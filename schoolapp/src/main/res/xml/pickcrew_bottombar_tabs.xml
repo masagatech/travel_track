@@ -1,0 +1,16 @@
+<tabs>
+    <tab
+        id="@+id/tab_pending"
+        icon="@drawable/ic_action_wait"
+        title="Pending"
+        barColorWhenSelected="#FF9A33"/>
+    <tab
+        id="@+id/tab_done"
+        icon="@drawable/ic_action_done"
+        title="Done"
+        barColorWhenSelected="#48BD26"/>
+    <tab
+        id="@+id/tab_all"
+        icon="@drawable/ic_action_all"
+        title="All"  barColorWhenSelected="#508BF2"/>
+</tabs>

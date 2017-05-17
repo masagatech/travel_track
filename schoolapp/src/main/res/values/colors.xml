@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#373435</color>
+    <color name="colorPrimaryDark">#232320</color>
+    <color name="colorAccent">#fc5006</color>
+    <color name="colorLight">#ffecb3</color>
+    <color name="primaryText">#212121</color>
+    <color name="darkText">#FFFFFF</color>
+    <color name="navigationBar">#393536</color>
+    <color name="white_hover">#d8d8d8</color>
+    <color name="white">#ffffff</color>
+    <color name="background">#eeeeee</color>
+    <color name="progressbar">#00d231</color>
+</resources>

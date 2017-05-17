@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="7dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView21"
+            android:background="@color/colorPrimaryDark" />
+
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                >
+
+                <TextView
+                    android:id="@+id/titleTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="13sp"
+                    android:layout_toLeftOf="@+id/Date"
+                    android:singleLine="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Large Text"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+
+
+
+                <TextView
+                    android:id="@+id/povTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleTxt"
+                    android:layout_marginTop="5dp"
+                    android:text="POV"
+                    android:textColor="#000000"
+                    android:textSize="11dp" />
+                <TextView
+                    android:id="@+id/Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+
+                    android:text="Date"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#000000"
+                    android:textSize="9dp" />
+
+                <TextView
+                    android:id="@+id/uploadonRes"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/Date"
+                    android:textAllCaps="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#ff0000"
+
+                    />
+                <TextView
+                    android:id="@+id/uploadon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="Uploaded on Server:"
+                    android:textColor="#000000"
+                    android:visibility="gone"
+                    android:layout_alignTop="@+id/uploadonRes"
+                    android:layout_toLeftOf="@+id/uploadonRes"
+                    android:layout_toStartOf="@+id/uploadonRes" />
+
+                <TextView
+                    android:id="@+id/hidid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                   />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
