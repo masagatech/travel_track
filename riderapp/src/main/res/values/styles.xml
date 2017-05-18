@@ -134,4 +134,17 @@
         <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
     </style>
 
+    <style name="Switch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#FF00D231</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#FFFC530B
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#FFFC530B
+        </item>
+    </style>
+
 </resources>

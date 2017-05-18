@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="5dp"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:text="Online"
+            android:id="@+id/online"
+            android:textColor="@color/white"
+            android:textSize="23dp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/compatSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/Switch"
+
+            />
+    </LinearLayout>
+</RelativeLayout>

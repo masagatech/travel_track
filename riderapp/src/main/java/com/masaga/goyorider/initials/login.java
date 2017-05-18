@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.common.Checker;
+import com.masaga.goyorider.forms.dashboard;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.model.model_loginusr;
@@ -69,6 +70,9 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 if (!validate()) {
                     return;
                 }
+
+                Intent intent=new Intent(login.this, dashboard.class);
+                startActivity(intent);
 
 
                 JsonObject json = new JsonObject();

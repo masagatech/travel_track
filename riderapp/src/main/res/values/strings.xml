@@ -1,7 +1,7 @@
 <resources>
     <string name="title_activity_splash_screen" translatable="false">splash_screen</string>
     <string name="lblSarthiName">Sarathi Name :</string>
-    <string name="app_name">GoYo School</string>
+    <string name="app_name">GoYo Rider</string>
     <string name="mytrp_todaytrip">Today\'s Trips</string>
     <string name="mytrp_history">History</string>
     <string name="del_schoolnm">Dhiru Bhai Ambani School</string>
