@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.masaga.goyorider.initials.login">
+
+    <RelativeLayout
+        android:id="@+id/userPassLayout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/edtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/username_ico"
+            android:drawablePadding="5dp"
+            android:background="@drawable/loginedttext"
+            android:singleLine="true"
+            android:textColorHint="#CACACA"
+            android:hint="@string/login_usrnamehint">
+
+            <requestFocus />
+        </EditText>
+        <ImageView
+            android:padding="3dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/username_ico"
+            android:src="@drawable/usr"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+        <ImageView
+            android:padding="3dp"
+            android:layout_below="@+id/edtUserName"
+            android:id="@+id/password_icon"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/lock"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/edtUserName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/loginedttext"
+            android:layout_toRightOf="@+id/password_icon"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColorHint="#CACACA"
+            android:hint="@string/login_passwordhint">
+        </EditText>
+
+
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/edtPassword"
+            android:layout_below="@+id/edtPassword"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible"
+
+            android:textColor="#CACACA"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userPassLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/darkText"
+        android:background="@color/colorPrimary"
+        android:text="@string/login_signin" />
+
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/userPassLayout">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/goyologo500"
+            android:layout_margin="25dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

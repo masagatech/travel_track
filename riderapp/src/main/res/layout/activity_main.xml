@@ -1,0 +1,25 @@
+<com.masaga.goyorider.layouts.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    tools:context="com.masaga.goyorider.goyorider.MainActivity"
+    android:background="@color/background">
+
+    <GridView
+        android:id="@+id/grid_dashboardmenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:numColumns="2"/>
+
+    <!--<Button-->
+        <!--android:text="@string/dashboard_mytrips"-->
+        <!--style="@style/DashboardButton"-->
+        <!--android:drawableTop="@drawable/messages_default"-->
+        <!--android:id="@+id/btnMyTrip"/>-->
+
+</com.masaga.goyorider.layouts.DashboardLayout>
