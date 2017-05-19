@@ -1,87 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:paddingTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="#000"
-        android:text="You Have New Order!"
-        android:gravity="center"/>
+    android:orientation="vertical"
+    android:id="@+id/PopUp"
+    android:background="@drawable/border_popup"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:paddingLeft="10dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="5dp">
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp">
     <TextView
+        android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="New Order!"
         android:textColor="#000"
-        android:text="Deliver at : " />
+        android:textSize="20dp"
+        android:layout_weight="2"/>
+
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="03.00"
+            android:id="@+id/popup_counter"
+            android:textSize="30dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/holo_red_light" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp">
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/marchant_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Marchant : " />
+        <TextView
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="Navi Mumbai,Plot No.11, Sector 14"
-            android:layout_height="wrap_content" />
+            android:text="Pizza Hut"
+            android:textColor="#000"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:orientation="horizontal"
         android:paddingTop="5dp">
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/outlets"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:text="No. of Products : "
+            android:text=" Outlets : "
             />
         <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="Pralhad nagar"
+            android:textColor="#000"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/no_products"/>
+        <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Stops : "
+            />
+        <TextView
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="5"
-            android:layout_height="wrap_content" />
+            android:textColor="#000"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingTop="5dp">
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/time"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:text="Payment: " />
+            android:text=" Pick-up time : " />
         <TextView
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="COD"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp">
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="Promised Time " />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:text="17 May, 08.33am"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/deliver_at"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text=" Deliver at : " />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:id="@+id/Deliver_at"
+            android:text="Navi Mumbai,Plot No.11, Sector 14"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -94,6 +160,7 @@
             android:layout_weight="1"
             android:background="@android:color/holo_green_dark"
             android:text="Accept"
+            android:id="@+id/Accept_order"
             android:layout_marginRight="5dp"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
@@ -105,6 +172,7 @@
             android:layout_marginRight="10dp"
             android:background="@android:color/holo_red_dark"
             android:text="Reject"
+            android:id="@+id/Reject_Order"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 

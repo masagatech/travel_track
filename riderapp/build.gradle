@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId 'com.masaga.goyo'
-        minSdkVersion 14
+        minSdkVersion 20
         targetSdkVersion 25
         compileSdkVersion = 25
         versionCode 1
@@ -74,6 +74,7 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'hanks.xyz:htextview-library:0.1.5'
 }
 
 
