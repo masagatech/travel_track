@@ -85,7 +85,7 @@ public class clnt_mykids extends AppCompatActivity {
         lstmykids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mykid = ((model_mykids) parent.getItemAtPosition(position));
-                Intent in = new Intent(clnt_mykids.this, com.masaga.goyorider.customer.clnt_tripview.class);
+                Intent in = new Intent(clnt_mykids.this, clnt_tripview.class);
                 in.putExtra("tripid",mykid.tripid);
                 in.putExtra("status",mykid.stsi);
                 startActivity(in);

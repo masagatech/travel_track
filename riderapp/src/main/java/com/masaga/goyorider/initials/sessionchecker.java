@@ -18,6 +18,7 @@ import com.masaga.goyorider.goyorider.MainActivity;
 import com.masaga.goyorider.model.model_loginusr;
 import com.masaga.goyorider.utils.SHP;
 import com.masaga.goyorider.utils.common;
+import com.masaga.goyorider.settings.languages;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -111,7 +112,7 @@ public class sessionchecker extends AppCompatActivity {
     private void nextScreen() {
         Intent i;
         if (isLanguageShow) {
-            i = new Intent(sessionchecker.this, com.masaga.goyorider.settings.languages.class);
+            i = new Intent(sessionchecker.this, languages.class);
             i.putExtra("frmsplash", true);
         } else {
             i = new Intent(sessionchecker.this, login.class);

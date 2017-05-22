@@ -50,7 +50,7 @@ public class driver_info_view extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_driver_info_view_add:
-                Intent i = new Intent(driver_info_view.this, com.masaga.goyorider.forms.driver_info.class);
+                Intent i = new Intent(driver_info_view.this, driver_info.class);
                 startActivity(i);
             default:
                 // If we got here, the user's action was not recognized.
@@ -91,7 +91,7 @@ public class driver_info_view extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, String> o = (HashMap<String, String>) parent.getItemAtPosition(position);
-                Intent i = new Intent(driver_info_view.this, com.masaga.goyorider.forms.driver_info.class);
+                Intent i = new Intent(driver_info_view.this, driver_info.class);
                 i.putExtra("autoid",o.get(Tables.tbl_driver_info.autoid));
                 startActivity(i);
 

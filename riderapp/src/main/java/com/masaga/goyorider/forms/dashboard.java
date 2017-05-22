@@ -2,35 +2,26 @@ package com.masaga.goyorider.forms;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.hanks.htextview.HTextView;
 import com.masaga.goyorider.R;
 
 import java.util.concurrent.TimeUnit;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.id.text1;
 
 public class dashboard extends AppCompatActivity {
 
@@ -74,8 +65,7 @@ public class dashboard extends AppCompatActivity {
                     (ViewGroup) findViewById(R.id.PopUp));
             OrderPopup= new PopupWindow(layout,850,700,true);
             OrderPopup.showAtLocation(layout, Gravity.CENTER,0,0);
-            OrderPopup.setOutsideTouchable(true);
-            OrderPopup.setFocusable(true);
+            OrderPopup.setOutsideTouchable(false);
             CountTimer.start();
 
             Btn_Accept=(Button)layout.findViewById(R.id.Accept_order);
@@ -124,9 +114,8 @@ public class dashboard extends AppCompatActivity {
     }
     @OnClick(R.id.Complated_Orders)
     void click3(){
-        initiatePopupWindow();
-        //Intent intent=new Intent(this,complated_order.class);
-        //startActivity(intent);
+        Intent intent=new Intent(this,complated_order.class);
+        startActivity(intent);
     }
     @OnClick(R.id.Rejected_Orders)
     void click4(){
@@ -135,8 +124,9 @@ public class dashboard extends AppCompatActivity {
     }
     @OnClick(R.id.All_Order)
     void click5(){
-        Intent intent=new Intent(this,all_order.class);
-        startActivity(intent);
+        initiatePopupWindow();
+//        Intent intent=new Intent(this,all_order.class);
+//        startActivity(intent);
     }
     @OnClick(R.id.Notifications)
     void click6(){

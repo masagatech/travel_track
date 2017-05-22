@@ -32,6 +32,7 @@ import com.masaga.goyorider.adapters.CustomAdapter;
 import com.masaga.goyorider.database.SQLBase;
 import com.masaga.goyorider.serverdata.upload;
 import com.masaga.goyorider.utils.common;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

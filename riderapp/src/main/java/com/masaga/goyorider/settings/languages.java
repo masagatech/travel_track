@@ -13,6 +13,7 @@ import com.masaga.goyorider.goyorider.MainActivity;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.utils.SHP;
 import com.masaga.goyorider.utils.common;
+import com.masaga.goyorider.initials.login;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +114,7 @@ public class languages extends AppCompatActivity {
                 common.setLanguage(getApplicationContext(), getBaseContext());
                 Intent intent;
                 if(isFromSplash){
-                    intent = new Intent(getApplicationContext(), com.masaga.goyorider.initials.login.class);
+                    intent = new Intent(getApplicationContext(), login.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 }else{
                     intent = new Intent(getApplicationContext(), MainActivity.class);

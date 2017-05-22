@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.masaga.goyorider"
     android:versionCode="1"
     android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="20"
         android:targetSdkVersion="23" />
 
     <supports-screens
@@ -20,9 +21,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
@@ -73,10 +72,6 @@
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <!--
             <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -167,20 +162,24 @@
         <!-- [END firebase_iid_service] -->
         <activity android:name=".initials.sessionchecker" />
         <activity android:name=".forms.dashboard" />
-        <activity android:name=".forms.pending_order"
-            android:label="Pending Order"/>
-        <activity android:name=".forms.complated_order"
-            android:label="Complated Orders"/>
-        <activity android:name=".forms.cash_collection"
-            android:label="Cash Collection"/>
-        <activity android:name=".forms.rejected_order"
-            android:label="Rejected Orders"/>
-        <activity android:name=".forms.notification"
-            android:label="Notification"/>
-        <activity android:name=".forms.all_order"
-            android:label="All Orders" >
-
-        </activity>
+        <activity
+            android:name=".forms.pending_order"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".forms.complated_order"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".forms.cash_collection"
+            android:label="Cash Collection" />
+        <activity
+            android:name=".forms.rejected_order"
+            android:label="Rejected Orders" />
+        <activity
+            android:name=".forms.notification"
+            android:label="Notification" />
+        <activity
+            android:name=".forms.all_order"
+            android:label="All Orders" />
     </application>
 
 </manifest>

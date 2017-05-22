@@ -32,6 +32,8 @@ import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.model.model_appsettings;
 import com.masaga.goyorider.model.model_loginusr;
 import com.masaga.goyorider.utils.SHP;
+import com.masaga.goyorider.customer.clnt_mykids;
+import com.masaga.goyorider.forms.my_trip;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,12 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent in;
                 switch (i) {
                     case 0:
-                        in = new Intent(MainActivity.this, com.masaga.goyorider.forms.my_trip.class);
+                        in = new Intent(MainActivity.this, my_trip.class);
                         startActivity(in);
                         break;
                     case 1:
                         //in = new Intent(MainActivity.this, com.masaga.goyo.settings.settings.class);
-                        in = new Intent(MainActivity.this, com.masaga.goyorider.customer.clnt_mykids.class);
+                        in = new Intent(MainActivity.this, clnt_mykids.class);
                         startActivity(in);
                         break;
                 }

@@ -22,6 +22,7 @@ import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.model.model_loginusr;
 import com.masaga.goyorider.utils.SHP;
+import com.masaga.goyorider.goyorider.MainActivity;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -109,7 +110,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                                             }
 
                                             Toast.makeText(login.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
-                                             Intent i = new Intent(login.this, com.masaga.goyorider.goyorider.MainActivity.class);
+                                             Intent i = new Intent(login.this, MainActivity.class);
                                             startActivity(i);
                                             login.this.finish();
                                         } else {
