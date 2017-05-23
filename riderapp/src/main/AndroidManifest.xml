@@ -170,7 +170,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.cash_collection"
-            android:label="Cash Collection" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.rejected_order"
             android:label="Rejected Orders" />

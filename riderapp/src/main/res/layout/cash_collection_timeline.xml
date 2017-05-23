@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/margintop"
+        android:visibility="gone"
+        android:background="@android:color/transparent" />
+                <LinearLayout
+                    android:id="@+id/marchant_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_marchent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/pending_outlets"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    tools:text="Pizza hut, Pralhad nagar" />
+
+                    <View
+                        android:id="@+id/devider"
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:layout_below="@+id/text_marchent"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimary">
+
+                    </View>
+                    <LinearLayout
+                        android:id="@+id/summery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/order_id"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/black"
+                        tools:text=" #129"
+                        android:layout_weight="1"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/cash_amount"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@android:color/black"
+                            tools:text="₹ 100"
+                            android:layout_weight="1"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/Hand_over"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/black"
+                            tools:text="Team Leader"
+                            android:paddingBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:drawableRight="@drawable/arrow_down"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/Sub_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp">
+
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="match_parent"
+                            android:id="@+id/text_subtotal"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/black"
+                            tools:text=" Sub Total :"
+                            android:layout_weight="2"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/cash_sub_total"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@android:color/black"
+                            tools:text="₹ 1100"
+                            android:textStyle="bold"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+</LinearLayout>
