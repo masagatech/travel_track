@@ -14,13 +14,16 @@ public class CashModel {
     private String mHandover;
     private String mMarchant;
 
+    private Integer mType;
 
-    public CashModel(String mMarchant,String mOrderID, double mCashAmount, String mHandover) {
+    public CashModel(String mMarchant, String mOrderID, double mCashAmount, String mHandover, Integer Type) {
         this.mOrderID = mOrderID;
         this.mMarchant = mMarchant;
         this.mCashAmount=mCashAmount;
         this.mHandover=mHandover;
         this.mMarchant = mMarchant;
+        this.mType = Type;
+
     }
 
 
@@ -29,6 +32,7 @@ public class CashModel {
         mCashAmount = in.readDouble();
         mHandover = in.readString();
         mMarchant = in.readString();
+        mType = in.readInt();
     }
 
 
@@ -63,4 +67,14 @@ public class CashModel {
     public void setmMarchant(String mMarchant) {
         this.mMarchant = mMarchant;
     }
+
+
+    public Integer getmType() {
+        return mType;
+    }
+
+    public void setmType(Integer mType) {
+        this.mType = mType;
+    }
+
 }

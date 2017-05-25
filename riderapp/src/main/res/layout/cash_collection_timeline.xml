@@ -4,50 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:id="@+id/margintop"
         android:visibility="gone"
-        android:background="@android:color/transparent" />
-                <LinearLayout
-                    android:id="@+id/marchant_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:orientation="vertical">
+        android:background="#d9d8d8" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_marchent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_vertical"
-                    android:drawableLeft="@drawable/pending_outlets"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    tools:text="Pizza hut, Pralhad nagar" />
+    <LinearLayout
 
-                    <View
-                        android:id="@+id/devider"
-                        android:layout_width="match_parent"
-                        android:layout_height="2px"
-                        android:layout_below="@+id/text_marchent"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/colorPrimary">
+        android:id="@+id/marchant_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/blue_light"
+        android:orientation="horizontal">
 
-                    </View>
-                    <LinearLayout
-                        android:id="@+id/summery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/text_marchent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16dp"
+            android:background="@android:color/darker_gray"
+            android:drawableLeft="@drawable/cash_outlets"
+            android:gravity="center_vertical"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            tools:text="Pizza hut, Pralhad nagar" />
+
+        <Button
+            android:id="@+id/save_all"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Save"
+            android:paddingStart="5dp"
+            android:background="#fff"
+            android:clickable="true"
+            android:drawableLeft="@drawable/save"
+            android:textColor="#000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/summery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#fff">
 
 
                     <android.support.v7.widget.AppCompatTextView
@@ -58,12 +65,14 @@
                         android:gravity="center_vertical"
                         android:textColor="@android:color/black"
                         tools:text=" #129"
+                        android:background="#fff"
                         android:layout_weight="1"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/cash_amount"
                             android:gravity="center_vertical"
                             android:layout_width="match_parent"
+                            android:background="#fff"
                             android:layout_height="match_parent"
                             android:textColor="@android:color/black"
                             tools:text="₹ 100"
@@ -75,6 +84,7 @@
                             android:gravity="center_vertical"
                             android:textColor="@android:color/black"
                             tools:text="Team Leader"
+                            android:background="#fff"
                             android:paddingBottom="5dp"
                             android:layout_marginRight="5dp"
                             android:drawableRight="@drawable/arrow_down"
@@ -83,10 +93,11 @@
                     <LinearLayout
                         android:id="@+id/Sub_total"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="5dp"
                         android:visibility="gone"
-                        android:layout_marginTop="10dp">
+                        android:background="@android:color/darker_gray"
+                        android:orientation="horizontal">
 
 
                         <android.support.v7.widget.AppCompatTextView
@@ -95,22 +106,21 @@
                             android:id="@+id/text_subtotal"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:textColor="@android:color/black"
+                            android:textColor="#fff"
                             tools:text=" Sub Total :"
                             android:layout_weight="2"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/cash_sub_total"
+                            android:textSize="18dp"
                             android:gravity="center_vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColor="@android:color/black"
+                            android:textColor="#fff"
                             tools:text="₹ 1100"
                             android:textStyle="bold"
                             android:layout_weight="1"/>
                     </LinearLayout>
 
-
-                </LinearLayout>
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import de.halfbit.pinnedsection.PinnedSectionListView;
 
 import static android.R.attr.data;
 import static android.os.Build.VERSION_CODES.M;
@@ -40,11 +42,13 @@ import static java.security.AccessController.getContext;
  * Created by fajar on 23-May-17.
  */
 
-public class CashCollectionAdapter extends BaseAdapter{
+public class CashCollectionAdapter extends BaseAdapter implements PinnedSectionListView.PinnedSectionListAdapter {
 
     List<CashModel> list = new ArrayList<CashModel>();
     LayoutInflater inflater;
     Context context;
+    public static final int ITEM = 0;
+    public static final int SECTION = 1;
     double Total=0;
     int t=0;
     private  static  String Header="";
@@ -54,6 +58,11 @@ public class CashCollectionAdapter extends BaseAdapter{
         this.inflater = LayoutInflater.from(context);
         //super(context, R.layout.cash_collection_timeline);
     }
+
+    private static final int[] COLORS = new int[] {
+            R.color.green_light, R.color.orange_light,
+            R.color.blue_light, R.color.red_light };
+
 
     @Override
     public int getCount() {
@@ -70,6 +79,18 @@ public class CashCollectionAdapter extends BaseAdapter{
         return  position;
     }
 
+    @Override public int getViewTypeCount() {
+        return 2;
+    }
+    @Override public int getItemViewType(int position) {
+        return this.list.get(position).getmType();
+    }
+
+    @Override
+    public boolean isItemViewTypePinned(int viewType) {
+        return viewType == SECTION;
+    }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,39 +105,40 @@ public class CashCollectionAdapter extends BaseAdapter{
             mViewHolder = ( ViewHolder) convertView.getTag();
         }
 
+        final CashModel ml = list.get(position);
 
+        mViewHolder.mMarchant.setText(ml.getmMarchant());
+        mViewHolder.mMarchant.setVisibility(View.VISIBLE);
+        //  mViewHolder.devider.setVisibility(View.VISIBLE);
+        mViewHolder.order_id.setText(ml.getmOrderID());
+        mViewHolder.cash_amount.setText("₹ "+ml.getmCashAmount());
+        mViewHolder.Hand_over.setText(ml.getmHandover());
+        mViewHolder.subtotal_text.setText("Sub Total : ");
 
-        if (!Header.equals(list.get(position).getmMarchant()))
-        {
-            Header=list.get(position).getmMarchant();
-            mViewHolder.mMarchant.setText(list.get(position).getmMarchant());
-            mViewHolder.mMarchant.setVisibility(View.VISIBLE);
-            mViewHolder.devider.setVisibility(View.VISIBLE);
+        if(ml.getmType() == SECTION){
+            mViewHolder.summery.setVisibility(View.GONE);
+            mViewHolder.CashSubTotal.setText("₹ "+Total);
+            mViewHolder.Sub_Total.setVisibility(View.VISIBLE);
             mViewHolder.margintop.setVisibility(View.VISIBLE);
+            mViewHolder.CashSubTotal.setText("₹ "+ml.getmCashAmount());
+
+                mViewHolder.mMarchant.setBackgroundColor(parent.getResources().getColor(R.color.blue_light));
+                mViewHolder.Sub_Total.setBackgroundColor(parent.getResources().getColor(R.color.blue_light));
+
+
+
+
         }else {
 
-            mViewHolder.mMarchant.setVisibility(View.GONE);
-            mViewHolder.devider.setVisibility(View.GONE);
-            t=t+1;
-//            if(t==9){
-//                mViewHolder.Sub_Total.setVisibility(View.VISIBLE);
-//            }
-//            else if(t==8){
-//                mViewHolder.Sub_Total.setVisibility(View.VISIBLE);
-//            }
-
-
+            mViewHolder.Marchant_group.setVisibility(View.GONE);
         }
+        mViewHolder.Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"Saved Details of "+ml.getmMarchant(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        mViewHolder.order_id.setText(list.get(position).getmOrderID());
-        mViewHolder.cash_amount.setText("₹ "+list.get(position).getmCashAmount());
-        mViewHolder.Hand_over.setText(list.get(position).getmHandover());
-        mViewHolder.subtotal_text.setText("Sub Total : ");
-//        for (int i=0;i<=list.get(position);i++){
-//            Total=Total+Double.parseDouble(mViewHolder.cash_amount.toString());
-//            mViewHolder.CashSubTotal.setText(""+Total);
-//        }
-        mViewHolder.CashSubTotal.setText("₹ 1110");
 
         try {
             mViewHolder.Hand_over.setOnClickListener(new View.OnClickListener() {
@@ -161,18 +183,20 @@ public class CashCollectionAdapter extends BaseAdapter{
 
     private class ViewHolder {
         TextView mMarchant,order_id,cash_amount,Hand_over,margintop,CashSubTotal,subtotal_text;
-        View devider;
-        LinearLayout Sub_Total;
+        LinearLayout Sub_Total,summery,Marchant_group;
+        Button Save;
 
         ViewHolder(View view) {
 
             subtotal_text = (TextView) view.findViewById(R.id.text_subtotal);
+            Save = (Button) view.findViewById(R.id.save_all);
             mMarchant = (TextView) view.findViewById(R.id.text_marchent);
             CashSubTotal = (TextView) view.findViewById(R.id.cash_sub_total);
             Sub_Total = (LinearLayout) view.findViewById(R.id.Sub_total);
             order_id = (TextView) view.findViewById(R.id.order_id);
             cash_amount = (TextView) view.findViewById(R.id.cash_amount);
-            devider = (View) view.findViewById(R.id.devider);
+            summery = (LinearLayout) view.findViewById(R.id.summery);
+            Marchant_group = (LinearLayout) view.findViewById(R.id.marchant_group);
             Hand_over = (TextView) view.findViewById(R.id.Hand_over);
             margintop = (TextView) view.findViewById(R.id.margintop);
         }

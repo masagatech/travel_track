@@ -140,6 +140,9 @@
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- [START Rider_service] -->
+
+
         <!-- [START firebase_service] -->
         <service
             android:name=".firebasemessaging.APPFirebaseMessagingService"

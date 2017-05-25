@@ -16,6 +16,7 @@ import com.masaga.goyorider.utils.VectorDrawableUtils;
 
 import java.util.List;
 
+import static android.R.attr.data;
 import static com.masaga.goyorider.forms.PendingOrdersView.getTimeLineViewType;
 
 /**
@@ -75,8 +76,11 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.Btn_Delivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PendingModel status = mFeedList.get(position+1);
-                status.setmStatus(OrderStatus.ACTIVE);
+
+
+                    final PendingModel status = mFeedList.get(position+1);
+                    status.setmStatus(OrderStatus.ACTIVE);
+
                 mFeedList.remove(newPosition);
                 notifyItemRemoved(newPosition);
                 notifyItemRangeChanged(newPosition,mFeedList.size());

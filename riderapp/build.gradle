@@ -80,6 +80,9 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.2.1'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.roughike:bottom-bar:2.3.1'
+
+    compile "de.halfbit:pinned-section-listview:1.0.0"
+
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
