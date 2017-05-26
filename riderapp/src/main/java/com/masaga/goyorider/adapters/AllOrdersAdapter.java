@@ -16,14 +16,11 @@ import com.masaga.goyorider.utils.VectorDrawableUtils;
 
 import java.util.List;
 
-import static android.R.attr.data;
-import static com.masaga.goyorider.forms.PendingOrdersView.getTimeLineViewType;
-
 /**
- * Created by fajar on 22-May-17.
+ * Created by fajar on 26-May-17.
  */
 
-public class pending_order_adapter extends RecyclerView.Adapter<pending_order_viewHolder> {
+public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHolder>  {
 
     private List<PendingModel> mFeedList;
     private Context mContext;
@@ -31,7 +28,8 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     private boolean mWithLinePadding;
     private LayoutInflater mLayoutInflater;
 
-    public pending_order_adapter(List<PendingModel> feedList, Orientation orientation, boolean withLinePadding) {
+
+    public AllOrdersAdapter(List<PendingModel> feedList, Orientation orientation, boolean withLinePadding) {
         mFeedList = feedList;
         mOrientation = orientation;
         mWithLinePadding = withLinePadding;
@@ -47,7 +45,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         mLayoutInflater = LayoutInflater.from(mContext);
         View view;
 
-        view = mLayoutInflater.inflate(R.layout.pending_order_timeline, parent, false);
+        view = mLayoutInflater.inflate(R.layout.all_order_timeline, parent, false);
 
         return new pending_order_viewHolder(view, viewType);
     }
@@ -60,36 +58,50 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         if(timeLineModel.getmStatus() == OrderStatus.INACTIVE) {
             holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
         } else if(timeLineModel.getmStatus() == OrderStatus.ACTIVE) {
-            holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.colorAccent));
+            holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.round));
         } else {
-            holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.colorAccent));
+            holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
         }
+
         holder.mDate.setText(timeLineModel.getmDate());
         holder.mOrder.setText(timeLineModel.getmOrder());
         holder.mMarchant.setText(timeLineModel.getmMarchant());
         holder.mDeliver_at.setText(timeLineModel.getmDeliver_at());
         holder.mTime.setText(timeLineModel.getmTime());
-        holder.collected_cash.setText("₹ " +timeLineModel.getCash());
-        final int newPosition = holder.getAdapterPosition();
+        holder.collected_cash.setText("₹ " + timeLineModel.getCash());
 
-        holder.Btn_Delivery.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int listCount = mFeedList.size();
-
-                    final PendingModel status = mFeedList.get(mFeedList.size() == position +1 ? position :position+1);
-                    status.setmStatus(OrderStatus.ACTIVE);
-
-
-
-                mFeedList.remove(newPosition);
-                notifyItemRemoved(newPosition);
-                notifyItemRangeChanged(newPosition,mFeedList.size());
+            public void onClick(final View m) {
+                if(holder.ClickToHide.getVisibility() == View.VISIBLE){
+                    holder.ClickToHide.setVisibility(View.GONE);
+                    holder.mDate.setVisibility(View.GONE);
+                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }else {
+                    holder.ClickToHide.setVisibility(View.VISIBLE);
+                    holder.mDate.setVisibility(View.VISIBLE);
+                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
+                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds( R.drawable.pending_outlets, 0, 0, 0);
+                }
             }
         });
+        holder.collected_cash.setEnabled(false);
+
+
+
+//        holder.Btn_Delivery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final PendingModel status = mFeedList.get(position+1);
+//                status.setmStatus(OrderStatus.ACTIVE);
+//                mFeedList.remove(newPosition);
+//                notifyItemRemoved(newPosition);
+//                notifyItemRangeChanged(newPosition,mFeedList.size());
+//            }
+//        });
 
     }
-
 
     @Override
     public int getItemCount() {

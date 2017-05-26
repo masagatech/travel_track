@@ -1,5 +1,7 @@
 package com.masaga.goyorider.forms;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -33,10 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class dashboard extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+public class dashboard extends AppCompatActivity{
 
     @BindView(R.id.Pending_Order)
     FrameLayout Pending_Order;
@@ -50,12 +49,6 @@ public class dashboard extends AppCompatActivity implements
     FrameLayout Notifications;
     @BindView(R.id.All_Order)
     FrameLayout All_Order;
-
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private double currentLatitude;
-    private double currentLongitude;
 
     private PopupWindow OrderPopup;
     private Button Btn_Accept, Btn_Reject;
@@ -84,18 +77,8 @@ public class dashboard extends AppCompatActivity implements
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                if (isChecked){
                     Online.setText("Online");
-                   RiderLocationService gpsTracker = new RiderLocationService(getApplication());
-                   if (gpsTracker.getIsGPSTrackingEnabled())
-                   {
-                       Toast.makeText(getApplicationContext(),"latitude = "+gpsTracker.latitude+"\n"+"longitude = "+gpsTracker.longitude,Toast.LENGTH_SHORT).show();
-                   } else
-               {
-                   // can't get location
-                   // GPS or Network is not enabled
-                   // Ask user to enable GPS/network in settings
 
-                   gpsTracker.showSettingsAlert();
-               }
+                   scheduleAlarm();
                }else {
                    Online.setText("Offline");
                }
@@ -172,49 +155,14 @@ public class dashboard extends AppCompatActivity implements
     }
     @OnClick(R.id.All_Order)
     void click5(){
-        initiatePopupWindow();
-//        Intent intent=new Intent(this,all_order.class);
-//        startActivity(intent);
+        Intent intent=new Intent(this,all_order.class);
+        startActivity(intent);
     }
     @OnClick(R.id.Notifications)
     void click6(){
-        Intent intent=new Intent(this,notification.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        initiatePopupWindow();
+//        Intent intent=new Intent(this,notification.class);
+//        startActivity(intent);
     }
 
     public class Popup_Counter extends CountDownTimer{
@@ -234,5 +182,20 @@ public class dashboard extends AppCompatActivity implements
                     TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
         }
+    }
+    public void scheduleAlarm() {
+        // Construct an intent that will execute the AlarmReceiver
+        Intent intent = new Intent(getApplicationContext(), TimeService.class);
+        // Create a PendingIntent to be triggered when the alarm goes off
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, TimeService.REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // Setup periodic alarm every 5 seconds
+        long firstMillis = System.currentTimeMillis(); // alarm is set right away
+        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
+                10000, pIntent);
+
     }
 }

@@ -52,6 +52,8 @@
     <string name="Pending_Order">Pending Orders</string>
     <string name="Complated_Order">Complated Orders</string>
     <string name="Cash_Collection">Cash Collection</string>
+    <string name="All_Order">All Orders</string>
+    <string name="Rejected_Order">Rejected Orders</string>
 
 
 
