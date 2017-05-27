@@ -85,37 +85,37 @@ public class my_trip extends AppCompatActivity {
     private void PostHttpBindTrips() {
 
 
-        JsonObject json = new JsonObject();
-        json.addProperty("driverid", Global.loginusr.getDriverid());
-        Global.showProgress(loader);
+//        JsonObject json = new JsonObject();
+//        json.addProperty("driverid", Global.loginusr.getDriverid());
+//        Global.showProgress(loader);
         //menu_refresh.setEnabled(false);
-        Ion.with(this)
-                .load(Global.urls.getmytrips.value)
-
-                .setJsonObjectBody(json)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        // do stuff with the result or error
-                        try {
-                            if (result != null) Log.v("result", result.toString());
-                            // JSONObject jsnobject = new JSONObject(jsond);
-                            Gson gson = new Gson();
-                            Type listType = new TypeToken<List<model_mytrips>>() {
-                            }.getType();
-                            List<model_mytrips> events = (List<model_mytrips>) gson.fromJson(result.get("data"), listType);
-                            bindCurrentTrips(events);
-
-
-                        } catch (Exception ea) {
-                            ea.printStackTrace();
-                        }
-                        // menu_refresh.setEnabled(false);
-                        Global.hideProgress(loader);
-                    }
-                });
-    }
+//        Ion.with(this)
+//              //  .load(Global.urls.getmytrips.value)
+//
+//                .setJsonObjectBody(json)
+//                .asJsonObject()
+//                .setCallback(new FutureCallback<JsonObject>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonObject result) {
+//                        // do stuff with the result or error
+//                        try {
+//                            if (result != null) Log.v("result", result.toString());
+//                            // JSONObject jsnobject = new JSONObject(jsond);
+//                            Gson gson = new Gson();
+//                            Type listType = new TypeToken<List<model_mytrips>>() {
+//                            }.getType();
+//                            List<model_mytrips> events = (List<model_mytrips>) gson.fromJson(result.get("data"), listType);
+//                            bindCurrentTrips(events);
+//
+//
+//                        } catch (Exception ea) {
+//                            ea.printStackTrace();
+//                        }
+//                        // menu_refresh.setEnabled(false);
+//                        Global.hideProgress(loader);
+//                    }
+//                });
+   }
 
 
     /*fill all controls*/

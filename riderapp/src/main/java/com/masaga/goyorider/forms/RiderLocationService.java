@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by fajar on 25-May-17.
  */
@@ -110,7 +112,7 @@ public class RiderLocationService extends Service implements LocationListener {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                             Log.i("location", +latitude + " " + longitude);
-                            Toast.makeText(getApplicationContext(),"LatLang is" +latitude+" "+longitude, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"LatLang is" +latitude+" "+longitude, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -126,6 +128,7 @@ public class RiderLocationService extends Service implements LocationListener {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                Toast.makeText(getApplicationContext(),"Lat Lang is" +latitude+" "+longitude, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

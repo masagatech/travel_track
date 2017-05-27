@@ -5,12 +5,23 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.adapters.ComplatedOrderAdapter;
 import com.masaga.goyorider.adapters.RejectedOrderAdapter;
+import com.masaga.goyorider.adapters.pending_order_adapter;
+import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_pending;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,10 +30,9 @@ import java.util.List;
 public class rejected_order extends AppCompatActivity {
     private com.masaga.goyorider.adapters.RejectedOrderAdapter mTimeLineAdapter;
     private RecyclerView mRecyclerView;
-    private List<PendingModel> mDataList = new ArrayList<>();
+    private List<model_pending> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
-    private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,35 @@ public class rejected_order extends AppCompatActivity {
         mRecyclerView.setLayoutManager(getLinearLayoutManager());
         mRecyclerView.setHasFixedSize(true);
 //
-        initView();
+ //       initView();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "details");
+        json.addProperty("status", "pending");
+
+//        Global.showProgress(loader);
+        Ion.with(this)
+                .load(Global.urls.getOrderDetails.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<List<model_pending>>() {
+                            }.getType();
+                            List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
+                            bindCurrentTrips(events);
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
     private LinearLayoutManager getLinearLayoutManager() {
@@ -51,18 +89,30 @@ public class rejected_order extends AppCompatActivity {
     }
 
     private void initView() {
-        setDataListItems();
-        mTimeLineAdapter = new RejectedOrderAdapter(mDataList, mOrientation, mWithLinePadding);
-        mRecyclerView.setAdapter(mTimeLineAdapter);
+//        setDataListItems();
+//        mTimeLineAdapter = new RejectedOrderAdapter(mDataList, mOrientation, mWithLinePadding);
+//        mRecyclerView.setAdapter(mTimeLineAdapter);
     }
 
     private void setDataListItems(){
-        mDataList.add(new PendingModel("#198" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.ACTIVE,0.00));
-        mDataList.add(new PendingModel("#199" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,0.00));
-        mDataList.add(new PendingModel("#200" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,209.00));
-        mDataList.add(new PendingModel("#201" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,349.00));
-        mDataList.add(new PendingModel("#202" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,460.50));
+//        mDataList.add(new PendingModel("#198" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.ACTIVE,0.00));
+//        mDataList.add(new PendingModel("#199" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,0.00));
+//        mDataList.add(new PendingModel("#200" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,209.00));
+//        mDataList.add(new PendingModel("#201" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,349.00));
+//        mDataList.add(new PendingModel("#202" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,460.50));
 
+    }
+
+    private void bindCurrentTrips(List<model_pending> lst) {
+        if (lst.size() > 0) {
+            findViewById(R.id.txtNodata).setVisibility(View.GONE);
+            mTimeLineAdapter = new RejectedOrderAdapter(lst, mOrientation, mWithLinePadding);
+            mRecyclerView.setAdapter(mTimeLineAdapter);
+            mTimeLineAdapter.notifyDataSetChanged();
+
+        } else {
+            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
