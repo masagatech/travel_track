@@ -38,6 +38,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;

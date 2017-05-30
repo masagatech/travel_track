@@ -39,6 +39,8 @@ public class dashboard extends AppCompatActivity{
 
     @BindView(R.id.Pending_Order)
     FrameLayout Pending_Order;
+    @BindView(R.id.pushOrder)
+    FrameLayout Push_Order;
     @BindView(R.id.Complated_Orders)
     FrameLayout Complated_Orders;
     @BindView(R.id.Rejected_Orders)
@@ -163,6 +165,11 @@ public class dashboard extends AppCompatActivity{
         initiatePopupWindow();
 //        Intent intent=new Intent(this,notification.class);
 //        startActivity(intent);
+    }
+    @OnClick(R.id.pushOrder)
+    void click7(){
+        Intent intent=new Intent(this,PushOrder.class);
+        startActivity(intent);
     }
 
     public class Popup_Counter extends CountDownTimer{

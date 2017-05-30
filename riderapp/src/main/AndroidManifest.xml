@@ -6,8 +6,9 @@
     android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="20"
-        android:targetSdkVersion="23" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="23"
+        tools:overrideLibrary="ernestoyaquello.com.verticalstepperform" />
 
     <supports-screens
         android:largeScreens="true"
@@ -144,13 +145,11 @@
         <!-- [START Rider_service] -->
         <receiver
             android:name=".forms.TimeService"
-            android:process=":remote" >
-        </receiver>
+            android:process=":remote"></receiver>
 
         <service
             android:name=".forms.RiderLocationService"
             android:exported="false" />
-
 
         <!-- [START firebase_service] -->
         <service
@@ -185,13 +184,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.rejected_order"
-            android:theme="@style/AppTheme.NoActionBar"  />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.notification"
             android:label="Notification" />
         <activity
             android:name=".forms.all_order"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".forms.PushOrder"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

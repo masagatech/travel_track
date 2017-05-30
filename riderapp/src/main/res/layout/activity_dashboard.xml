@@ -173,7 +173,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="170dp"
             android:layout_marginRight="5dp"
             android:layout_weight="2"
             android:layout_marginStart="5dp"
@@ -205,13 +205,18 @@
             </FrameLayout>
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="80dp"
 
             android:layout_marginLeft="5dp"
-            android:layout_weight="0.6"
+
             android:orientation="vertical"
             android:background="@color/progressbar"
             android:clickable="true">
@@ -238,6 +243,43 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="15dp"/>
             </FrameLayout>
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+
+                android:background="#9d4ae1"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/pushOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:src="@drawable/push_order" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:text="Push Order"
+                        android:textColor="@color/white" />
+                </FrameLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

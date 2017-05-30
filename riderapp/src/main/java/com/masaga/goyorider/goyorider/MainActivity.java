@@ -290,29 +290,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void fillDashboardMenu() {
-        String jsond = "{\"data\":[{\"icon\":\"ewad\",\"name\":\"My Trips\"}]}";
-        try {
-            JSONObject jsnobject = new JSONObject(jsond);
-            JSONArray _data = jsnobject.getJSONArray("data");
-            for (int i = 0; i <= _data.length() - 1; i++) {
-                HashMap<String, String> h = new HashMap();
-                JSONObject o = _data.getJSONObject(i);
-                h.put("id", o.get("id").toString());
-                h.put("nm", o.get("nm").toString());
-                h.put("date", o.get("date").toString());
-                h.put("time", o.get("time").toString());
-                h.put("pd", o.get("pd").toString());
-                h.put("sts", o.get("sts").toString());
-                mDashboard.add(h);
-            }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
 
     private void fillSettings() {
