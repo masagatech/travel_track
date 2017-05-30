@@ -61,6 +61,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
     private boolean mWithLinePadding;
     private LayoutInflater mLayoutInflater;
     Runnable updateTimerMethod;
+    private int OrderNo;
     protected boolean stopFlag = false;
     HashMap<String, Runnable> threads = new HashMap<>();
 
@@ -105,10 +106,14 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
         final model_push_order timeLineModel = mFeedList.get(position);
 
-        holder.mOrderID.setText(timeLineModel.mOrderId);
-        holder.mMarchant.setText(timeLineModel.mMarchant);
-        holder.mAddr.setText(timeLineModel.mAddr);
-        holder.mTime.setText(timeLineModel.mTime);
+        OrderNo=timeLineModel.ordno.size();
+
+        holder.mOrderID.setText(timeLineModel.ordid+" ("+OrderNo+")");
+        holder.mMarchant.setText(timeLineModel.olnm);
+        holder.mAddr.setText(timeLineModel.area+", "+timeLineModel.city);
+        holder.mTime.setText(timeLineModel.pchtm);
+        holder.mCash.setText("₹ "+timeLineModel.totamt+"");
+
 
         //Spinner
 
@@ -170,6 +175,8 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mRider.setAdapter(myAdapter);
 
+
+
         holder.mRider.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -186,6 +193,8 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
+
         });
 
 
@@ -199,7 +208,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
                 Date date1 = null;
 
                 try {
-                    date2 = simpleDateFormat.parse(timeLineModel.mTime);
+                    date2 = simpleDateFormat.parse(timeLineModel.pchtm);
                     date1 = simpleDateFormat.parse(simpleDateFormat.format((new Date()).getTime()));
                     long difference = date1.getTime() - date2.getTime();
                     Integer minutes = (int) (difference / (1000 * 60));
@@ -247,7 +256,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
         holder.Btn_Push.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
-                Toast.makeText(mContext,timeLineModel.mMarchant+" Order Pushed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,timeLineModel.olnm+" Order Pushed!", Toast.LENGTH_SHORT).show();
                 mFeedList.remove(newPosition);
                 notifyItemRemoved(newPosition);
                 notifyItemRangeChanged(newPosition, mFeedList.size());

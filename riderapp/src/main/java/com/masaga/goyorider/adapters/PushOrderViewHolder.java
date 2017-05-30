@@ -33,6 +33,8 @@ public class PushOrderViewHolder extends RecyclerView.ViewHolder {
     Spinner mRider;
     @BindView(R.id.adress)
     TextView mAddr;
+    @BindView(R.id.Cash)
+    TextView mCash;
     @BindView(R.id.Btn_Push)
     Button Btn_Push;
 

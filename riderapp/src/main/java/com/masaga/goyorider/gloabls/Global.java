@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class Global {
     //public static String DOMAIN_URL = "http://192.168.1.16:8081/goyoapi";
-    public final static String REST_URL = "http://192.168.43.228:8082/goyoapi";
+    public final static String REST_URL = "http://192.168.1.102:8082/goyoapi";
     public static final String SOCKET_URL = "http://192.168.43.228:8082/";
     private final static String APIName="/mrcht";
 //    public static final String SOCKET_URL = "http://35.154.230.244:8082/";
@@ -38,7 +38,8 @@ public class Global {
         getmykids("getmykids", REST_URL + "/cust/getmykids"),
         getlastknownloc("getlastknownloc", REST_URL + "/tripapi/getdelta"),
         sendreachingalert("sendreachingalert", REST_URL + "/tripapi/sendreachingalert"),
-        getOrderDetails("getorderdetails", REST_URL + APIName+"/getOrderDetails");
+        getOrderDetails("getorderdetails", REST_URL + APIName+"/getOrderDetails"),
+        getOrderDash("getorderdash", REST_URL + APIName+"/getOrderDash");
 
         public String key;
         public String value;
