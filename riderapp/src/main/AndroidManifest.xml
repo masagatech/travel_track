@@ -142,14 +142,10 @@
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
-        <!-- [START Rider_service] -->
-        <receiver
-            android:name=".forms.TimeService"
-            android:process=":remote"></receiver>
-
         <service
-            android:name=".forms.RiderLocationService"
-            android:exported="false" />
+            android:name=".Service.RiderStatus"
+            android:exported="false"/>
+
 
         <!-- [START firebase_service] -->
         <service

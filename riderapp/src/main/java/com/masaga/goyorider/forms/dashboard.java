@@ -1,18 +1,29 @@
 package com.masaga.goyorider.forms;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.BatteryManager;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +37,41 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
+import android.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
+import com.masaga.goyorider.Service.RiderStatus;
+import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.goyorider.MainActivity;
+import com.masaga.goyorider.model.model_push_order;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class dashboard extends AppCompatActivity{
+import static com.masaga.goyorider.Service.RiderStatus.Rider_Lat;
+import static com.masaga.goyorider.Service.RiderStatus.Rider_Long;
+import static com.masaga.goyorider.Service.RiderStatus.handler;
+import static com.masaga.goyorider.Service.RiderStatus.locationManager;
+
+public class dashboard extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @BindView(R.id.Pending_Order)
     FrameLayout Pending_Order;
@@ -57,8 +93,13 @@ public class dashboard extends AppCompatActivity{
     private TextView Deliver_at_Text;
     private TextView PopUp_CountText;
     private TextView Online;
-    final Popup_Counter CountTimer = new Popup_Counter(180000,1000);
-    private SwitchCompat RiderStatus;
+    final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
+    private SwitchCompat RiderStatusSwitch;
+   Intent mServiceIntent;
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    GoogleApiClient mGoogleApiClient;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,28 +107,180 @@ public class dashboard extends AppCompatActivity{
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
 
+        Toast.makeText(this,"Current Battery : "+getBatteryLevel()+"%",Toast.LENGTH_SHORT).show();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build();
+        mGoogleApiClient.connect();
+
+
+
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.rider_online_switch);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        RiderStatus=(SwitchCompat)findViewById(R.id.compatSwitch);
-        Online=(TextView) findViewById(R.id.online);
+        RiderStatusSwitch = (SwitchCompat) findViewById(R.id.compatSwitch);
+        Online = (TextView) findViewById(R.id.online);
 
 
-        RiderStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        RiderStatusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if (isChecked){
+                if (isChecked) {
                     Online.setText("Online");
 
-                   scheduleAlarm();
-               }else {
-                   Online.setText("Offline");
-               }
+                    //Getting JSON data from server
+                    Data();
+                } else {
+                    Online.setText("Offline");
+                    handler.removeMessages(0);
+                    dashboard.this.stopService(mServiceIntent);
+                }
             }
         });
 
-}
+
+    }
+
+    private  void Data(){
+//        Global.showProgress(loader);
+        Ion.with(this)
+                .load("GET",Global.urls.saveLiveBeat.value)
+                .addQuery("rdid", "1")
+                .addQuery("av_stat", "1")
+                .addQuery("lat", Rider_Lat)
+                .addQuery("lon", Rider_Long)
+                .addQuery("onoff", "true")
+                .addQuery("hs_id", "1")
+                .addQuery("btr", getBatteryLevel()+"")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                        if (result != null) Log.v("result", result.toString());
+                         // Gson gson = new Gson();
+                            if(result.get("data").getAsJsonObject().get("status").getAsBoolean()){
+
+                                //Check if GPS on in user phone, If not promt them on
+                                settingsrequest();
+
+                                //Starting Location service and running background
+                                mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
+                                dashboard.this.startService(mServiceIntent);
+                            }
+                          // if(gson.fromJson(result.get("data"))==true){
+
+
+                           // }
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    public float getBatteryLevel() {
+        Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+
+        // Error checking that probably isn't needed but added just in case.
+        if(level == -1 || scale == -1) {
+            return 50.0f;
+        }
+
+        return ((float)level / (float)scale) * 100.0f;
+    }
+
+
+    public void settingsrequest()
+    {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(30 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true); //this is the key ingredient
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates state = result.getLocationSettingsStates();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location
+                        // requests here.
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied. But could be fixed by showing the user
+                        // a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(dashboard.this, REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the
+                        // settings so we won't show the dialog.
+                        break;
+                }
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+           // Check for the integer request code originally supplied to startResolutionForResult().
+            case REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        settingsrequest();//keep asking if imp or do whatever
+                        break;
+                }
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
     private void initiatePopupWindow() {
         try {
@@ -172,6 +365,21 @@ public class dashboard extends AppCompatActivity{
         startActivity(intent);
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
     public class Popup_Counter extends CountDownTimer{
 
         public Popup_Counter(long millisInFuture, long countDownInterval) {
@@ -189,20 +397,5 @@ public class dashboard extends AppCompatActivity{
                     TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
         }
-    }
-    public void scheduleAlarm() {
-        // Construct an intent that will execute the AlarmReceiver
-        Intent intent = new Intent(getApplicationContext(), TimeService.class);
-        // Create a PendingIntent to be triggered when the alarm goes off
-        PendingIntent pIntent = PendingIntent.getBroadcast(this, TimeService.REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Setup periodic alarm every 5 seconds
-        long firstMillis = System.currentTimeMillis(); // alarm is set right away
-        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
-                10000, pIntent);
-
     }
 }
