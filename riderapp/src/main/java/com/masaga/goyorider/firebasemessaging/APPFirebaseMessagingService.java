@@ -182,33 +182,6 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Schedule a job using FirebaseJobDispatcher.
      */
-
-    private void setStatus(){
-
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "order");
-        json.addProperty("status", "2");
-        json.addProperty("ordid", "1");
-        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-
-        Ion.with(this)
-                .load(Global.urls.setStatus.value)
-                .setJsonObjectBody(json)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-
-                        try {
-                            if (result != null) Log.v("result", result.toString());
-                        }
-                        catch (Exception ea) {
-                            ea.printStackTrace();
-                        }
-                    }
-                });
-
-    }
     private  void processData(RemoteMessage _msg){
 
 
@@ -252,7 +225,8 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
 
                 Intent intent = new Intent(this, APPFirebaseMessagingService.class);
                 intent.putExtra("NotiClick",true);
-                PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent buttonsIntent = new Intent(this, NotifyActivityHandler.class);
+                buttonsIntent.putExtra("do_action", "Accept");
 
 
                mBuilder =
@@ -262,9 +236,9 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
                                 .setDefaults(Notification.DEFAULT_ALL) // must requires VIBRATE permission
                                 .setPriority(NotificationCompat.PRIORITY_HIGH) //must give priority to High, Max which will considered as heads-up notification
                                 .addAction(R.drawable.bluetick,
-                                        "Accept", pIntent)
+                                        "Accept",  PendingIntent.getActivity(this, 0, buttonsIntent, 0))
                                 .addAction(R.drawable.ic_action_cancel,
-                                        "Reject", piSnooze)
+                                        "Reject", PendingIntent.getActivity(this, 0, buttonsIntent, 0))
                                 .setVisibility(BIND_IMPORTANT)
                                 .setOngoing(true)
                                 .setAutoCancel(false);

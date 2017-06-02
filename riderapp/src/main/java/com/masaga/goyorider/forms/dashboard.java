@@ -534,19 +534,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
             OrderPopup.dismiss();
         }
     };
-    
-    if (SavedInstanceState == null) {
-        Bundle extras = getIntent().getExtras();
-        if(extras == null)
-        {
-            //Cry about not being clicked on
-        }
-        else if (extras.getBoolean("NotiClick"))
-        {
-            //Do your stuff here mate :)
-        }
-
-    }
 
     private void setStatus(){
 
