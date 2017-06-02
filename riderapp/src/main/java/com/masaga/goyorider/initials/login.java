@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
@@ -71,15 +72,20 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 if (!validate()) {
                     return;
                 }
+//                Intent intent=new Intent(login.this, dashboard.class);
+//                startActivity(intent);
+                    String token = "";
+                try{
+                    token  = FirebaseInstanceId.getInstance().getToken();
+                }catch (Exception ex){
 
-                Intent intent=new Intent(login.this, dashboard.class);
-                startActivity(intent);
-
+                }
 
                 JsonObject json = new JsonObject();
                 json.addProperty("email", edtUserName.getText().toString());
                 json.addProperty("pwd", edtPassword.getText().toString());
-                json.addProperty("type", "driver");
+                json.addProperty("token", token);
+                json.addProperty("type", "rider");
                 json.addProperty("otherdetails", "{}");
                 json.addProperty("src", "m");
                 Global.showProgress(loader);
@@ -102,6 +108,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                                         Global.loginusr = login.get(0);
                                         if (Global.loginusr.getStatus() == 1) {
                                             SHP.set(login.this, SHP.ids.uid, Global.loginusr.getDriverid() + "");
+                                            SHP.set(login.this, SHP.ids.hsid, Global.loginusr.getHsid() + "");
                                             String g = Global.loginusr.getSessiondetails().toString();
                                             if(!g.equals("null")){
                                                String s =  ((LinkedTreeMap)Global.loginusr.getSessiondetails()).get("sessionid").toString();
@@ -109,8 +116,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                                                 SHP.set(login.this, SHP.ids.sessionid, Global.loginusr.getSessiondetails().toString());
                                             }
 
-                                            Toast.makeText(login.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
-                                             Intent i = new Intent(login.this, MainActivity.class);
+                                            //Toast.makeText(login.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+                                             Intent i = new Intent(login.this, dashboard.class);
                                             startActivity(i);
                                             login.this.finish();
                                         } else {

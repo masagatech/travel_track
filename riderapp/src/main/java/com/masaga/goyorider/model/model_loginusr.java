@@ -111,6 +111,16 @@ public class model_loginusr {
     @SerializedName("lastlogindt")
     private String lastlogindt;
 
+    public String getHsid() {
+        return hsid;
+    }
+
+    public void setHsid(String hsid) {
+        this.hsid = hsid;
+    }
+
+    @SerializedName("hsid")
+    private String hsid;
 
     public Object getSessiondetails() {
         return sessiondetails;

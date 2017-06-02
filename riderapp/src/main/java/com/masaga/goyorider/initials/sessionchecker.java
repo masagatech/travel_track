@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.common.Checker;
+import com.masaga.goyorider.forms.dashboard;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.goyorider.MainActivity;
 import com.masaga.goyorider.model.model_loginusr;
@@ -42,10 +44,18 @@ public class sessionchecker extends AppCompatActivity {
             String sessionid = SHP.get(sessionchecker.this, SHP.ids.sessionid, "-1").toString();
             String uid = SHP.get(sessionchecker.this, SHP.ids.uid, "-1").toString();
 
+            String token = "";
+            try{
+                token  = FirebaseInstanceId.getInstance().getToken();
+            }catch (Exception ex){
+
+            }
+
             JsonObject json = new JsonObject();
             json.addProperty("base", "_sid");
             json.addProperty("sid", sessionid);
             //json.addProperty("uid", uid);
+            json.addProperty("token", token);
             json.addProperty("type", "driver");
             json.addProperty("otherdetails", "{}");
             json.addProperty("src", "m");
@@ -71,8 +81,8 @@ public class sessionchecker extends AppCompatActivity {
                                         loader.setMessage("Auto Login...");
                                         Global.loginusr = login.get(0);
                                         if (Global.loginusr.getStatus() == 1) {
-                                            Toast.makeText(sessionchecker.this, "Auto Login Successfully!", Toast.LENGTH_SHORT).show();
-                                            Intent i = new Intent(sessionchecker.this, MainActivity.class);
+                                            //Toast.makeText(sessionchecker.this, "Auto Login Successfully!", Toast.LENGTH_SHORT).show();
+                                            Intent i = new Intent(sessionchecker.this, dashboard.class);
                                             startActivity(i);
                                             finish();
                                         } else {

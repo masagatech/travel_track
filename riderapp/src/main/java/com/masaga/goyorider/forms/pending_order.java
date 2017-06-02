@@ -1,5 +1,6 @@
 package com.masaga.goyorider.forms;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -34,6 +36,7 @@ import butterknife.BindView;
 
 import static com.masaga.goyorider.R.id.edtPassword;
 import static com.masaga.goyorider.R.id.edtUserName;
+import static com.masaga.goyorider.gloabls.Global.urls.setStatus;
 
 
 public class pending_order extends AppCompatActivity {
@@ -50,6 +53,7 @@ public class pending_order extends AppCompatActivity {
     EditText collected_cash;
 
     private RecyclerView mRecyclerView;
+    private FloatingActionButton StartRide;
     private com.masaga.goyorider.adapters.pending_order_adapter mTimeLineAdapter;
     private List<model_pending> mDataList = new ArrayList<>();
     private Orientation mOrientation;
@@ -74,6 +78,19 @@ public class pending_order extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());
         mRecyclerView.setHasFixedSize(true);
+
+        StartRide=(FloatingActionButton)findViewById(R.id.startRide);
+
+
+        StartRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getApplicationContext(),"Ride Started!",Toast.LENGTH_SHORT).show();
+                setStatus();
+
+            }
+        });
 //
      //  initView();
 
@@ -118,6 +135,33 @@ public class pending_order extends AppCompatActivity {
 //        setDataListItems();
 //        mTimeLineAdapter = new pending_order_adapter(mDataList, mOrientation, mWithLinePadding);
 //        mRecyclerView.setAdapter(mTimeLineAdapter);
+    }
+
+    private void setStatus(){
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "order");
+        json.addProperty("status", "3");
+        json.addProperty("ordid", "1");
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+
+        Ion.with(this)
+                .load(setStatus.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
     private void setDataListItems(){

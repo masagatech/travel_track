@@ -40,7 +40,8 @@ public class SHP {
         uid("uid","str"),
         sessionid("sessionid","str"),
         islogin("islogin","bool"),
-        sett_lang("sett_lang","str");
+        sett_lang("sett_lang","str"),
+        hsid("hsid","str");
 
         private String name;
         private String type;

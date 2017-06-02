@@ -3,12 +3,20 @@ package com.masaga.goyorider.forms;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +27,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +41,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +52,9 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
+
 import android.location.LocationListener;
+
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
@@ -56,7 +69,10 @@ import com.masaga.goyorider.R;
 import com.masaga.goyorider.Service.RiderStatus;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.goyorider.MainActivity;
+import com.masaga.goyorider.model.model_loginusr;
+import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.model.model_push_order;
+import com.masaga.goyorider.utils.SHP;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -66,12 +82,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.masaga.goyorider.Service.RiderStatus.Rider_Lat;
-import static com.masaga.goyorider.Service.RiderStatus.Rider_Long;
 import static com.masaga.goyorider.Service.RiderStatus.handler;
 import static com.masaga.goyorider.Service.RiderStatus.locationManager;
+import static com.masaga.goyorider.gloabls.Global.urls.getStatus;
+import static com.masaga.goyorider.gloabls.Global.urls.setStatus;
 
-public class dashboard extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class dashboard extends AppCompatActivity implements LocationListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @BindView(R.id.Pending_Order)
     FrameLayout Pending_Order;
@@ -92,13 +109,19 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
     private Button Btn_Accept, Btn_Reject;
     private TextView Deliver_at_Text;
     private TextView PopUp_CountText;
-    private TextView Online;
-    final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
+    private TextView Online, RiderName;
+    private ImageButton Logout;
     private SwitchCompat RiderStatusSwitch;
-   Intent mServiceIntent;
+    Intent mServiceIntent;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     GoogleApiClient mGoogleApiClient;
-
+    private String latitude, longitude;
+    public Criteria criteria;
+    public String bestProvider;
+    LocationManager locationManager2;
+    final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
+    private NotificationManager notificationManager;
+    int flag;
 
 
     @Override
@@ -107,7 +130,8 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
 
-        Toast.makeText(this,"Current Battery : "+getBatteryLevel()+"%",Toast.LENGTH_SHORT).show();
+        getStatus();
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -115,9 +139,36 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
                 .addOnConnectionFailedListener(this).build();
         mGoogleApiClient.connect();
 
+        //Check if GPS on in user phone, If not promt them on
+        settingsrequest();
 
 
+        locationManager2 = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager2.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        location = locationManager2.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        criteria = new Criteria();
+        bestProvider = String.valueOf(locationManager2.getBestProvider(criteria, true)).toString();
+        if ((location == null)) {
+            locationManager2.requestLocationUpdates(bestProvider, 1000, 0, this);
+        }
 
+        if (location != null) {
+            latitude = String.valueOf(location.getLatitude());
+            longitude = String.valueOf(location.getLongitude());
+            Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
+        }
+
+//      Toast.makeText(this,"Current Battery : "+getBatteryLevel()+"%",Toast.LENGTH_SHORT).show();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.rider_online_switch);
@@ -125,19 +176,132 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
 
         RiderStatusSwitch = (SwitchCompat) findViewById(R.id.compatSwitch);
         Online = (TextView) findViewById(R.id.online);
+        RiderName = (TextView) findViewById(R.id.nameRider);
+        Logout = (ImageButton) findViewById(R.id.Logout);
+
+        RiderName.setText(Global.loginusr.getFullname());
+
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(dashboard.this)
+                        .setTitle(getResources().getString(R.string.logout))
+                        .setMessage(getResources().getString(R.string.confirm_logout))
+                        .setPositiveButton(R.string.alert_ok_text, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String sessionid = SHP.get(dashboard.this, SHP.ids.sessionid, "-1").toString();
+                                String uid = SHP.get(dashboard.this, SHP.ids.uid, "-1").toString();
+                                JsonObject json = new JsonObject();
+                                json.addProperty("sessionid", sessionid);
+                                json.addProperty("email", uid);
+//                                Global.showProgress(loader);
+                                Ion.with(dashboard.this)
+                                        .load(Global.urls.getlogout.value)
+
+                                        .setJsonObjectBody(json)
+                                        .asJsonObject()
+                                        .setCallback(new FutureCallback<JsonObject>() {
+                                            @Override
+                                            public void onCompleted(Exception e, JsonObject result) {
+                                                // do stuff with the result or error
+                                                try {
+                                                    if (result != null)
+                                                        Log.v("result", result.toString());
+                                                    // JSONObject jsnobject = new JSONObject(jsond);
+                                                    Gson gson = new Gson();
+                                                    Type listType = new TypeToken<List<model_loginusr>>() {
+                                                    }.getType();
+                                                    List<model_loginusr> login = (List<model_loginusr>) gson.fromJson(result.get("data"), listType);
+                                                    if (login.size() > 0) {
+                                                        model_loginusr m = login.get(0);
+                                                        if (m.getStatus() == 1) {
+                                                            SHP.set(dashboard.this, SHP.ids.uid, "");
+                                                            SHP.set(dashboard.this, SHP.ids.sessionid, "");
+                                                            Intent i = new Intent(dashboard.this, com.masaga.goyorider.initials.login.class);
+                                                            startActivity(i);
+                                                            dashboard.this.finish();
+                                                        } else {
+                                                            Toast.makeText(dashboard.this, "Faild to logout " + m.getErrcode() + " " + m.getErrmsg(), Toast.LENGTH_LONG).show();
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(dashboard.this, "Oops there is some issue! please logout later!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } catch (Exception ea) {
+                                                    Toast.makeText(dashboard.this, "Oops there is some issue! Error: " + ea.getMessage(), Toast.LENGTH_LONG).show();
+                                                    ea.printStackTrace();
+                                                }
+//                                                Global.hideProgress(loader);
+                                            }
+                                        });
+
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_lock_lock).show();
+            }
+        });
 
 
         RiderStatusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Online.setText("Online");
+                    if(isStatusDbCheck) {
+                        //Notification
+                        showNotification();
+                        SwitchTurnedOnOFF("true");
+                        return;
+                    }
 
-                    //Getting JSON data from server
-                    Data();
+                    new AlertDialog.Builder(dashboard.this)
+                            .setTitle("Online")
+                            .setMessage("Ready for some delivery?")
+                            .setPositiveButton("Yes, Lets go!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Online.setText("Online");
+                                    //Notification
+                                    showNotification();
+                                    //Getting JSON data from server
+                                    SwitchTurnedOnOFF("true");
+                                }
+                            })
+                            .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    RiderStatusSwitch.setChecked(false);
+
+                                }
+                            })
+                            .setIcon(R.drawable.rider_del).show();
+
                 } else {
-                    Online.setText("Offline");
-                    handler.removeMessages(0);
-                    dashboard.this.stopService(mServiceIntent);
+                    if(isStatusDbCheck) {
+                        return;
+                    }
+                    new AlertDialog.Builder(dashboard.this)
+                            .setTitle("Offline")
+                            .setMessage("Are you sure you want go Offline Mode?")
+                            .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    notificationManager.cancel(0);
+                                    Online.setText("Offline");
+                                    handler.removeMessages(0);
+                                    if (flag == 1) {
+                                        dashboard.this.stopService(mServiceIntent);
+                                        SwitchTurnedOnOFF("false");
+                                        Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    RiderStatusSwitch.setChecked(true);
+                                }
+                            })
+                            .setIcon(R.drawable.rider_del).show();
+
                 }
             }
         });
@@ -145,45 +309,93 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
 
     }
 
-    private  void Data(){
-//        Global.showProgress(loader);
+    boolean isStatusDbCheck = false;
+
+    private void getStatus() {
+
         Ion.with(this)
-                .load("GET",Global.urls.saveLiveBeat.value)
-                .addQuery("rdid", "1")
-                .addQuery("av_stat", "1")
-                .addQuery("lat", Rider_Lat)
-                .addQuery("lon", Rider_Long)
-                .addQuery("onoff", "true")
-                .addQuery("hs_id", "1")
-                .addQuery("btr", getBatteryLevel()+"")
+                .load("GET", getStatus.value)
+                .addQuery("flag", "rider")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
 
                         try {
-                        if (result != null) Log.v("result", result.toString());
-                         // Gson gson = new Gson();
-                            if(result.get("data").getAsJsonObject().get("status").getAsBoolean()){
-
-                                //Check if GPS on in user phone, If not promt them on
-                                settingsrequest();
-
-                                //Starting Location service and running background
-                                mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
-                                dashboard.this.startService(mServiceIntent);
-                            }
-                          // if(gson.fromJson(result.get("data"))==true){
-
-
-                           // }
+                            if (result != null) Log.v("result", result.toString());
+                            JsonObject o = result.get("data").getAsJsonObject();
+                            boolean avail = o.get("onoff").getAsBoolean();
+                            isStatusDbCheck = true;
+                            RiderStatusSwitch.setChecked(avail);
+                            isStatusDbCheck = false;
+                            // }
+                        } catch (Exception ea) {
+                            ea.printStackTrace();
                         }
-                        catch (Exception ea) {
+                    }
+                });
+
+    }
+
+    public void showNotification() {
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, dashboard.class), 0);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setTicker("Online!")
+                .setSmallIcon(R.drawable.rider)
+                .setContentTitle("Your Online!")
+//                .setContentText(r.getString(R.string.notification_text))
+                .setContentIntent(pi)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .build();
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+    }
+
+
+    private void SwitchTurnedOnOFF(final String state) {
+//        Global.showProgress(loader);
+        Ion.with(this)
+                .load("GET", Global.urls.saveLiveBeat.value)
+                .addQuery("flag", "avail")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+                .addQuery("lat", latitude)
+                .addQuery("lon", longitude)
+                .addQuery("onoff", state)
+                .addQuery("hs_id", Global.loginusr.getHsid())
+                .addQuery("btr", getBatteryLevel() + "")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                            if (state == "true") {
+                                if (result.get("data").getAsJsonObject().get("status").getAsBoolean()) {
+                                    flag = 1;
+                                    //Starting Location service and running background
+                                    Toast.makeText(getApplicationContext(), "Starting Service", Toast.LENGTH_SHORT).show();
+                                    mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
+                                    dashboard.this.startService(mServiceIntent);
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    RiderStatusSwitch.setChecked(false);
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+                            }
+                            // }
+                        } catch (Exception ea) {
                             ea.printStackTrace();
                         }
                     }
                 });
     }
+
 
     public float getBatteryLevel() {
         Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -191,16 +403,15 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
         int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
         // Error checking that probably isn't needed but added just in case.
-        if(level == -1 || scale == -1) {
+        if (level == -1 || scale == -1) {
             return 50.0f;
         }
 
-        return ((float)level / (float)scale) * 100.0f;
+        return ((float) level / (float) scale) * 100.0f;
     }
 
 
-    public void settingsrequest()
-    {
+    public void settingsrequest() {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);
@@ -240,10 +451,11 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-           // Check for the integer request code originally supplied to startResolutionForResult().
+            // Check for the integer request code originally supplied to startResolutionForResult().
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
@@ -255,12 +467,6 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
                 break;
         }
     }
-
-
-
-
-
-
 
 
 
@@ -282,25 +488,25 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
         }
     }
 
-    private void initiatePopupWindow() {
+    public void initiatePopupWindow() {
         try {
             String role;
-            role="db";
-            LayoutInflater inflater=(LayoutInflater) dashboard.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.popup_orderummery,
-                    (ViewGroup) findViewById(R.id.PopUp));
-            OrderPopup= new PopupWindow(layout,ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,true);
-            OrderPopup.showAtLocation(layout, Gravity.CENTER,0,0);
+            role = "db";
+            LayoutInflater inflater = (LayoutInflater) dashboard.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.popup_orderummery,(ViewGroup) findViewById(R.id.PopUp));
+            OrderPopup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            OrderPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
             OrderPopup.setOutsideTouchable(false);
+
             CountTimer.start();
 
-            Btn_Accept=(Button)layout.findViewById(R.id.Accept_order);
-            Btn_Reject=(Button)layout.findViewById(R.id.Reject_Order);
-            PopUp_CountText=(TextView)layout.findViewById(R.id.popup_counter);
-            Deliver_at_Text=(TextView)layout.findViewById(R.id.Deliver_at);
+            Btn_Accept = (Button) layout.findViewById(R.id.Accept_order);
+            Btn_Reject = (Button) layout.findViewById(R.id.Reject_Order);
+            PopUp_CountText = (TextView) layout.findViewById(R.id.popup_counter);
+            Deliver_at_Text = (TextView) layout.findViewById(R.id.Deliver_at);
 
             //If User role = "TL" or "Admin" Show address else don't show address
-            if(role.toLowerCase()=="db")
+            if (role.toLowerCase() == "db")
                 Deliver_at_Text.setText("xxx");
             else
                 Deliver_at_Text.setText("Actual First Delivery Location");
@@ -308,60 +514,107 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
 
             Btn_Accept.setOnClickListener(accept_order_click);
             Btn_Reject.setOnClickListener(reject_order_click);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
-    private View.OnClickListener accept_order_click= new View.OnClickListener() {
+
+    private View.OnClickListener accept_order_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setStatus();
+            OrderPopup.dismiss();
+        }
+    };
+    private View.OnClickListener reject_order_click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             OrderPopup.dismiss();
         }
     };
-    private View.OnClickListener reject_order_click= new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            OrderPopup.dismiss();
+    
+    if (SavedInstanceState == null) {
+        Bundle extras = getIntent().getExtras();
+        if(extras == null)
+        {
+            //Cry about not being clicked on
         }
-    };
+        else if (extras.getBoolean("NotiClick"))
+        {
+            //Do your stuff here mate :)
+        }
+
+    }
+
+    private void setStatus(){
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "order");
+        json.addProperty("status", "2");
+        json.addProperty("ordid", "1");
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+
+        Ion.with(this)
+                .load(Global.urls.setStatus.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+
+    }
 
     @OnClick(R.id.Pending_Order)
-    void click(){
-        Intent intent=new Intent(this,pending_order.class);
+    void click() {
+        Intent intent = new Intent(this, pending_order.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.Cash_Collection)
-    void click2(){
-        Intent intent=new Intent(this,cash_collection.class);
+    void click2() {
+        Intent intent = new Intent(this, cash_collection.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.Complated_Orders)
-    void click3(){
-        Intent intent=new Intent(this,complated_order.class);
+    void click3() {
+        Intent intent = new Intent(this, complated_order.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.Rejected_Orders)
-    void click4(){
-        Intent intent=new Intent(this,rejected_order.class);
+    void click4() {
+        Intent intent = new Intent(this, rejected_order.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.All_Order)
-    void click5(){
-        Intent intent=new Intent(this,all_order.class);
+    void click5() {
+        Intent intent = new Intent(this, all_order.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.Notifications)
-    void click6(){
+    void click6() {
         initiatePopupWindow();
 //        Intent intent=new Intent(this,notification.class);
 //        startActivity(intent);
     }
+
     @OnClick(R.id.pushOrder)
-    void click7(){
-        Intent intent=new Intent(this,PushOrder.class);
+    void click7() {
+        Intent intent = new Intent(this, PushOrder.class);
         startActivity(intent);
     }
 
@@ -380,7 +633,41 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
 
     }
 
-    public class Popup_Counter extends CountDownTimer{
+    @Override
+    public void onLocationChanged(Location location) {
+
+        latitude = String.valueOf(location.getLatitude());
+        longitude = String.valueOf(location.getLongitude());
+        Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
+
+        locationManager2.removeUpdates(this);
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        super.onDestroy();
+    }
+
+
+    public class Popup_Counter extends CountDownTimer {
 
         public Popup_Counter(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -393,7 +680,7 @@ public class dashboard extends AppCompatActivity implements GoogleApiClient.Conn
 
         @Override
         public void onTick(long millisUntilFinished) {
-           PopUp_CountText.setText(""+String.format("%02d:%02d",
+            PopUp_CountText.setText(""+String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
         }

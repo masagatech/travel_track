@@ -40,7 +40,11 @@ public class Global {
         sendreachingalert("sendreachingalert", REST_URL + "/tripapi/sendreachingalert"),
         getOrderDetails("getorderdetails", REST_URL + APIName+"/getOrderDetails"),
         getOrderDash("getorderdash", REST_URL + APIName+"/getOrderDash"),
-        saveLiveBeat("saveLiveBeat", REST_URL + APIName+"/saveLiveBeat");
+        saveLiveBeat("saveLiveBeat", REST_URL + APIName+"/saveLiveBeat"),
+        getStatus("getStatus", REST_URL + APIName+"/getStatus"),
+        setStatus("setStatus", REST_URL + APIName+"/setStatus");
+
+
 
         public String key;
         public String value;
