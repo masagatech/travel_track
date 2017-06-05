@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.masaga.goyorider.utils.common;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by mTech on 03-Mar-2017.
  */
 public class SQLBase  {
-    private static final String DATABASE_NAME = "goyomr.db";
+    private static final String DATABASE_NAME = "goyorider.db";
     private static final int DATABASE_VERSION = 1;
     private static Context context;
     public static SQLiteDatabase sqLiteDB;
@@ -259,7 +261,56 @@ public class SQLBase  {
     }
 
 
+    //############################################################################################################
+    // notifications
 
+    public void NOTIFICATION_INSERT(String data
+    ){
+        //insertStmt = sqLiteDB.compileStatement(Procedures.tbl_driver_info.INSERT);
+        ContentValues values = new ContentValues();
+
+
+        values.put(Tables.tblnotification.createon , "" + common.dateandtime(context));
+        values.put(Tables.tblnotification.data, data);
+        sqLiteDB.insert(Tables.tblnotification.name,null,values);
+        //sqLiteDB.close();
+    }
+
+    public void NOTIFICATION_DELETE(String autoid
+    ){
+        //insertStmt = sqLiteDB.compileStatement(Procedures.tbl_driver_info.INSERT);
+        sqLiteDB.execSQL("DELETE FROM " + Tables.tblnotification.name
+                + " WHERE " + Tables.tbl_driver_info.autoid + "=" + autoid);
+        //sqLiteDB.close();
+    }
+
+
+
+
+    public List<HashMap<String, String>> NOTIFICATION_GET(){
+        List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+        String selectEvents = "SELECT "
+                + Tables.tblnotification.autoid
+                +"," + Tables.tblnotification.createon +","
+                + Tables.tblnotification.data
+
+                + " FROM " + Tables.tblnotification.name ;
+        Cursor cursor = sqLiteDB.rawQuery(selectEvents, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(Tables.tblnotification.autoid, cursor.getString(0));
+                map.put(Tables.tblnotification.createon, cursor.getString(1));
+                map.put(Tables.tblnotification.data, cursor.getString(2));
+                data.add(map);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return data;
+    }
 
 
 
@@ -272,7 +323,8 @@ public class SQLBase  {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(Procedures.tbl_driver_info.CREATE);
+            //db.execSQL(Procedures.tbl_driver_info.CREATE);
+            db.execSQL(Procedures.tblnotification.CREATE);
         }
 
         @Override
@@ -282,6 +334,11 @@ public class SQLBase  {
     }
 
     public void close(){
+        try{
         openHelper.close();
+        sqLiteDB.close();}
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

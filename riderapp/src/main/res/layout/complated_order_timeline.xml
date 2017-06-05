@@ -75,15 +75,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/Custmer_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textStyle="bold"
+                            android:drawableLeft="@drawable/pending_deliver_at"
+                            android:textColor="@android:color/black"
+                            tools:text="Sector 15, Navi mumbai" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/Deliver_at"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/pending_deliver_at"
-                        android:gravity="center_vertical"
-                        android:textColor="@android:color/black"
-                        tools:text="Sector 15, Navi mumbai" />
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/Deliver_at"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="31dp"
+                            android:textColor="@android:color/black"
+                            tools:text="Sector 15, Navi mumbai" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/Time"

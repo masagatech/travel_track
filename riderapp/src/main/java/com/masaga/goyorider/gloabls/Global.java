@@ -8,16 +8,22 @@ import com.masaga.goyorider.model.model_crewdata;
 import com.masaga.goyorider.model.model_loginusr;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * Created by mTech on 04-Mar-2017.
  */
 public class Global {
     //public static String DOMAIN_URL = "http://192.168.1.16:8081/goyoapi";
-    public final static String REST_URL = "http://192.168.43.10:8082/goyoapi";
+
+    public final static String REST_URL = "http://192.168.43.97:8082/goyoapi";
     public static final String SOCKET_URL = "http://192.168.43.228:8082/";
+
     private final static String APIName="/mrcht";
-//    public static final String SOCKET_URL = "http://35.154.230.244:8082/";
+
+ //  public  static final String Socket_Url= "http://35.154.230.244:8082/";
+   //    public static final String SOCKET_URL = "http://35.154.230.244:8082/";
+    //public  static final String Socket_URL="http://35.154.230.244:8082/";
 
     public static File ExternalPath = Environment.getExternalStorageDirectory();
     public final static String Image_Path = "/goyo_images";
@@ -30,7 +36,7 @@ public class Global {
         getlogout("getlogout", REST_URL + "/getLogout"),
         savedriverinfo("savedriverinfo", REST_URL + "/savedriverinfo"),
         getmytrips("getmytrips", REST_URL + "/tripapi"),
-        starttrip("starttrip", REST_URL + "/tripapi/start"),
+        starttrip("starttrip", REST_URL + "/tripapi/start04"),
         stoptrip("stoptrip", REST_URL + "/tripapi/stop"),
         picdropcrew("picdropcrew", REST_URL + "/tripapi/picdropcrew"),
         storetripdelta("storetripdelta", REST_URL + "/tripapi/storedelta"),
@@ -41,8 +47,13 @@ public class Global {
         getOrderDetails("getorderdetails", REST_URL + APIName+"/getOrderDetails"),
         getOrderDash("getorderdash", REST_URL + APIName+"/getOrderDash"),
         saveLiveBeat("saveLiveBeat", REST_URL + APIName+"/saveLiveBeat"),
+        getOrders("getOrders", REST_URL + APIName+"/getOrders"),
         getStatus("getStatus", REST_URL + APIName+"/getStatus"),
-        setStatus("setStatus", REST_URL + APIName+"/setStatus");
+        setStatus("setStatus", REST_URL + APIName+"/setStatus"),
+        setTripAction("setTripAction", REST_URL + APIName+"/setTripAction"),
+        getNotify("getNotify", REST_URL + APIName+"/getNotify");
+
+
 
 
 
@@ -61,7 +72,7 @@ public class Global {
     public final static String pause = "pause";
     public final static String cancel = "3";
     public final static String pending = "0";
-
+    public final static Integer RedAlert = 1;
     public final static String pickedupdrop = "1";
     public final static String absent = "2";
 

@@ -206,6 +206,16 @@ public class PushOrder extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTimeLineAdapter.Kill();
+        if(mTimeLineAdapter!=null){
+            mTimeLineAdapter.Kill();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mTimeLineAdapter!=null){
+            mTimeLineAdapter.Kill();
+        }
     }
 }

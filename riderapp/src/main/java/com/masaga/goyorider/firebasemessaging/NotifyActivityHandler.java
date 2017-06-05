@@ -25,30 +25,6 @@ public class NotifyActivityHandler extends Activity {
         if (action != null) {
             if (action.equals("Accept")) {
 
-                Toast.makeText(getApplicationContext(),"Send Data",Toast.LENGTH_SHORT).show();
-
-                    JsonObject json = new JsonObject();
-                    json.addProperty("flag", "order");
-                    json.addProperty("status", "2");
-                    json.addProperty("ordid", "1");
-                    json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-
-                    Ion.with(this)
-                            .load(Global.urls.setStatus.value)
-                            .setJsonObjectBody(json)
-                            .asJsonObject()
-                            .setCallback(new FutureCallback<JsonObject>() {
-                                @Override
-                                public void onCompleted(Exception e, JsonObject result) {
-
-                                    try {
-                                        if (result != null) Log.v("result", result.toString());
-                                    }
-                                    catch (Exception ea) {
-                                        ea.printStackTrace();
-                                    }
-                                }
-                            });
             } else if (action.equals("Reject")) {
                 // close current notification
             }

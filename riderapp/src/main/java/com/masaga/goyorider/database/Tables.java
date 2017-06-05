@@ -47,5 +47,14 @@ public final class Tables {
 
         }
 
+    public static class tblnotification{
+
+        public static final String name = "tbl_notifications";
+        public static final String autoid = "autoid";
+        public static final String createon = "createon";
+        public static final String data = "data";
+
+    }
+
 
 }

@@ -13,6 +13,7 @@ import org.apache.http.ParseException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -93,6 +94,14 @@ public class common {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
         String  currenttime = sdf.format(new Date());
+        return currenttime;
+
+    }
+
+    public static String calenderdateandtime(Context ctx,  long dt){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+        String  currenttime = sdf.format(dt);
         return currenttime;
 
     }

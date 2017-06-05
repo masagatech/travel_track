@@ -69,8 +69,9 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
 
         holder.mDate.setText(currentDateTimeString);
         holder.mOrder.setText(timeLineModel.ordno +"");
-        holder.mMarchant.setText(timeLineModel.enttnm+", "+timeLineModel.olnm);
-        holder.mDeliver_at.setText(timeLineModel.custaddr);
+        holder.mMarchant.setText(timeLineModel.olnm);
+        holder.Custmer_name.setText(timeLineModel.custname);
+        holder.mDeliver_at.setText(timeLineModel.custmob+"\n"+ timeLineModel.custaddr+"\n"+"Remark: "+timeLineModel.remark);
         holder.mTime.setText(timeLineModel.deltime);
         holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
 

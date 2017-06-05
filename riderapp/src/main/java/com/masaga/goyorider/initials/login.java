@@ -1,7 +1,11 @@
 package com.masaga.goyorider.initials;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +21,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+
 import com.masaga.goyorider.common.Checker;
 import com.masaga.goyorider.forms.dashboard;
 import com.masaga.goyorider.gloabls.Global;
@@ -26,22 +31,67 @@ import com.masaga.goyorider.utils.SHP;
 import com.masaga.goyorider.goyorider.MainActivity;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.Manifest.permission.ADD_VOICEMAIL;
+import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.PROCESS_OUTGOING_CALLS;
+import static android.Manifest.permission.READ_CALL_LOG;
+import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.USE_SIP;
+import static android.Manifest.permission.WRITE_CALL_LOG;
 
 public class login extends AppCompatActivity implements View.OnClickListener {
     /* form variable */
     EditText edtUserName, edtPassword;
     Button btnLogin;
     ProgressDialog loader;
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle(getResources().getString(R.string.login_title));
+        checkAndRequestPermissions();
         initAllControls();
     }
 
+    private  boolean checkAndRequestPermissions() {
+        int Phone = ContextCompat.checkSelfPermission(this, PROCESS_OUTGOING_CALLS);
+        int storage = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int loc = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        int loc2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (Phone != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(PROCESS_OUTGOING_CALLS);
+            listPermissionsNeeded.add(READ_PHONE_STATE);
+                    listPermissionsNeeded.add(CALL_PHONE);
+                            listPermissionsNeeded.add(READ_CALL_LOG);
+                                    listPermissionsNeeded.add(WRITE_CALL_LOG);
+                                            listPermissionsNeeded.add(ADD_VOICEMAIL);
+                                                    listPermissionsNeeded.add(USE_SIP);
+
+        }
+        if (storage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (loc2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (loc != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (!listPermissionsNeeded.isEmpty())
+        {
+            ActivityCompat.requestPermissions(this,listPermissionsNeeded.toArray
+                    (new String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
 
     /*fill all controls*/
     private void initAllControls() {

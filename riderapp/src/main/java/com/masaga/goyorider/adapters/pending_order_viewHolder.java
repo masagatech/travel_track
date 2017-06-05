@@ -31,12 +31,18 @@ public class pending_order_viewHolder extends RecyclerView.ViewHolder {
     TextView mTime;
     @BindView(R.id.Deliver_at)
     TextView mDeliver_at;
+    @BindView(R.id.Custmer_name)
+    TextView Custmer_name;
+    @BindView(R.id.Remark)
+    TextView Remark;
     @BindView(R.id.Btn_Call)
     ImageButton Btn_Call;
     @BindView(R.id.Btn_Delivery)
     Button Btn_Delivery;
     @BindView(R.id.Btn_map)
     ImageButton Btn_Map;
+    @BindView(R.id.remarkhide)
+    ImageButton ArrowRemark;
     @BindView(R.id.Btn_Return)
     Button Btn_Return;
     @BindView(R.id.Collected_Cash)

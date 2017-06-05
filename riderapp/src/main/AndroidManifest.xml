@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permision.CALL_PHONE"/>
     <!--
         <permission
         android:name="com.example.androidmapsv2.permission.MAPS_RECEIVE"
@@ -157,6 +158,9 @@
             </intent-filter>
         </service>
         <!-- [END firebase_service] -->
+
+        <receiver android:name=".firebasemessaging.APPFirebaseMessagingService$switchButtonListener" />
+
         <!-- [START firebase_iid_service] -->
         <service
             android:name=".firebasemessaging.FirebaseInstanceIDService"
@@ -168,41 +172,43 @@
         </service>
         <!-- [END firebase_iid_service] -->
         <activity android:name=".initials.sessionchecker" />
-        <activity android:name=".forms.dashboard"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".forms.dashboard"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".forms.pending_order"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".forms.complated_order"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.cash_collection"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.rejected_order"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.notification"
             android:label="Notification"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".forms.all_order"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".forms.PushOrder"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".forms.newOrder"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" >
 
-        <activity android:name=".forms.notificationfcm"
-            android:launchMode="singleInstance" android:excludeFromRecents="true"
-            android:taskAffinity="" android:theme="@android:style/Theme.Dialog"
-            android:screenOrientation="portrait">
         </activity>
     </application>
 

@@ -1,6 +1,12 @@
 package com.masaga.goyorider.forms;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
+import com.masaga.goyorider.Service.RiderStatus;
 import com.masaga.goyorider.adapters.my_trip_listAdapter;
 import com.masaga.goyorider.adapters.pending_order_adapter;
 import com.masaga.goyorider.gloabls.Global;
@@ -34,9 +42,17 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static android.R.attr.button;
 import static com.masaga.goyorider.R.id.edtPassword;
 import static com.masaga.goyorider.R.id.edtUserName;
+import static com.masaga.goyorider.R.id.txtNodata;
+import static com.masaga.goyorider.Service.RiderStatus.Rider_Lat;
+import static com.masaga.goyorider.Service.RiderStatus.Rider_Long;
+import static com.masaga.goyorider.Service.RiderStatus.handler;
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
+import static com.masaga.goyorider.gloabls.Global.urls.getStatus;
 import static com.masaga.goyorider.gloabls.Global.urls.setStatus;
+import static com.masaga.goyorider.gloabls.Global.urls.setTripAction;
 
 
 public class pending_order extends AppCompatActivity {
@@ -53,22 +69,27 @@ public class pending_order extends AppCompatActivity {
     EditText collected_cash;
 
     private RecyclerView mRecyclerView;
-    private FloatingActionButton StartRide;
+    private ImageButton StartRide;
     private com.masaga.goyorider.adapters.pending_order_adapter mTimeLineAdapter;
     private List<model_pending> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
+    String TripId = "0";
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_order);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        if(getSupportActionBar()!=null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.pending_order_item);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        if(getSupportActionBar()!=null)
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
@@ -79,29 +100,47 @@ public class pending_order extends AppCompatActivity {
         mRecyclerView.setLayoutManager(getLinearLayoutManager());
         mRecyclerView.setHasFixedSize(true);
 
-        StartRide=(FloatingActionButton)findViewById(R.id.startRide);
+        StartRide = (ImageButton) findViewById(R.id.startRide);
 
 
+        StartRide.setBackgroundColor(R.color.green_light);
         StartRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TripId.equals("0")) {
+                    startTrip();
+                } else {
+                    new AlertDialog.Builder(pending_order.this)
+                            .setTitle("Stop Trip")
+                            .setMessage("Are you sure you want Stop Trip?")
+                            .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent=new Intent(pending_order.this,dashboard.class);
+                                    startActivity(intent);
+                                    stopTrip();
 
-                Toast.makeText(getApplicationContext(),"Ride Started!",Toast.LENGTH_SHORT).show();
-                setStatus();
+                                }
+                            })
+                            .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            })
+                            .setIcon(R.drawable.stop_trip).show();
+
+
+                }
             }
         });
 //
      //  initView();
 
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "details");
-        json.addProperty("status", "pending");
 
-//        Global.showProgress(loader);
         Ion.with(this)
-                .load(Global.urls.getOrderDetails.value)
-                .setJsonObjectBody(json)
+                .load("GET", getOrders.value)
+                .addQuery("flag", "orders")
+                .addQuery("subflag", "pending")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -114,8 +153,8 @@ public class pending_order extends AppCompatActivity {
                             }.getType();
                             List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
-                        }
-                        catch (Exception ea) {
+
+                        } catch (Exception ea) {
                             ea.printStackTrace();
                         }
                     }
@@ -137,16 +176,16 @@ public class pending_order extends AppCompatActivity {
 //        mRecyclerView.setAdapter(mTimeLineAdapter);
     }
 
-    private void setStatus(){
+    private void startTrip(){
 
         JsonObject json = new JsonObject();
-        json.addProperty("flag", "order");
-        json.addProperty("status", "3");
-        json.addProperty("ordid", "1");
+        json.addProperty("flag", "start");
+        json.addProperty("loc", Rider_Lat+","+Rider_Long);
+        json.addProperty("tripid", TripId);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
 
         Ion.with(this)
-                .load(setStatus.value)
+                .load(setTripAction.value)
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -155,6 +194,54 @@ public class pending_order extends AppCompatActivity {
 
                         try {
                             if (result != null) Log.v("result", result.toString());
+                          JsonObject Data=  result.get("data").getAsJsonObject();
+                            if(Data.get("status").getAsBoolean()){
+                                TripId=Data.get("tripid").toString();
+                                StartRide.setBackgroundColor(Color.RED);
+                                Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                                StartRide.setImageResource(R.drawable.stop_trip);
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+
+    }
+
+    private void stopTrip(){
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "stop");
+        json.addProperty("loc", Rider_Lat+","+Rider_Long);
+        json.addProperty("tripid", TripId);
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+
+        Ion.with(this)
+                .load(setTripAction.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                            if(result.get("data").getAsJsonObject().get("status").getAsBoolean()){
+                                Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                                StartRide.setVisibility(View.GONE);
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                            }
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
@@ -177,13 +264,37 @@ public class pending_order extends AppCompatActivity {
     }
     private void bindCurrentTrips(List<model_pending> lst) {
         if (lst.size() > 0) {
-            findViewById(R.id.txtNodata).setVisibility(View.GONE);
+            TripId = lst.get(0).tripid;
+            if(TripId.equals("0")){
+                //greeen
+                StartRide.setBackgroundColor(Color.GREEN);
+            }else {
+                //red
+                StartRide.setBackgroundColor(Color.RED);
+            }
+
+            StartRide.setVisibility(View.VISIBLE);
+            findViewById(txtNodata).setVisibility(View.GONE);
+            for (int i =0; i<=lst.size()-1 ;i ++){
+                if(!lst.get(i).stats.equals("0")){
+                    lst.remove(i);
+                    i-=1;
+                }
+            }
+
+            if(!TripId.equals("0") && lst.size() ==0){
+                TextView Text =(TextView)findViewById(txtNodata);
+                Text.setText("You have Deliverd all food. Press Stop to continue..");
+            }
+
             mTimeLineAdapter = new pending_order_adapter(lst, mOrientation, mWithLinePadding);
             mRecyclerView.setAdapter(mTimeLineAdapter);
             mTimeLineAdapter.notifyDataSetChanged();
 
         } else {
-            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
+
+            StartRide.setVisibility(View.GONE);
+            findViewById(txtNodata).setVisibility(View.VISIBLE);
         }
     }
 

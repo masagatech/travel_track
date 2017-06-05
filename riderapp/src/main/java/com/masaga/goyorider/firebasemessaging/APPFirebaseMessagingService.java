@@ -5,30 +5,19 @@ package com.masaga.goyorider.firebasemessaging;
  */
 
 
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.CountDownTimer;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
-import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -36,21 +25,13 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
-import com.masaga.goyorider.common.CheckAppForground;
-import com.masaga.goyorider.forms.dashboard;
-import com.masaga.goyorider.forms.notificationfcm;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.goyorider.MainActivity;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class APPFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
-    final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
+//    final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
     NotificationCompat.Builder mBuilder;
     NotificationManager notificationManager;
     private Button Btn_Accept, Btn_Reject;
@@ -100,7 +81,7 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             //Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            processData(remoteMessage);
+//            processData(remoteMessage);
             //sendNotification(remoteMessage.getNotification().getBody());
             //Toast.makeText(this, remoteMessage.getNotification().getBody(),Toast.LENGTH_SHORT).show();
         }
@@ -109,25 +90,25 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    public class Popup_Counter extends CountDownTimer {
-
-        public Popup_Counter(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onFinish() {
-//            OrderPopup.dismiss();
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            mBuilder.setContentText(ordid+" "+olnm+" "+stops+" "+amt+" "+String.format("%02d:%02d",
-                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-            notificationManager.notify(0, mBuilder.build());
-        }
-    }
+//    public class Popup_Counter extends CountDownTimer {
+//
+//        public Popup_Counter(long millisInFuture, long countDownInterval) {
+//            super(millisInFuture, countDownInterval);
+//        }
+//
+//        @Override
+//        public void onFinish() {
+////            OrderPopup.dismiss();
+//        }
+//
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            mBuilder.setContentText(ordid+" "+olnm+" "+stops+" "+amt+" "+String.format("%02d:%02d",
+//                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+//                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+//            notificationManager.notify(0, mBuilder.build());
+//        }
+//    }
 
 
 //    public void initiatePopupWindow() {
@@ -186,11 +167,11 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-        Map<String,String> Data= (Map<String, String>) _msg.getData();
-        ordid = Data.get("ordid");
-        olnm = Data.get("olnm");
-        stops = Data.get("stops");
-        amt = Data.get("amt");
+//        Map<String,String> Data= (Map<String, String>) _msg.getData();
+//        ordid = Data.get("ordid");
+//        olnm = Data.get("olnm");
+//        stops = Data.get("stops");
+//        amt = Data.get("amt");
 
 //        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.popup_orderummery);
 //        contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
@@ -213,48 +194,53 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
 //        notificationManager.notify(1, notification);
 
 
-        try {
-            boolean foregroud = new CheckAppForground().execute(this).get();
-//            if(!foregroud)
-            {
-                Intent snoozeIntent = new Intent(this, MainActivity.class);
-                PendingIntent piSnooze = PendingIntent.getService(this, 0, snoozeIntent, 0);
-
-                Intent dismissIntent = new Intent(this, MainActivity.class);
-                PendingIntent piDismiss = PendingIntent.getService(this, 0, dismissIntent, 0);
-
-                Intent intent = new Intent(this, APPFirebaseMessagingService.class);
-                intent.putExtra("NotiClick",true);
-                Intent buttonsIntent = new Intent(this, NotifyActivityHandler.class);
-                buttonsIntent.putExtra("do_action", "Accept");
-
-
-               mBuilder =
-                        new NotificationCompat.Builder(this)
-                                .setSmallIcon(R.drawable.rider)
-                                .setContentTitle("New Order")
-                                .setDefaults(Notification.DEFAULT_ALL) // must requires VIBRATE permission
-                                .setPriority(NotificationCompat.PRIORITY_HIGH) //must give priority to High, Max which will considered as heads-up notification
-                                .addAction(R.drawable.bluetick,
-                                        "Accept",  PendingIntent.getActivity(this, 0, buttonsIntent, 0))
-                                .addAction(R.drawable.ic_action_cancel,
-                                        "Reject", PendingIntent.getActivity(this, 0, buttonsIntent, 0))
-                                .setVisibility(BIND_IMPORTANT)
-                                .setOngoing(true)
-                                .setAutoCancel(false);
-                  CountTimer.start();
+//        try {
+//            boolean foregroud = new CheckAppForground().execute(this).get();
+////            if(!foregroud)
+//            {
+//                Intent snoozeIntent = new Intent(this, MainActivity.class);
+//                PendingIntent piSnooze = PendingIntent.getService(this, 0, snoozeIntent, 0);
 //
-                notificationManager =
-                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//to post your notification to the notification bar with a id. If a notification with same id already exists, it will get replaced with updated information.
-                notificationManager.notify(0, mBuilder.build());
-            }
+//                Intent dismissIntent = new Intent(this, MainActivity.class);
+//                PendingIntent piDismiss = PendingIntent.getService(this, 0, dismissIntent, 0);
+//
+////                Intent intent = new Intent(this, APPFirebaseMessagingService.class);
+////                intent.putExtra("NotiClick",true);
+////                Intent buttonsIntent = new Intent(this, NotifyActivityHandler.class);
+////                buttonsIntent.putExtra("do_action", "Accept");
+//
+//                Intent switchIntent = new Intent(this, switchButtonListener.class);
+//                PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
+//                        switchIntent, 0);
+//
+//
+//               mBuilder =
+//                        new NotificationCompat.Builder(this)
+//                                .setSmallIcon(R.drawable.rider)
+//                                .setContentTitle("New Order")
+//                                .setDefaults(Notification.DEFAULT_ALL) // must requires VIBRATE permission
+//                                .setPriority(NotificationCompat.PRIORITY_HIGH) //must give priority to High, Max which will considered as heads-up notification
+//                                .addAction(R.drawable.bluetick,
+//                                        "Acce   pt",pendingSwitchIntent)
+//                                .addAction(R.drawable.ic_action_cancel,
+//                                        "Reject",piSnooze)
+//                                .setVisibility(BIND_IMPORTANT)
+//                                .setOngoing(true)
+//                                .setAutoCancel(false);
+//                  CountTimer.start();
+////
+//                notificationManager =
+//                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+////to post your notification to the notification bar with a id. If a notification with same id already exists, it will get replaced with updated information.
+//                notificationManager.notify(0, mBuilder.build());
+//            }
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 //        Intent intent = new Intent("order-receive");
 ////        // You can also include some extra data.
 //        intent.putExtra("message", "This is my message!");
@@ -276,6 +262,35 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
 //        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 //        window.setAttributes(lp);
 
+    }
+
+    public class switchButtonListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(APPFirebaseMessagingService.this, "Send Data", Toast.LENGTH_SHORT).show();
+
+            JsonObject json = new JsonObject();
+            json.addProperty("flag", "order");
+            json.addProperty("status", "2");
+            json.addProperty("ordid", "1");
+            json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+
+            Ion.with(APPFirebaseMessagingService.this)
+                    .load(Global.urls.setStatus.value)
+                    .setJsonObjectBody(json)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+
+                            try {
+                                if (result != null) Log.v("result", result.toString());
+                            } catch (Exception ea) {
+                                ea.printStackTrace();
+                            }
+                        }
+                    });
+        }
     }
 
 

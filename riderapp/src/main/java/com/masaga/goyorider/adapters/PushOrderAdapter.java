@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static com.masaga.goyorider.gloabls.Global.RedAlert;
 
 /**
  * Created by fajar on 29-May-17.
@@ -67,7 +68,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
    private ArrayList<model_rider_list> mRiderList;
 
-    Integer RedAlert = 3;
+
     long timeInMillies = 0L;
     long startTime = 0L;
 
@@ -215,7 +216,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
                     // If time diffrence is greater than alert time text will blink and tuen to red color
 
-                    if (minutes > RedAlert) {
+                    if (minutes > Global.RedAlert) {
                         holder.mAlertTime.setTextColor(Color.RED);
                         holder.mAlertTime.setTextColor(Color.RED);
                         Animation anim = new AlphaAnimation(0.4f, 1.0f);
@@ -267,23 +268,24 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
     public void Kill() {
         Set<Map.Entry<String, Runnable>> s = threads.entrySet();
-        Iterator it = s.iterator();
-        stopFlag = true;
-        while (it.hasNext()) {
-            try {
+        if(s!= null) {
+            Iterator it = s.iterator();
+            stopFlag = true;
+            while (it.hasNext()) {
+                try {
 
-                Map.Entry pairs = (Map.Entry) it.next();
-                Runnable r = (Runnable) pairs.getValue();
-                myHandler.removeCallbacks(r);
-                r = null;
-            } catch (Exception x) {
+                    Map.Entry pairs = (Map.Entry) it.next();
+                    Runnable r = (Runnable) pairs.getValue();
+                    myHandler.removeCallbacks(r);
+                    r = null;
+                } catch (Exception x) {
 
+                }
             }
+            s = null;
+            it = null;
+            threads.clear();
         }
-        s =null;
-        it =null;
-        threads.clear();
-
     }
 
 

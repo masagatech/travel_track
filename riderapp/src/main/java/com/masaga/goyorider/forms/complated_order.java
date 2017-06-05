@@ -57,12 +57,13 @@ public class complated_order extends AppCompatActivity {
      //   initView();
 
         JsonObject json = new JsonObject();
-        json.addProperty("flag", "details");
-        json.addProperty("status", "pending");
+        json.addProperty("flag", "completed");
+        json.addProperty("subflag", "smry");
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
 
 //        Global.showProgress(loader);
         Ion.with(this)
-                .load(Global.urls.getOrderDetails.value)
+                .load(Global.urls.getOrders.value)
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {

@@ -2,6 +2,7 @@ package com.masaga.goyorider.forms;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -121,7 +122,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     LocationManager locationManager2;
     final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
     private NotificationManager notificationManager;
-    int flag;
 
 
     @Override
@@ -129,6 +129,10 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.rider_online_switch);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 
         getStatus();
 
@@ -170,9 +174,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
 //      Toast.makeText(this,"Current Battery : "+getBatteryLevel()+"%",Toast.LENGTH_SHORT).show();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.rider_online_switch);
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
 
         RiderStatusSwitch = (SwitchCompat) findViewById(R.id.compatSwitch);
         Online = (TextView) findViewById(R.id.online);
@@ -252,6 +253,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                     if(isStatusDbCheck) {
                         //Notification
                         showNotification();
+                        Online.setText("Online");
                         SwitchTurnedOnOFF("true");
                         return;
                     }
@@ -261,9 +263,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                             .setMessage("Ready for some delivery?")
                             .setPositiveButton("Yes, Lets go!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Online.setText("Online");
-                                    //Notification
-                                    showNotification();
                                     //Getting JSON data from server
                                     SwitchTurnedOnOFF("true");
                                 }
@@ -288,10 +287,10 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     notificationManager.cancel(0);
                                     Online.setText("Offline");
                                     handler.removeMessages(0);
-                                    if (flag == 1) {
-                                        dashboard.this.stopService(mServiceIntent);
-                                        SwitchTurnedOnOFF("false");
-                                        Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
+                                    if(isMyServiceRunning(RiderStatus.class)){
+                                            dashboard.this.stopService(mServiceIntent);
+                                            SwitchTurnedOnOFF("false");
+                                            Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
@@ -357,6 +356,10 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     private void SwitchTurnedOnOFF(final String state) {
 //        Global.showProgress(loader);
+        if(latitude == null){
+            latitude = "0.0";
+            longitude = "0.0";
+        }
         Ion.with(this)
                 .load("GET", Global.urls.saveLiveBeat.value)
                 .addQuery("flag", "avail")
@@ -375,11 +378,16 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                             if (result != null) Log.v("result", result.toString());
                             if (state == "true") {
                                 if (result.get("data").getAsJsonObject().get("status").getAsBoolean()) {
-                                    flag = 1;
                                     //Starting Location service and running background
-                                    Toast.makeText(getApplicationContext(), "Starting Service", Toast.LENGTH_SHORT).show();
-                                    mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
-                                    dashboard.this.startService(mServiceIntent);
+
+                                    if(!isMyServiceRunning(RiderStatus.class)) {
+                                        //Notification
+                                        showNotification();
+                                        Online.setText("Online");
+                                        Toast.makeText(getApplicationContext(), "Starting Service", Toast.LENGTH_SHORT).show();
+                                        mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
+                                        dashboard.this.startService(mServiceIntent);
+                                    }
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
@@ -394,6 +402,16 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                         }
                     }
                 });
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -488,79 +506,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         }
     }
 
-    public void initiatePopupWindow() {
-        try {
-            String role;
-            role = "db";
-            LayoutInflater inflater = (LayoutInflater) dashboard.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.popup_orderummery,(ViewGroup) findViewById(R.id.PopUp));
-            OrderPopup = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-            OrderPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            OrderPopup.setOutsideTouchable(false);
-
-            CountTimer.start();
-
-            Btn_Accept = (Button) layout.findViewById(R.id.Accept_order);
-            Btn_Reject = (Button) layout.findViewById(R.id.Reject_Order);
-            PopUp_CountText = (TextView) layout.findViewById(R.id.popup_counter);
-            Deliver_at_Text = (TextView) layout.findViewById(R.id.Deliver_at);
-
-            //If User role = "TL" or "Admin" Show address else don't show address
-            if (role.toLowerCase() == "db")
-                Deliver_at_Text.setText("xxx");
-            else
-                Deliver_at_Text.setText("Actual First Delivery Location");
-
-
-            Btn_Accept.setOnClickListener(accept_order_click);
-            Btn_Reject.setOnClickListener(reject_order_click);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private View.OnClickListener accept_order_click = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            setStatus();
-            OrderPopup.dismiss();
-        }
-    };
-    private View.OnClickListener reject_order_click = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            OrderPopup.dismiss();
-        }
-    };
-
-    private void setStatus(){
-
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "order");
-        json.addProperty("status", "2");
-        json.addProperty("ordid", "1");
-        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-
-        Ion.with(this)
-                .load(Global.urls.setStatus.value)
-                .setJsonObjectBody(json)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-
-                        try {
-                            if (result != null) Log.v("result", result.toString());
-                        }
-                        catch (Exception ea) {
-                            ea.printStackTrace();
-                        }
-                    }
-                });
-
-    }
 
     @OnClick(R.id.Pending_Order)
     void click() {
@@ -594,9 +539,11 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     @OnClick(R.id.Notifications)
     void click6() {
-        initiatePopupWindow();
+        int flag=1;
+        Intent intent=new Intent(this,newOrder.class);
 //        Intent intent=new Intent(this,notification.class);
-//        startActivity(intent);
+//        intent.putExtra("FromDashboard", flag);
+        startActivity(intent);
     }
 
     @OnClick(R.id.pushOrder)

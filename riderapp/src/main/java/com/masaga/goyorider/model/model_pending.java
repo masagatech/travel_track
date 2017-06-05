@@ -18,32 +18,41 @@ public class model_pending {
     @SerializedName("ordno")
     public int ordno;
 
-    @SerializedName("enttnm")
-    public String enttnm;
+    @SerializedName("rm")
+    public String remark;
 
     @SerializedName("olnm")
     public String olnm;
 
-    @SerializedName("custname")
+    @SerializedName("cnm")
     public String custname;
 
-    @SerializedName("custaddr")
+    @SerializedName("mob")
+    public String custmob;
+
+    @SerializedName("cadr")
     public String custaddr;
 
     @SerializedName("orddate")
     public String orddate;
 
-    @SerializedName("amtcollect")
+    @SerializedName("amt")
     public Double amtcollect;
 
-    @SerializedName("picktime")
+    @SerializedName("pctm")
     public String picktime;
 
     @SerializedName("deldate")
     public String deldate;
 
-    @SerializedName("deltime")
+    @SerializedName("dtm")
     public String deltime;
+
+    @SerializedName("trpid")
+    public String tripid;
+
+    @SerializedName("stsi")
+    public String stats;
 
 
     public OrderStatus status = OrderStatus.ACTIVE;

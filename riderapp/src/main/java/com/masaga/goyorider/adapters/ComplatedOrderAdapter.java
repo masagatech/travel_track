@@ -4,18 +4,26 @@ import android.content.Context;
 import android.database.Observable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.forms.OrderStatus;
 import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingModel;
 import com.masaga.goyorider.forms.PendingOrdersView;
+import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.utils.VectorDrawableUtils;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -71,8 +79,10 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
         }
         holder.mDate.setText(currentDateTimeString);
         holder.mOrder.setText(timeLineModel.ordno +"");
-        holder.mMarchant.setText(timeLineModel.enttnm+", "+timeLineModel.olnm);
+        holder.mMarchant.setText(timeLineModel.olnm);
+        holder.Custmer_name.setText(timeLineModel.custname);
         holder.mDeliver_at.setText(timeLineModel.custaddr);
+        holder.Remark.setText("Remark: "+timeLineModel.remark);
         holder.mTime.setText(timeLineModel.deltime);
         holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
@@ -86,6 +96,8 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }else {
+
+                    ComplatedOrder(timeLineModel);
                 holder.ClickToHide.setVisibility(View.VISIBLE);
                     holder.mDate.setVisibility(View.VISIBLE);
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
@@ -108,6 +120,33 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //            }
 //        });
 
+    }
+    private void ComplatedOrder(model_pending timeLineModel){
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "completed");
+        json.addProperty("subflag", "detl");
+        json.addProperty("ordid", timeLineModel.ordid + "");
+        json.addProperty("orddid", timeLineModel.orderdetailid + "");
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+        json.addProperty("stat","1");
+
+//        Global.showProgress(loader);
+        Ion.with(mContext)
+                .load(Global.urls.getOrders.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
     }
 
     @Override

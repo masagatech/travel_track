@@ -68,5 +68,26 @@ public final class Procedures {
                 + ")"
                 + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+
+
+    }
+
+    public static class tblnotification{
+
+        public static final String CREATE = "CREATE TABLE  IF NOT EXISTS "
+                + Tables.tblnotification.name +
+                "("
+                +  Tables.tblnotification.autoid + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +  Tables.tblnotification.createon  + " VARCHAR, "
+                +  Tables.tblnotification.data  + " VARCHAR "
+                +")";
+
+
+        public static final String INSERT = "INSERT INTO " + Tables.tblnotification.name
+                + " ("
+                + Tables.tbl_driver_info.createon +  "," + Tables.tblnotification.data
+                + ")"
+                + " VALUES (?,?)";
+
     }
 }
