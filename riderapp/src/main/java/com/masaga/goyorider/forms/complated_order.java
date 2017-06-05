@@ -18,6 +18,7 @@ import com.masaga.goyorider.R;
 import com.masaga.goyorider.adapters.ComplatedOrderAdapter;
 import com.masaga.goyorider.adapters.pending_order_adapter;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 
 import java.lang.reflect.Type;
@@ -26,11 +27,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
+
 public class complated_order extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private com.masaga.goyorider.adapters.ComplatedOrderAdapter mTimeLineAdapter;
-    private List<model_pending> mDataList = new ArrayList<>();
+    private List<model_completed> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
@@ -56,15 +59,13 @@ public class complated_order extends AppCompatActivity {
 //
      //   initView();
 
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "completed");
-        json.addProperty("subflag", "smry");
-        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-
-//        Global.showProgress(loader);
         Ion.with(this)
-                .load(Global.urls.getOrders.value)
-                .setJsonObjectBody(json)
+                .load("GET", getOrders.value)
+                .addQuery("flag", "completed")
+                .addQuery("subflag", "smry")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+                .addQuery("stat","1")
+
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -73,9 +74,9 @@ public class complated_order extends AppCompatActivity {
                         try {
                             if (result != null) Log.v("result", result.toString());
                             Gson gson = new Gson();
-                            Type listType = new TypeToken<List<model_pending>>() {
+                            Type listType = new TypeToken<List<model_completed>>() {
                             }.getType();
-                            List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
+                            List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
                         }
                         catch (Exception ea) {
@@ -103,7 +104,7 @@ public class complated_order extends AppCompatActivity {
 //        mDataList.add(new PendingModel("#202" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,460.50));
 
     }
-    private void bindCurrentTrips(List<model_pending> lst) {
+    private void bindCurrentTrips(List<model_completed> lst) {
         if (lst.size() > 0) {
             findViewById(R.id.txtNodata).setVisibility(View.GONE);
             mTimeLineAdapter = new ComplatedOrderAdapter(lst, mOrientation, mWithLinePadding);

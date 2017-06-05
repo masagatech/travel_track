@@ -4,27 +4,28 @@ import com.google.gson.annotations.SerializedName;
 import com.masaga.goyorider.forms.OrderStatus;
 
 /**
- * Created by fajar on 27-May-17.
+ * Created by fajar on 06-Jun-17.
  */
 
-public class model_pending {
+public class model_completed {
+
+    @SerializedName("ordid")
+    public Double ordid;
+
+    @SerializedName("ordno")
+    public Double ordno;
+
+    @SerializedName("olnm")
+    public String olnm;
 
     @SerializedName("orddid")
     public int orderdetailid;
 
+    @SerializedName("amtrec")
+    public Double amtrec;
 
-
-    @SerializedName("ordid")
-    public int ordid;
-
-    @SerializedName("ordno")
-    public int ordno;
-
-    @SerializedName("rm")
-    public String remark;
-
-    @SerializedName("olnm")
-    public String olnm;
+    @SerializedName("stsi")
+    public int stsi;
 
     @SerializedName("cnm")
     public String custname;
@@ -35,31 +36,17 @@ public class model_pending {
     @SerializedName("cadr")
     public String custaddr;
 
-    @SerializedName("orddate")
-    public String orddate;
-
     @SerializedName("amt")
     public Double amtcollect;
-
-    @SerializedName("pctm")
-    public String picktime;
-
-    @SerializedName("deldate")
-    public String deldate;
-
-    @SerializedName("dtm")
-    public String deltime;
 
     @SerializedName("trpid")
     public String tripid;
 
-    @SerializedName("stsi")
-    public String stats;
+    @SerializedName("rm")
+    public String remark;
 
+    @SerializedName("dtm")
+    public String deltime;
 
     public OrderStatus status = OrderStatus.ACTIVE;
-
-    public model_pending()
-    {}
-
 }

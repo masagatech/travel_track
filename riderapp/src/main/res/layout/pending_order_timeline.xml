@@ -142,6 +142,14 @@
                                 android:src="@drawable/click_hide"
                                 android:visibility="gone" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/rupee"/>
 
                         <EditText
                             android:id="@+id/Collected_Cash"
@@ -154,9 +162,9 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:padding="10dp"
-
                             android:textColor="@android:color/black"
                             android:textSize="15dp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 

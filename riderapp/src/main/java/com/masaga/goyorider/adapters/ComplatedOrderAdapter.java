@@ -20,6 +20,7 @@ import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingModel;
 import com.masaga.goyorider.forms.PendingOrdersView;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.utils.VectorDrawableUtils;
 
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import static android.R.color.holo_orange_light;
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
 
 /**
  * Created by fajar on 22-May-17.
@@ -36,7 +38,7 @@ import static android.R.color.holo_orange_light;
 
 public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_viewHolder>  {
 
-    private List<model_pending> mFeedList;
+    private List<model_completed> mFeedList;
     private Context mContext;
     private Orientation mOrientation;
     private boolean mWithLinePadding;
@@ -44,7 +46,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
 
-    public ComplatedOrderAdapter(List<model_pending> feedList, Orientation orientation, boolean withLinePadding) {
+    public ComplatedOrderAdapter(List<model_completed> feedList, Orientation orientation, boolean withLinePadding) {
         mFeedList = feedList;
         mOrientation = orientation;
         mWithLinePadding = withLinePadding;
@@ -68,7 +70,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
     @Override
     public void onBindViewHolder(final pending_order_viewHolder holder, final int position) {
 
-        final model_pending timeLineModel = mFeedList.get(position);
+        final model_completed timeLineModel = mFeedList.get(position);
 
         if(timeLineModel.status == OrderStatus.INACTIVE) {
             holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
@@ -121,19 +123,16 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //        });
 
     }
-    private void ComplatedOrder(model_pending timeLineModel){
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "completed");
-        json.addProperty("subflag", "detl");
-        json.addProperty("ordid", timeLineModel.ordid + "");
-        json.addProperty("orddid", timeLineModel.orderdetailid + "");
-        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-        json.addProperty("stat","1");
+    private void ComplatedOrder(model_completed timeLineModel){
 
-//        Global.showProgress(loader);
         Ion.with(mContext)
-                .load(Global.urls.getOrders.value)
-                .setJsonObjectBody(json)
+                .load("GET", getOrders.value)
+                .addQuery("flag", "completed")
+                  .addQuery("subflag", "detl")
+                  .addQuery("ordid", timeLineModel.ordid + "")
+                  .addQuery("orddid", timeLineModel.orderdetailid + "")
+                  .addQuery("rdid", Global.loginusr.getDriverid() + "")
+                .addQuery("stat","1")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
