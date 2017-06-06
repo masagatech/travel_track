@@ -79,14 +79,13 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
         } else {
             holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
         }
-        holder.mDate.setText(currentDateTimeString);
         holder.mOrder.setText(timeLineModel.ordno +"");
         holder.mMarchant.setText(timeLineModel.olnm);
-        holder.Custmer_name.setText(timeLineModel.custname);
-        holder.mDeliver_at.setText(timeLineModel.custaddr);
-        holder.Remark.setText("Remark: "+timeLineModel.remark);
-        holder.mTime.setText(timeLineModel.deltime);
-        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
+//        holder.Custmer_name.setText(timeLineModel.custname);
+//        holder.mDeliver_at.setText(timeLineModel.custaddr);
+//        holder.Remark.setText("Remark: "+timeLineModel.remark);
+//        holder.mTime.setText(timeLineModel.deltime);
+//        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +98,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                     holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }else {
 
-                    ComplatedOrder(timeLineModel);
+                    ComplatedOrder(timeLineModel,holder,position);
                 holder.ClickToHide.setVisibility(View.VISIBLE);
                     holder.mDate.setVisibility(View.VISIBLE);
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
@@ -123,7 +122,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //        });
 
     }
-    private void ComplatedOrder(model_completed timeLineModel){
+    private void ComplatedOrder(final model_completed timeLineModel, final pending_order_viewHolder holder,final int position){
 
         Ion.with(mContext)
                 .load("GET", getOrders.value)
@@ -139,7 +138,23 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                     public void onCompleted(Exception e, JsonObject result) {
 
                         try {
-                            if (result != null) Log.v("result", result.toString());
+                            if (result != null){
+                              JsonObject  Data=  result.get("data").getAsJsonArray().get(position).getAsJsonObject();
+                                timeLineModel.custaddr=Data.get("cadr").getAsString();
+                                timeLineModel.custname=Data.get("cnm").getAsString();
+                                timeLineModel.deltime=Data.get("dtm").getAsString();
+                                timeLineModel.custname=Data.get("cnm").getAsString();
+                                timeLineModel.dltm=Data.get("dltm").getAsString();
+
+
+                                holder.mTime.setText(  timeLineModel.deltime+"");
+                                holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
+                                holder.Custmer_name.setText(timeLineModel.custname+"");
+                                holder.mDeliver_at.setText(timeLineModel.custaddr+" ");
+                                holder.mDate.setText(timeLineModel.dltm+"");
+
+                            }
+
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();

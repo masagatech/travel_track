@@ -118,9 +118,12 @@ public class PushOrder extends AppCompatActivity {
 
     private void bindCurrentTrips(List<model_push_order> lst) {
         if (lst.size() > 0) {
+            findViewById(R.id.txtNodata).setVisibility(View.GONE);
             mTimeLineAdapter = new PushOrderAdapter(lst, mOrientation, mWithLinePadding);
             mRecyclerView.setAdapter(mTimeLineAdapter);
             mTimeLineAdapter.notifyDataSetChanged();
+        } else {
+            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
         }
     }
 

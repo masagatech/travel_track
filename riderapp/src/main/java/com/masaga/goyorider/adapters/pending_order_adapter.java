@@ -102,7 +102,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.mDeliver_at.setText(timeLineModel.custaddr+"\n");
         holder.Remark.setText("Remark: "+timeLineModel.remark);
         holder.mTime.setText(timeLineModel.deltime);
-        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
+        holder.collected_cash.setText(+timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
         holder.Btn_Call.setOnClickListener(new View.OnClickListener() {

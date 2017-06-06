@@ -19,6 +19,7 @@ import com.masaga.goyorider.adapters.ComplatedOrderAdapter;
 import com.masaga.goyorider.adapters.RejectedOrderAdapter;
 import com.masaga.goyorider.adapters.pending_order_adapter;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 
 import java.lang.reflect.Type;
@@ -27,10 +28,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
+
 public class rejected_order extends AppCompatActivity {
     private com.masaga.goyorider.adapters.RejectedOrderAdapter mTimeLineAdapter;
     private RecyclerView mRecyclerView;
-    private List<model_pending> mDataList = new ArrayList<>();
+    private List<model_completed> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
 
@@ -55,14 +58,13 @@ public class rejected_order extends AppCompatActivity {
 //
  //       initView();
 
-        JsonObject json = new JsonObject();
-        json.addProperty("flag", "details");
-        json.addProperty("status", "pending");
-
-//        Global.showProgress(loader);
         Ion.with(this)
-                .load(Global.urls.getOrderDetails.value)
-                .setJsonObjectBody(json)
+                .load("GET", getOrders.value)
+                .addQuery("flag", "completed")
+                .addQuery("subflag", "smry")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+                .addQuery("stat","2")
+
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -71,9 +73,9 @@ public class rejected_order extends AppCompatActivity {
                         try {
                             if (result != null) Log.v("result", result.toString());
                             Gson gson = new Gson();
-                            Type listType = new TypeToken<List<model_pending>>() {
+                            Type listType = new TypeToken<List<model_completed>>() {
                             }.getType();
-                            List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
+                            List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
                         }
                         catch (Exception ea) {
@@ -103,7 +105,7 @@ public class rejected_order extends AppCompatActivity {
 
     }
 
-    private void bindCurrentTrips(List<model_pending> lst) {
+    private void bindCurrentTrips(List<model_completed> lst) {
         if (lst.size() > 0) {
             findViewById(R.id.txtNodata).setVisibility(View.GONE);
             mTimeLineAdapter = new RejectedOrderAdapter(lst, mOrientation, mWithLinePadding);

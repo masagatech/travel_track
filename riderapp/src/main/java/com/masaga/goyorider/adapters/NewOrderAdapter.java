@@ -1,6 +1,8 @@
 package com.masaga.goyorider.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,6 +24,7 @@ import com.masaga.goyorider.forms.OrderStatus;
 import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingOrdersView;
 import com.masaga.goyorider.forms.dashboard;
+import com.masaga.goyorider.forms.pending_order;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.model.model_new_order;
 import com.masaga.goyorider.model.model_notification;
@@ -109,11 +112,27 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
         holder.Btn_Reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.timer.cancel();
-                holder.timer= null;
-                holder.Btn_Reject.setVisibility(View.GONE);
-                holder.Btn_Accept.setVisibility(View.GONE);
-                setStatus("rejord", timeLineModel.ordid, position, timeLineModel.autoid, holder);
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Reject")
+                        .setMessage("Are you sure you want Reject this order?")
+                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                holder.timer.cancel();
+                                holder.timer= null;
+                                holder.Btn_Reject.setVisibility(View.GONE);
+                                holder.Btn_Accept.setVisibility(View.GONE);
+                                setStatus("rejord", timeLineModel.ordid, position, timeLineModel.autoid, holder);
+
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.rider_del).show();
+
 
             }
         });

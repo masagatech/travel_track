@@ -10,16 +10,16 @@ import com.masaga.goyorider.forms.OrderStatus;
 public class model_completed {
 
     @SerializedName("ordid")
-    public Double ordid;
+    public String ordid;
 
     @SerializedName("ordno")
-    public Double ordno;
+    public String ordno;
 
     @SerializedName("olnm")
     public String olnm;
 
     @SerializedName("orddid")
-    public int orderdetailid;
+    public String orderdetailid;
 
     @SerializedName("amtrec")
     public Double amtrec;
@@ -47,6 +47,9 @@ public class model_completed {
 
     @SerializedName("dtm")
     public String deltime;
+
+    @SerializedName("dltm")
+    public String dltm;
 
     public OrderStatus status = OrderStatus.ACTIVE;
 }

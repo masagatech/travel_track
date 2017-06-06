@@ -198,7 +198,7 @@ public class pending_order extends AppCompatActivity {
                             if(Data.get("status").getAsBoolean()){
                                 TripId=Data.get("tripid").toString();
                                 StartRide.setBackgroundColor(Color.RED);
-                                Toast.makeText(getApplicationContext(),Data.get("msg").toString()
+                                Toast.makeText(getApplicationContext(),"Your Ride Has started"
                                         ,Toast.LENGTH_SHORT).show();
                                 StartRide.setImageResource(R.drawable.stop_trip);
                                 mTimeLineAdapter.updateTripId(TripId);
@@ -285,7 +285,8 @@ public class pending_order extends AppCompatActivity {
 
             if(!TripId.equals("0") && lst.size() ==0){
                 TextView Text =(TextView)findViewById(txtNodata);
-                Text.setText("You have Deliverd all food. Press Stop to continue..");
+                findViewById(txtNodata).setVisibility(View.VISIBLE);
+                Text.setText("You have Deliverd all food.\n Press Stop to continue..");
             }
 
             mTimeLineAdapter = new pending_order_adapter(lst, mOrientation, mWithLinePadding);
@@ -309,6 +310,14 @@ public class pending_order extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mTimeLineAdapter!=null){
+            mTimeLineAdapter.notifyDataSetChanged();
+        }
     }
 
     //  @Override

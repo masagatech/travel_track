@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Rejected Orders"
+                    android:text="Return Orders"
                     android:textColor="@color/white"
                     android:layout_marginBottom="15dp"
                     android:layout_gravity="bottom"/>
