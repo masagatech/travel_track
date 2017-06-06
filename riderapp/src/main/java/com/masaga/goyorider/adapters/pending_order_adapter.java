@@ -75,6 +75,13 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         return new pending_order_viewHolder(view, viewType);
     }
 
+    public void updateTripId(String Tripid){
+
+        for (int i=0; i<=mFeedList.size() -1 ; i ++){
+            mFeedList.get(i).tripid = Tripid;
+        }
+    }
+
     @Override
     public void onBindViewHolder(final pending_order_viewHolder holder, final int position) {
 

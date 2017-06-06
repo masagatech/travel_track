@@ -198,9 +198,10 @@ public class pending_order extends AppCompatActivity {
                             if(Data.get("status").getAsBoolean()){
                                 TripId=Data.get("tripid").toString();
                                 StartRide.setBackgroundColor(Color.RED);
-                                Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
+                                Toast.makeText(getApplicationContext(),Data.get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                                 StartRide.setImageResource(R.drawable.stop_trip);
+                                mTimeLineAdapter.updateTripId(TripId);
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()

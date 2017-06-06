@@ -26,6 +26,8 @@ public class model_notification {
     @SerializedName("amt")
     public String amt;
 
+    public boolean isExpired = false;
+
 
 
 }

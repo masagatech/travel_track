@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.api.client.json.Json;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -83,10 +84,14 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
         final model_notification timeLineModel = mFeedList.get(position);
 
 
-        holder.mStops.setText(timeLineModel.autoid + "");
-        holder.Cash_amount.setText(timeLineModel.amt);
+        holder.mStops.setText(timeLineModel.stops + "");
+        holder.Cash_amount.setText(String.format("%.2f", Double.parseDouble(timeLineModel.amt)));
         holder.mOulets.setText(timeLineModel.olnm);
         holder.mTime.setText(timeLineModel.pcktm);
+        if(!timeLineModel.isExpired) {
+            holder.Btn_Reject.setVisibility(View.VISIBLE);
+            holder.Btn_Accept.setVisibility(View.VISIBLE);
+        }
 
         holder.Btn_Accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +127,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
                 holder.popup_counter.setText("Expired !!!");
                 holder.Btn_Reject.setVisibility(View.GONE);
                 holder.Btn_Accept.setVisibility(View.GONE);
+                timeLineModel.isExpired = true;
 //                mFeedList.remove(position);
 //                notifyItemRemoved(position);
 //                notifyItemRangeChanged(position, mFeedList.size());
@@ -187,8 +193,9 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
 
                         try {
                             if (result != null) {
-                                if (result.get("status").getAsBoolean()) {
-                                    String msg = result.get("data").getAsJsonObject().get("msg").toString();
+                                JsonObject data = result.get("data").getAsJsonObject();
+                                if (data.get("status").getAsBoolean()) {
+                                    String msg = data.get("msg").toString();
                                     Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                                     if(flag=="accord" ){
                                         holder.popup_counter.setText("ACCEPTED") ;
@@ -196,7 +203,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
                                         holder.popup_counter.setText("REJECTED") ;
                                     }
                                 } else {
-                                    String msg = result.get("data").getAsJsonObject().get("msg").toString();
+                                    String msg = data.get("msg").toString();
                                     Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                                 }
                                 sb.NOTIFICATION_DELETE(autoid + "");

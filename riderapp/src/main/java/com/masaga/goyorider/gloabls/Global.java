@@ -16,7 +16,7 @@ import java.net.URL;
 public class Global {
     //public static String DOMAIN_URL = "http://192.168.1.16:8081/goyoapi";
 
-    public final static String REST_URL = "http://192.168.43.97:8082/goyoapi";
+    public final static String REST_URL = "http://192.168.43.10:8082/goyoapi";
     public static final String SOCKET_URL = "http://192.168.43.228:8082/";
 
     private final static String APIName="/mrcht";
@@ -72,7 +72,7 @@ public class Global {
     public final static String pause = "pause";
     public final static String cancel = "3";
     public final static String pending = "0";
-    public final static Integer RedAlert = 1;
+    public final static Integer RedAlert = 10;
     public final static String pickedupdrop = "1";
     public final static String absent = "2";
 
