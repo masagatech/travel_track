@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -144,12 +145,17 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.Btn_Return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText edittext = new EditText(mContext);
+                edittext.setMaxLines(100);
                 new AlertDialog.Builder(mContext)
                         .setTitle("Return")
-                        .setMessage("Are you sure you want Return Delivery ?")
+                        .setMessage("Are you sure you want Return Delivery ? \n\nTell us why?")
+                        .setView(edittext)
                         .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Return(timeLineModel,position,newPosition);
+                                //Getting rider feed back
+                                String feedabck = edittext.getText().toString();
+                                Return(timeLineModel,position,newPosition,feedabck);
                             }
                         })
                         .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
@@ -218,17 +224,20 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 
     }
 
-    private void Return(final model_pending timeLineModel, final int position, final int newPosition){
+    private void Return(final model_pending timeLineModel, final int position, final int newPosition,String feedback){
+        if(feedback==null){
+            feedback="";
+        }
 
         JsonObject json = new JsonObject();
-        json.addProperty("flag", "delvr");
+        json.addProperty("flag", "retn");
         json.addProperty("loc", Rider_Lat+","+Rider_Long);
         json.addProperty("tripid", tripid);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
         json.addProperty("amtrec", timeLineModel.amtcollect + "");
         json.addProperty("ordid", timeLineModel.ordid + "");
         json.addProperty("orddid", timeLineModel.orderdetailid + "");
-        json.addProperty("remark", timeLineModel.remark);
+        json.addProperty("remark", feedback);
 
 
         Ion.with(mContext)

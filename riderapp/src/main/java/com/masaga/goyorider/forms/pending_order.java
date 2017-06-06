@@ -268,10 +268,11 @@ public class pending_order extends AppCompatActivity {
             TripId = lst.get(0).tripid;
             if(TripId.equals("0")){
                 //greeen
+                StartRide.setImageResource(R.drawable.rider);
                 StartRide.setBackgroundColor(Color.GREEN);
             }else {
                 //red
-
+                StartRide.setImageResource(R.drawable.stop_trip);
                 StartRide.setBackgroundColor(Color.RED);
             }
 

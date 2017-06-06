@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.api.client.json.Json;
@@ -103,7 +104,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
                 holder.timer= null;
                 holder.Btn_Reject.setVisibility(View.GONE);
                 holder.Btn_Accept.setVisibility(View.GONE);
-                setStatus("accord", timeLineModel.ordid, position, timeLineModel.autoid, holder);
+                setStatus("accord", timeLineModel.ordid, position, timeLineModel.autoid, holder,"");
 
 
             }
@@ -112,17 +113,24 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
         holder.Btn_Reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText edittext = new EditText(mContext);
+                edittext.setMaxLines(100);
 
                 new AlertDialog.Builder(mContext)
                         .setTitle("Reject")
-                        .setMessage("Are you sure you want Reject this order?")
+                        .setMessage("Are you sure you want Reject this order? \n\nTell us why!")
+                        .setView(edittext)
                         .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                //Getting rider feed back
+                                String feedabck = edittext.getText().toString();
+
+
                                 holder.timer.cancel();
                                 holder.timer= null;
                                 holder.Btn_Reject.setVisibility(View.GONE);
                                 holder.Btn_Accept.setVisibility(View.GONE);
-                                setStatus("rejord", timeLineModel.ordid, position, timeLineModel.autoid, holder);
+                                setStatus("rejord", timeLineModel.ordid, position, timeLineModel.autoid, holder,feedabck);
 
                             }
                         })
@@ -195,12 +203,16 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
 //        });
 
 
-    private void setStatus(final String flag, String ordid, final int position, final int autoid,final NewOrderAdapterViewHolder holder) {
+    private void setStatus(final String flag, String ordid, final int position, final int autoid,final NewOrderAdapterViewHolder holder,String feedabck) {
 
+        if(feedabck==null){
+            feedabck="";
+        }
         JsonObject json = new JsonObject();
         json.addProperty("flag", flag);
         json.addProperty("ordid", ordid);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+        json.addProperty("remark",feedabck);
 
         Ion.with(mContext)
                 .load(setStatus.value)
