@@ -147,7 +147,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 
                             if (events.size() > 0) {
 
-                                    JsonObject Data = result.get("data").getAsJsonArray().get(position).getAsJsonObject();
+                                    JsonObject Data = result.get("data").getAsJsonArray().get(0).getAsJsonObject();
                                     timeLineModel.custaddr = Data.get("cadr").getAsString();
                                     timeLineModel.custname = Data.get("cnm").getAsString();
                                     timeLineModel.deltime = Data.get("dtm").getAsString();

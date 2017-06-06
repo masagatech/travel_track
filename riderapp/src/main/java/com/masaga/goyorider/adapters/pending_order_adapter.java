@@ -95,7 +95,8 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         } else {
             holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.colorAccent));
         }
-        holder.mDate.setText(currentDateTimeString);
+//        holder.mDate.setText(currentDateTimeString);
+        holder.mDate.setText(timeLineModel.dltm + "");
         holder.mOrder.setText(timeLineModel.ordno +"");
         holder.mMarchant.setText(timeLineModel.olnm);
         holder.Custmer_name.setText(timeLineModel.custname);

@@ -3,11 +3,14 @@ package com.masaga.goyorider.adapters;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
@@ -20,6 +23,7 @@ import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.utils.VectorDrawableUtils;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -120,20 +124,27 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
                     public void onCompleted(Exception e, JsonObject result) {
 
                         try {
-                            if (result != null){
-                                JsonObject  Data=  result.get("data").getAsJsonArray().get(position).getAsJsonObject();
-                                timeLineModel.custaddr=Data.get("cadr").getAsString();
-                                timeLineModel.custname=Data.get("cnm").getAsString();
-                                timeLineModel.deltime=Data.get("dtm").getAsString();
-                                timeLineModel.custname=Data.get("cnm").getAsString();
-                                timeLineModel.dltm=Data.get("dltm").getAsString();
+                            if (result != null) Log.v("result", result.toString());
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<List<model_completed>>() {
+                            }.getType();
+                            List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
+
+                            if (events.size() > 0) {
+
+                                JsonObject Data = result.get("data").getAsJsonArray().get(0).getAsJsonObject();
+                                timeLineModel.custaddr = Data.get("cadr").getAsString();
+                                timeLineModel.custname = Data.get("cnm").getAsString();
+                                timeLineModel.deltime = Data.get("dtm").getAsString();
+                                timeLineModel.custname = Data.get("cnm").getAsString();
+                                timeLineModel.dltm = Data.get("dltm").getAsString();
 
 
-                                holder.mTime.setText(  timeLineModel.deltime+"");
-                                holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
-                                holder.Custmer_name.setText(timeLineModel.custname+"");
-                                holder.mDeliver_at.setText(timeLineModel.custaddr+" ");
-                                holder.mDate.setText(timeLineModel.dltm+"");
+                                holder.mTime.setText(timeLineModel.deltime + "");
+                                holder.collected_cash.setText("₹ " + timeLineModel.amtcollect + "");
+                                holder.Custmer_name.setText(timeLineModel.custname + "");
+                                holder.mDeliver_at.setText(timeLineModel.custaddr + " ");
+                                holder.mDate.setText(timeLineModel.dltm + "");
 
                             }
 

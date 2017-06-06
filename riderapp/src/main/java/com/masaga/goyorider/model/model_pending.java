@@ -50,6 +50,9 @@ public class model_pending {
     @SerializedName("dtm")
     public String deltime;
 
+    @SerializedName("dltm")
+    public String dltm;
+
     @SerializedName("trpid")
     public String tripid;
 

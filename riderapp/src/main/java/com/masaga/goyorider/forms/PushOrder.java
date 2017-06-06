@@ -69,8 +69,8 @@ public class PushOrder extends AppCompatActivity {
 //        initView();
 
         JsonObject json = new JsonObject();
-        json.addProperty("flag", "details");
-        json.addProperty("status", "pending");
+        json.addProperty("flag", "dashboard");
+        json.addProperty("status", "0");
 
 //        Global.showProgress(loader);
         Ion.with(this)
