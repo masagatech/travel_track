@@ -274,7 +274,7 @@ public class pending_order extends AppCompatActivity {
 
                 StartRide.setBackgroundColor(Color.RED);
             }
-            mTimeLineAdapter.tripid = TripId;
+
 
             StartRide.setVisibility(View.VISIBLE);
             findViewById(txtNodata).setVisibility(View.GONE);
@@ -292,6 +292,7 @@ public class pending_order extends AppCompatActivity {
             }
 
             mTimeLineAdapter = new pending_order_adapter(lst, mOrientation, mWithLinePadding);
+            mTimeLineAdapter.tripid = TripId;
             mRecyclerView.setAdapter(mTimeLineAdapter);
             mTimeLineAdapter.notifyDataSetChanged();
 
