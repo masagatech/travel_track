@@ -53,7 +53,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     private boolean mWithLinePadding;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private LayoutInflater mLayoutInflater;
-
+    public String tripid = "0";
     public pending_order_adapter(List<model_pending> feedList, Orientation orientation, boolean withLinePadding) {
         mFeedList = feedList;
         mOrientation = orientation;
@@ -76,10 +76,10 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     }
 
     public void updateTripId(String Tripid){
-
-        for (int i=0; i<=mFeedList.size() -1 ; i ++){
-            mFeedList.get(i).tripid = Tripid;
-        }
+        tripid = Tripid;
+//        for (int i=0; i<=mFeedList.size() -1 ; i ++){
+//            mFeedList.get(i).tripid = Tripid;
+//        }
     }
 
     @Override
@@ -172,7 +172,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         JsonObject json = new JsonObject();
         json.addProperty("flag", "delvr");
         json.addProperty("loc", Rider_Lat+","+Rider_Long);
-        json.addProperty("tripid", timeLineModel.tripid);
+        json.addProperty("tripid", tripid);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
         json.addProperty("amtrec", timeLineModel.amtcollect + "");
         json.addProperty("ordid", timeLineModel.ordid + "");
@@ -223,7 +223,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         JsonObject json = new JsonObject();
         json.addProperty("flag", "delvr");
         json.addProperty("loc", Rider_Lat+","+Rider_Long);
-        json.addProperty("tripid", timeLineModel.tripid);
+        json.addProperty("tripid", tripid);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
         json.addProperty("amtrec", timeLineModel.amtcollect + "");
         json.addProperty("ordid", timeLineModel.ordid + "");
