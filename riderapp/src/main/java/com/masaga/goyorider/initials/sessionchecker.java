@@ -109,7 +109,7 @@ public class sessionchecker extends AppCompatActivity {
                                 ea.printStackTrace();
                                 nextScreen();
                             }
-                            loader.hide();
+                                loader.hide();
                         }
                     });
 

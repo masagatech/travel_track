@@ -1,5 +1,6 @@
 package com.masaga.goyorider.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Observable;
 import android.support.v4.content.ContextCompat;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -20,6 +22,7 @@ import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingModel;
 import com.masaga.goyorider.forms.PendingOrdersView;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.initials.sessionchecker;
 import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.utils.VectorDrawableUtils;
@@ -44,6 +47,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
     private boolean mWithLinePadding;
     private LayoutInflater mLayoutInflater;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    private ProgressDialog loader;
 
 
     public ComplatedOrderAdapter(List<model_completed> feedList, Orientation orientation, boolean withLinePadding) {
@@ -98,7 +102,10 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }else {
-
+                    loader = new ProgressDialog(mContext);
+                    loader.setCancelable(false);
+                    loader.setMessage("Please wait..");
+                    loader.show();
                     ComplatedOrder(timeLineModel,holder,position);
                 holder.ClickToHide.setVisibility(View.VISIBLE);
                     holder.mDate.setVisibility(View.VISIBLE);
@@ -162,6 +169,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                                     holder.mDate.setText(timeLineModel.dltm + "");
 
                                 }
+                            loader.hide();
 
 
                         }

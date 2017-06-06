@@ -70,6 +70,7 @@ import com.masaga.goyorider.R;
 import com.masaga.goyorider.Service.RiderStatus;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.goyorider.MainActivity;
+import com.masaga.goyorider.initials.splash_screen;
 import com.masaga.goyorider.model.model_loginusr;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.model.model_push_order;
@@ -338,7 +339,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     }
 
     public void showNotification() {
-        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, dashboard.class), 0);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, splash_screen.class), 0);
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker("Online!")
                 .setSmallIcon(R.drawable.rider)
@@ -390,7 +391,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     }
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString() , Toast.LENGTH_SHORT).show();
                                     RiderStatusSwitch.setChecked(false);
                                 }
                             } else {

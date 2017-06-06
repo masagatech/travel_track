@@ -144,17 +144,6 @@ public class newOrder extends AppCompatActivity {
 
         }
 
-//        mDataList.add(new model_new_order(  1 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15","Pralhad Nagar"));
-//        mDataList.add(new model_new_order(  6 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15","Pralhad Nagar"));
-//        mDataList.add(new model_new_order(  5 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15","Pralhad Nagar"));
-//        mDataList.add(new model_new_order(  4 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15","Pralhad Nagar"));
-//        mDataList.add(new model_new_order(  5 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15","Pralhad Nagar"));
-//        mDataList.add(new model_new_order(  2 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15"  ,"Navi Mumbai"));
-//        mDataList.add(new model_new_order(  5 , "Pizza Hut" , "08.00 ","Navi Mumbai,sector 15"  ,"Navi Mumbai"));
-
-
-
-
     }
 
     @Override
