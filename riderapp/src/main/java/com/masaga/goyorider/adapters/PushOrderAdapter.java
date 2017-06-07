@@ -1,6 +1,7 @@
 package com.masaga.goyorider.adapters;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -34,6 +35,7 @@ import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingOrdersView;
 import com.masaga.goyorider.forms.PushOrder;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
 import com.masaga.goyorider.model.model_push_order;
 import com.masaga.goyorider.model.model_rider_list;
@@ -54,11 +56,10 @@ import java.util.Set;
 
 import static android.R.attr.country;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static com.masaga.goyorider.R.id.checkbox;
 import static com.masaga.goyorider.R.id.pushOrder;
-import static com.masaga.goyorider.R.id.saveBtn;
-import static com.masaga.goyorider.forms.PushOrder.populateList;
 import static com.masaga.goyorider.gloabls.Global.RedAlert;
+import static com.masaga.goyorider.gloabls.Global.urls.getAvailRider;
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
 
 /**
  * Created by fajar on 29-May-17.
@@ -68,6 +69,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
     private List<model_push_order> mFeedList;
     private Context mContext;
+    private ProgressDialog loader;
     private Orientation mOrientation;
     private boolean mWithLinePadding;
     private LayoutInflater mLayoutInflater;
@@ -75,6 +77,8 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
     private int OrderNo;
     protected boolean stopFlag = false;
     HashMap<String, Runnable> threads = new HashMap<>();
+    ListView lstRider;
+    String []Name;
 
        private ArrayList<model_rider_list> mRiderList;
 
@@ -314,43 +318,38 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
     }
 
     public void onClickRider(final PushOrderViewHolder holder) {
-        final ArrayList<model_rider_list> data = populateList();
+
+        GetRiderList();
+//        final ArrayList<model_rider_list> data = populateList();
         final Dialog dialogOut = new Dialog(mContext);
 
         dialogOut.setContentView(R.layout.rider_list);
-        ListView lstRider = (ListView) dialogOut.findViewById(R.id.lstRiderList);
-        Button Btn_Save=(Button)  dialogOut.findViewById(saveBtn);
+       lstRider = (ListView) dialogOut.findViewById(R.id.lstRiderList);
+//        Button Btn_Save=(Button)  dialogOut.findViewById(saveBtn);
 
-        final RiderListAdapter adapter = new RiderListAdapter(mContext, data);
-        lstRider.setAdapter(adapter);
+//         RiderListAdapter adapter = new RiderListAdapter(mContext, data);
+//        lstRider.setAdapter(adapter);
 //        adapter.notifyDataSetChanged();
         dialogOut.setCancelable(true);
         dialogOut.setTitle("Riders");
-        Btn_Save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                data.get().isSelected()
-//                Toast.makeText(mContext,isCheckedOrNot())
+//        Btn_Save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                data.get().isSelected()
+////                Toast.makeText(mContext,isCheckedOrNot())
+////                dialogOut.dismiss();
 //                dialogOut.dismiss();
-                dialogOut.dismiss();
-            }
-        });
+//            }
+//        });
         lstRider.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mContext,"You have selected "+data.get(position).RiderName,Toast.LENGTH_SHORT).show();
-               holder.mRider.setText(data.get(position).RiderName);
-
+//                Toast.makeText(mContext,"You have selected "+Name[position],Toast.LENGTH_SHORT).show();
+//               holder.mRider.setText(Name[position]);
+                dialogOut.hide();
             }
         });
         dialogOut.show();
-    }
-
-    private String isCheckedOrNot(CheckBox checkbox) {
-        if(checkbox.isChecked())
-            return "is checked";
-        else
-            return "is not checked";
     }
 
 
@@ -373,6 +372,55 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
             s = null;
             it = null;
             threads.clear();
+        }
+    }
+
+    private void GetRiderList(){
+        loader = new ProgressDialog(mContext);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
+
+        Ion.with(mContext)
+                .load("GET", getAvailRider.value)
+                .addQuery("flag", "avail")
+                .addQuery("callr","mob" )
+                .addQuery("hsid", Global.loginusr.getHsid() + "")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+
+                            if (result != null) Log.v("result", result.toString());
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<List<model_rider_list>>() {
+                            }.getType();
+                            ArrayList<model_rider_list> events = (ArrayList<model_rider_list>) gson.fromJson(result.get("data"), listType);
+                            bindCurrentTrips(events);
+//                            for(int i=0;i<=events.size();i++){
+//                                events.get(i).nm=Name[i];
+//                            }
+
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                        loader.hide();
+                    }
+                });
+
+    }
+
+    private void bindCurrentTrips(ArrayList<model_rider_list> lst) {
+        if (lst.size() > 0) {
+            RiderListAdapter adapter = new RiderListAdapter(mContext, lst);
+            lstRider.setAdapter(adapter);
+//        } else {
+//            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
+//        }
         }
     }
 
