@@ -8,13 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.model.model_rider_list;
 
 import java.util.ArrayList;
+
+import static android.R.attr.country;
 
 /**
  * Created by fajar on 07-Jun-17.
@@ -24,13 +29,14 @@ public class RiderListAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
     Context context;
-    private ArrayList<model_rider_list> data;
+    public ArrayList<model_rider_list> data;
 
     public RiderListAdapter(Context context, ArrayList<model_rider_list> item) {
 
         this.inflater = LayoutInflater.from(context);
         this.context = context;
         this.data = item;
+
 
     }
 
@@ -66,9 +72,35 @@ public class RiderListAdapter extends BaseAdapter {
         mViewHolder.uRidername.setText(Rider.RiderName);
         mViewHolder.uPhone.setText(Rider.RiderNumber);
         mViewHolder.uKm.setText(Rider.RiderKM);
+        mViewHolder.uBtry.setText(Rider.RiderBtry);
+        mViewHolder.RiderCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mViewHolder.RiderCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
+                data.get(getPosition).setSelected(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
+            }
+        });
+        mViewHolder.RiderCheck.setTag(position);
+        mViewHolder.RiderCheck.setChecked(data.get(position).isSelected());
+
+
+
+
         return convertView;
 
     }
+
+
+
+
 
 
     private class MyViewHolder {
@@ -76,12 +108,16 @@ public class RiderListAdapter extends BaseAdapter {
         TextView uRidername;
         TextView uPhone;
         TextView uKm;
+        TextView uBtry;
+        CheckBox RiderCheck;
 
 
         public MyViewHolder(View item) {
             uRidername = (TextView) item.findViewById(R.id.name);
             uPhone = (TextView) item.findViewById(R.id.rider_numbr);
             uKm = (TextView) item.findViewById(R.id.km);
+            uBtry = (TextView) item.findViewById(R.id.rider_btry);
+            RiderCheck = (CheckBox) item.findViewById(R.id.checkbox);
         }
     }
 }

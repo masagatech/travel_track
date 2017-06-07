@@ -14,6 +14,7 @@ public class model_rider_list {
     public String RiderNumber;
     public String RiderKM;
     public String RiderBtry;
+    boolean selected = false;
 
     public model_rider_list(String RiderName,int RiderId,String RiderNumber,String RiderKM,String RiderBtry) {
         this.RiderNumber=RiderNumber;
@@ -21,6 +22,13 @@ public class model_rider_list {
         this.RiderBtry=RiderBtry;
         this.RiderId=RiderId;
         this.RiderName=RiderName;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
     @Override
     public String toString() {

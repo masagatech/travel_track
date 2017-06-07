@@ -117,8 +117,7 @@ public class pending_order extends AppCompatActivity {
                             .setMessage("Are you sure you want Stop Trip?")
                             .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent=new Intent(pending_order.this,dashboard.class);
-                                    startActivity(intent);
+
                                     stopTrip();
 
                                 }
@@ -160,11 +159,12 @@ public class pending_order extends AppCompatActivity {
                             }.getType();
                             List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
-                            loader.hide();
+
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
                         }
+                        loader.hide();
                     }
                 });
 
@@ -245,7 +245,9 @@ public class pending_order extends AppCompatActivity {
                             if(result.get("data").getAsJsonObject().get("status").getAsBoolean()){
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
-                                StartRide.setVisibility(View.GONE);
+                                //StartRide.setVisibility(View.GONE);
+                                Intent intent=new Intent(pending_order.this,dashboard.class);
+                                startActivity(intent);
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()

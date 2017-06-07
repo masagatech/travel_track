@@ -1,28 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+   android:paddingLeft="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rider 1 Rider 1"
         android:id="@+id/name"
-        android:textSize="15dp"/>
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="20km away"
-        android:id="@+id/km"
-        android:textSize="15dp"/>
-    <TextView
-        android:id="@+id/rider_numbr"
-        android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="9996325763"
-        android:textSize="15dp"/>
+        android:paddingTop="5dp"
+         android:layout_weight="1"
+       android:paddingLeft="10dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="16dp"/>
+        <CheckBox
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:id="@+id/checkbox"/>
 
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/rider_numbr"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:textColor="#000"
+            android:layout_height="wrap_content"
+            android:text="9996325763"
+            android:textSize="15dp"/>
+        <TextView
+
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20km away"
+            android:id="@+id/km"
+            android:gravity="center_horizontal"
+            android:textColor="#000"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/rider_btry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:text="63%"
+            android:textColor="#000"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
 </LinearLayout>

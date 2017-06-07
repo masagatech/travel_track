@@ -16,6 +16,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,8 +52,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static android.R.attr.country;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static com.masaga.goyorider.R.id.checkbox;
 import static com.masaga.goyorider.R.id.pushOrder;
+import static com.masaga.goyorider.R.id.saveBtn;
 import static com.masaga.goyorider.forms.PushOrder.populateList;
 import static com.masaga.goyorider.gloabls.Global.RedAlert;
 
@@ -203,10 +208,31 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 //
 //        });
 
+
+
+//
+//        RiderListAdapter adapter = new RiderListAdapter(mContext, data);
+//
+//        view = mContext.getLayoutInflater().inflate(R.layout.rider_list, null, true);
+
+//        ListView list = (ListView) view.findViewById(R.id.listView1);
+//        list.setAdapter(adapter);
+
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                String Slecteditem = data.get(position).RiderName;
+//                Toast.makeText(PushOrder.this, Slecteditem, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+
         holder.mRider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onClickRider();
+               onClickRider(holder);
 
             }
         });
@@ -287,48 +313,44 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
         });
     }
 
-    public void onClickRider() {
+    public void onClickRider(final PushOrderViewHolder holder) {
         final ArrayList<model_rider_list> data = populateList();
-
-
-
-
-//
-//        RiderListAdapter adapter = new RiderListAdapter(mContext, data);
-//
-//        view = mContext.getLayoutInflater().inflate(R.layout.rider_list, null, true);
-
-//        ListView list = (ListView) view.findViewById(R.id.listView1);
-//        list.setAdapter(adapter);
-
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                String Slecteditem = data.get(position).RiderName;
-//                Toast.makeText(PushOrder.this, Slecteditem, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-
         final Dialog dialogOut = new Dialog(mContext);
 
         dialogOut.setContentView(R.layout.rider_list);
         ListView lstRider = (ListView) dialogOut.findViewById(R.id.lstRiderList);
-        RiderListAdapter adapter = new RiderListAdapter(mContext, data);
+        Button Btn_Save=(Button)  dialogOut.findViewById(saveBtn);
+
+        final RiderListAdapter adapter = new RiderListAdapter(mContext, data);
         lstRider.setAdapter(adapter);
 //        adapter.notifyDataSetChanged();
         dialogOut.setCancelable(true);
         dialogOut.setTitle("Riders");
-//        dialogOut.buNeutralButton("Voltar",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialogOut.dismiss();
-//                    }
-//                });
+        Btn_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                data.get().isSelected()
+//                Toast.makeText(mContext,isCheckedOrNot())
+//                dialogOut.dismiss();
+                dialogOut.dismiss();
+            }
+        });
+        lstRider.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mContext,"You have selected "+data.get(position).RiderName,Toast.LENGTH_SHORT).show();
+               holder.mRider.setText(data.get(position).RiderName);
 
+            }
+        });
         dialogOut.show();
+    }
+
+    private String isCheckedOrNot(CheckBox checkbox) {
+        if(checkbox.isChecked())
+            return "is checked";
+        else
+            return "is not checked";
     }
 
 

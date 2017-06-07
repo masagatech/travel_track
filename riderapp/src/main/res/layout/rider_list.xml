@@ -2,8 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_margin="5dp"
+        android:background="@color/green_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_gravity="end"
+        android:text="save"
+        />
+
     <ListView
         android:id="@+id/lstRiderList"
+        android:divider="#000"
+        android:dividerHeight="2px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

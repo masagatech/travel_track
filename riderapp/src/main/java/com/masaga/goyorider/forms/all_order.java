@@ -87,11 +87,12 @@ public class all_order extends AppCompatActivity {
                             }.getType();
                             List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
-                            loader.hide();
+
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
                         }
+                        loader.hide();
                     }
                 });
 

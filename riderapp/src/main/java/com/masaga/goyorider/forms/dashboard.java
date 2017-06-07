@@ -197,6 +197,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                 JsonObject json = new JsonObject();
                                 json.addProperty("sessionid", sessionid);
                                 json.addProperty("email", uid);
+                                json.addProperty("flag", "rider");
 //                                Global.showProgress(loader);
                                 Ion.with(dashboard.this)
                                         .load(Global.urls.getlogout.value)
@@ -251,7 +252,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         RiderStatusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if(isStatusDbCheck) {
+                    if (isStatusDbCheck) {
                         //Notification
                         showNotification();
                         Online.setText("Online");
@@ -270,14 +271,16 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                             })
                             .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    isStatusDbCheck = true;
                                     RiderStatusSwitch.setChecked(false);
+                                    isStatusDbCheck = false;
 
                                 }
                             })
                             .setIcon(R.drawable.rider_del).show();
 
                 } else {
-                    if(isStatusDbCheck) {
+                    if (isStatusDbCheck) {
                         return;
                     }
                     new AlertDialog.Builder(dashboard.this)
@@ -288,16 +291,20 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     notificationManager.cancel(0);
                                     Online.setText("Offline");
                                     handler.removeMessages(0);
-                                    if(isMyServiceRunning(RiderStatus.class)){
-                                            dashboard.this.stopService(mServiceIntent);
-                                            SwitchTurnedOnOFF("false");
-                                            Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
+                                    if (isMyServiceRunning(RiderStatus.class)) {
+                                        if (mServiceIntent != null) stopService(mServiceIntent);
+                                        else
+                                            stopService(new Intent(dashboard.this, RiderStatus.class));
+                                        SwitchTurnedOnOFF("false");
+                                        Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
                             .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    isStatusDbCheck = true;
                                     RiderStatusSwitch.setChecked(true);
+                                    isStatusDbCheck = false;
                                 }
                             })
                             .setIcon(R.drawable.rider_del).show();
@@ -357,7 +364,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     private void SwitchTurnedOnOFF(final String state) {
 //        Global.showProgress(loader);
-        if(latitude == null){
+        if (latitude == null) {
             latitude = "0.0";
             longitude = "0.0";
         }
@@ -381,7 +388,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                 if (result.get("data").getAsJsonObject().get("status").getAsBoolean()) {
                                     //Starting Location service and running background
 
-                                    if(!isMyServiceRunning(RiderStatus.class)) {
+                                    if (!isMyServiceRunning(RiderStatus.class)) {
                                         //Notification
                                         showNotification();
                                         Online.setText("Online");
@@ -391,7 +398,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     }
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString() , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), result.get("data").getAsJsonObject().get("msg").toString(), Toast.LENGTH_SHORT).show();
                                     RiderStatusSwitch.setChecked(false);
                                 }
                             } else {
@@ -488,7 +495,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     }
 
 
-
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
@@ -540,8 +546,8 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     @OnClick(R.id.Notifications)
     void click6() {
-        int flag=1;
-        Intent intent=new Intent(this,newOrder.class);
+        int flag = 1;
+        Intent intent = new Intent(this, newOrder.class);
 //        Intent intent=new Intent(this,notification.class);
 //        intent.putExtra("FromDashboard", flag);
         startActivity(intent);
@@ -615,7 +621,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
         @Override
         public void onTick(long millisUntilFinished) {
-            PopUp_CountText.setText(""+String.format("%02d:%02d",
+            PopUp_CountText.setText("" + String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
         }

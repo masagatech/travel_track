@@ -162,20 +162,20 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                                     timeLineModel.dltm = Data.get("dltm").getAsString();
 
 
-                                    holder.mTime.setText(timeLineModel.deltime + "");
+                                    holder.mTime.setText("Deliverd At "+timeLineModel.deltime + "");
                                     holder.collected_cash.setText("₹ " + timeLineModel.amtcollect + "");
                                     holder.Custmer_name.setText(timeLineModel.custname + "");
                                     holder.mDeliver_at.setText(timeLineModel.custaddr + " ");
                                     holder.mDate.setText(timeLineModel.dltm + "");
 
                                 }
-                            loader.hide();
 
 
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
                         }
+                        loader.hide();
                     }
                 });
     }

@@ -154,11 +154,11 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
                                 holder.mDate.setText(timeLineModel.dltm + "");
 
                             }
-                            loader.hide();
 
                         } catch (Exception ea) {
                             ea.printStackTrace();
                         }
+                        loader.hide();
                     }
                 });
     }
