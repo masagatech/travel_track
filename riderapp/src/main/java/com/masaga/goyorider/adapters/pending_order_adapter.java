@@ -1,6 +1,7 @@
 package com.masaga.goyorider.adapters;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,8 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private LayoutInflater mLayoutInflater;
     public String tripid = "0";
+    private ProgressDialog loader;
+
     public pending_order_adapter(List<model_pending> feedList, Orientation orientation, boolean withLinePadding) {
         mFeedList = feedList;
         mOrientation = orientation;
@@ -129,6 +132,10 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.Btn_Delivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loader = new ProgressDialog(mContext);
+                loader.setCancelable(false);
+                loader.setMessage("Please wait..");
+                loader.show();
 
                 Deliver(timeLineModel,position,newPosition);
 
@@ -156,6 +163,10 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                             public void onClick(DialogInterface dialog, int which) {
                                 //Getting rider feed back
                                 String feedabck = edittext.getText().toString();
+                                loader = new ProgressDialog(mContext);
+                                loader.setCancelable(false);
+                                loader.setMessage("Please wait..");
+                                loader.show();
                                 Return(timeLineModel,position,newPosition,feedabck);
                             }
                         })
@@ -216,6 +227,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                                 Toast.makeText(mContext,result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                             }
+                            loader.hide();
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
@@ -270,6 +282,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                                 Toast.makeText(mContext,result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                             }
+                            loader.hide();
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();

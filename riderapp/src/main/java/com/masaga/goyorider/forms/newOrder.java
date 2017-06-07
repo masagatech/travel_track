@@ -1,5 +1,6 @@
 package com.masaga.goyorider.forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class newOrder extends AppCompatActivity {
     private boolean mWithLinePadding;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     SQLBase db;
+    private ProgressDialog loader;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,13 +164,19 @@ public class newOrder extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
         if(lst == null){
             lst = new ArrayList<>();
             setDataListItems();
             initView();
+            loader.hide();
         }else {
             setDataListItems();
             mTimeLineAdapter.notifyDataSetChanged();
+            loader.hide();
         }
 
 

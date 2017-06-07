@@ -1,5 +1,6 @@
 package com.masaga.goyorider.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
     private boolean mWithLinePadding;
     private LayoutInflater mLayoutInflater;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    private ProgressDialog loader;
 
 
     public RejectedOrderAdapter(List<model_completed> feedList, Orientation orientation, boolean withLinePadding) {
@@ -95,7 +97,10 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 } else {
-
+                    loader = new ProgressDialog(mContext);
+                    loader.setCancelable(false);
+                    loader.setMessage("Please wait..");
+                    loader.show();
                     RejectedOrder(timeLineModel, holder, position);
                     holder.ClickToHide.setVisibility(View.VISIBLE);
                     holder.mDate.setVisibility(View.VISIBLE);
@@ -147,6 +152,7 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
                                 holder.mDate.setText(timeLineModel.dltm + "");
 
                             }
+                            loader.hide();
 
                         }
                         catch (Exception ea) {

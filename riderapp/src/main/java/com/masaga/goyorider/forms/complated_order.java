@@ -1,5 +1,6 @@
 package com.masaga.goyorider.forms;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class complated_order extends AppCompatActivity {
     private Orientation mOrientation;
     private boolean mWithLinePadding;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+    private ProgressDialog loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,11 @@ public class complated_order extends AppCompatActivity {
 //
      //   initView();
 
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
+
         Ion.with(this)
                 .load("GET", getOrders.value)
                 .addQuery("flag", "completed")
@@ -78,6 +85,7 @@ public class complated_order extends AppCompatActivity {
                             }.getType();
                             List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
+                            loader.hide();
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();

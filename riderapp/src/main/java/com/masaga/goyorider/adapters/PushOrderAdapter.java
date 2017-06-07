@@ -1,6 +1,8 @@
 package com.masaga.goyorider.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,6 +16,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +51,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static com.masaga.goyorider.R.id.pushOrder;
+import static com.masaga.goyorider.forms.PushOrder.populateList;
 import static com.masaga.goyorider.gloabls.Global.RedAlert;
 
 /**
@@ -66,7 +71,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
     protected boolean stopFlag = false;
     HashMap<String, Runnable> threads = new HashMap<>();
 
-   private ArrayList<model_rider_list> mRiderList;
+       private ArrayList<model_rider_list> mRiderList;
 
 
     long timeInMillies = 0L;
@@ -170,33 +175,50 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 //            }
 //        });
 
-        mRiderList= PushOrder.populateList();
+//        mRiderList= PushOrder.populateList();
+//
+//        ArrayAdapter<model_rider_list> myAdapter = new ArrayAdapter<model_rider_list>(mContext, android.R.layout.simple_spinner_item, mRiderList);
+//        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        holder.mRider.setAdapter(myAdapter);
+//
+//
+//
+//        holder.mRider.setOnItemSelectedListener(new OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                model_rider_list mModal;
+//                if(!(holder.mRider.getSelectedItem() == null))
+//                {
+//                    mModal = (model_rider_list) holder.mRider.getSelectedItem();
+//                    Toast.makeText(mContext,"You have selected " + mModal.RiderName + "\t Id: " + mModal.RiderId,Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//
+//
+//        });
 
-        ArrayAdapter<model_rider_list> myAdapter = new ArrayAdapter<model_rider_list>(mContext, android.R.layout.simple_spinner_item, mRiderList);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.mRider.setAdapter(myAdapter);
-
-
-
-        holder.mRider.setOnItemSelectedListener(new OnItemSelectedListener() {
+        holder.mRider.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                model_rider_list mModal;
-                if(!(holder.mRider.getSelectedItem() == null))
-                {
-                    mModal = (model_rider_list) holder.mRider.getSelectedItem();
-                    Toast.makeText(mContext,"You have selected " + mModal.RiderName + "\t Id: " + mModal.RiderId,Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+               onClickRider();
 
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-
         });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -263,6 +285,50 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
                 notifyItemRangeChanged(newPosition, mFeedList.size());
             }
         });
+    }
+
+    public void onClickRider() {
+        final ArrayList<model_rider_list> data = populateList();
+
+
+
+
+//
+//        RiderListAdapter adapter = new RiderListAdapter(mContext, data);
+//
+//        view = mContext.getLayoutInflater().inflate(R.layout.rider_list, null, true);
+
+//        ListView list = (ListView) view.findViewById(R.id.listView1);
+//        list.setAdapter(adapter);
+
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                String Slecteditem = data.get(position).RiderName;
+//                Toast.makeText(PushOrder.this, Slecteditem, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+        final Dialog dialogOut = new Dialog(mContext);
+
+        dialogOut.setContentView(R.layout.rider_list);
+        ListView lstRider = (ListView) dialogOut.findViewById(R.id.lstRiderList);
+        RiderListAdapter adapter = new RiderListAdapter(mContext, data);
+        lstRider.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+        dialogOut.setCancelable(true);
+        dialogOut.setTitle("Riders");
+//        dialogOut.buNeutralButton("Voltar",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialogOut.dismiss();
+//                    }
+//                });
+
+        dialogOut.show();
     }
 
 

@@ -31,15 +31,15 @@ public class PushOrderViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.marchent)
     TextView mMarchant;
     @BindView(R.id.rider)
-    Spinner mRider;
+    TextView mRider;
     @BindView(R.id.adress)
     TextView mAddr;
     @BindView(R.id.Cash)
     TextView mCash;
     @BindView(R.id.Btn_Push)
     Button Btn_Push;
-
     CountDownTimer conter;
+
     public PushOrderViewHolder(View itemView, int viewType) {
         super(itemView);
         ButterKnife.bind(this, itemView);

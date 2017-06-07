@@ -1,6 +1,7 @@
 package com.masaga.goyorider.forms;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -75,6 +76,7 @@ public class pending_order extends AppCompatActivity {
     private Orientation mOrientation;
     private boolean mWithLinePadding;
     String TripId = "0";
+    private ProgressDialog loader;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
     @Override
@@ -135,6 +137,10 @@ public class pending_order extends AppCompatActivity {
 //
      //  initView();
 
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
 
         Ion.with(this)
                 .load("GET", getOrders.value)
@@ -147,14 +153,16 @@ public class pending_order extends AppCompatActivity {
                     public void onCompleted(Exception e, JsonObject result) {
 
                         try {
+
                             if (result != null) Log.v("result", result.toString());
                             Gson gson = new Gson();
                             Type listType = new TypeToken<List<model_pending>>() {
                             }.getType();
                             List<model_pending> events = (List<model_pending>) gson.fromJson(result.get("data"), listType);
                             bindCurrentTrips(events);
-
-                        } catch (Exception ea) {
+                            loader.hide();
+                        }
+                        catch (Exception ea) {
                             ea.printStackTrace();
                         }
                     }

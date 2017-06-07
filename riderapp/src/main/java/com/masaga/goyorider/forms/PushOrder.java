@@ -1,6 +1,9 @@
 package com.masaga.goyorider.forms;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -27,6 +32,8 @@ import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
 import com.masaga.goyorider.adapters.ComplatedOrderAdapter;
 import com.masaga.goyorider.adapters.PushOrderAdapter;
+
+import com.masaga.goyorider.adapters.RiderListAdapter;
 import com.masaga.goyorider.adapters.pending_order_adapter;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.model.model_pending;
@@ -37,6 +44,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Handler;
+import android.widget.Toast;
+
 import java.util.logging.LogRecord;
 
 public class PushOrder extends AppCompatActivity {
@@ -45,6 +54,7 @@ public class PushOrder extends AppCompatActivity {
     private List<model_push_order> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
+    private ProgressDialog loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +77,10 @@ public class PushOrder extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
 //        initView();
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
 
         JsonObject json = new JsonObject();
         json.addProperty("flag", "dashboard");
@@ -88,6 +102,7 @@ public class PushOrder extends AppCompatActivity {
                             }.getType();
                             List<model_push_order> events = (List<model_push_order>) gson.fromJson(result.get("data").getAsJsonArray().get(0), listType);
                             bindCurrentTrips(events);
+                            loader.hide();
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();
@@ -127,41 +142,74 @@ public class PushOrder extends AppCompatActivity {
         }
     }
 
+//    public void onClickRider(View view) {
+//        final ArrayList<model_rider_list> data = populateList();//init() just get some data
+//
+//        RiderListAdapter adapter = new RiderListAdapter(this, data);
+//
+//        View v = PushOrder.this.getLayoutInflater().inflate(R.layout.rider_list, null, true);
+//
+//        ListView list = (ListView) v.findViewById(R.id.listView1);
+//        list.setAdapter(adapter);
+//
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                String Slecteditem = data.get(position).RiderName;
+//                Toast.makeText(PushOrder.this, Slecteditem, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        final Dialog dialogOut = new Dialog(PushOrder.this);
+//
+//        dialogOut.setContentView(list);
+//        dialogOut.setCancelable(true);
+//        dialogOut.setTitle("Riders");
+////        dialogOut.buNeutralButton("Voltar",
+////                new DialogInterface.OnClickListener() {
+////                    @Override
+////                    public void onClick(DialogInterface dialog, int which) {
+////                        dialogOut.dismiss();
+////                    }
+////                });
+//
+//        dialogOut.show();
+//    }
+//
+//    public static ArrayList<model_rider_list> populateList(){
+//        ArrayList<model_rider_list> mRiderList = new ArrayList<model_rider_list>();
+//        mRiderList.add(new model_rider_list("Select a Rider", 0));
+//        mRiderList.add(new model_rider_list("Rider 1", 308));
+//        mRiderList.add(new model_rider_list("Rider 2", 948));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//        mRiderList.add(new model_rider_list("Rider 1", 308));
+//        mRiderList.add(new model_rider_list("Rider 2", 948));
+//        mRiderList.add(new model_rider_list("Rider 3", 340));
+//
+//        return mRiderList;
+//    }
+
     public static ArrayList<model_rider_list> populateList(){
         ArrayList<model_rider_list> mRiderList = new ArrayList<model_rider_list>();
-        mRiderList.add(new model_rider_list("Select a Rider", 0));
-        mRiderList.add(new model_rider_list("Rider 1", 308));
-        mRiderList.add(new model_rider_list("Rider 2", 948));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 1", 308));
-        mRiderList.add(new model_rider_list("Rider 2", 948));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 1", 308));
-        mRiderList.add(new model_rider_list("Rider 2", 948));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 1", 308));
-        mRiderList.add(new model_rider_list("Rider 2", 948));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
-        mRiderList.add(new model_rider_list("Rider 3", 340));
+        mRiderList.add(new model_rider_list("Select a Rider", 0,"","",""));
+        mRiderList.add(new model_rider_list("Rider 1", 308,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 2", 948,"994685586","22KM away","28%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"992586286","756KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","82KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 1", 308,"9946253286","25KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 2", 948,"9946253286","23KM away","26%"));
+        mRiderList.add(new model_rider_list("Rider 3", 340,"9946253286","25KM away","26%"));
 
         return mRiderList;
     }
