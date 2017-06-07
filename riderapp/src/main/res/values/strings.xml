@@ -49,13 +49,13 @@
     <string name="pickup_exit">This trip is in progress. If you exit from the screen we unable to track your vehicle. Do you still want to exit?</string>
     <string name="alert_yes_text">YES</string>
 
-    <string name="Pending_Order">Pending Orders</string>
-    <string name="Complated_Order">Complated Orders</string>
-    <string name="Cash_Collection">Cash Collection</string>
-    <string name="All_Order">All Orders</string>
-    <string name="New_Order">Notifications</string>
-    <string name="Rejected_Order">Returned Orders</string>
-    <string name="Push_Order">Push Orders</string>
+    <string name="Pending_Order" translatable="false">Pending Orders</string>
+    <string name="Complated_Order" translatable="false">Complated Orders</string>
+    <string name="Cash_Collection" translatable="false">Cash Collection</string>
+    <string name="All_Order" translatable="false">All Orders</string>
+    <string name="New_Order" translatable="false">Notifications</string>
+    <string name="Rejected_Order" translatable="false">Returned Orders</string>
+    <string name="Push_Order" translatable="false">Push Orders</string>
 
 
 </resources>

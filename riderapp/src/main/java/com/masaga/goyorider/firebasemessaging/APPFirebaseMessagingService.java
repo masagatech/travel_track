@@ -264,34 +264,34 @@ public class APPFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    public class switchButtonListener extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(APPFirebaseMessagingService.this, "Send Data", Toast.LENGTH_SHORT).show();
-
-            JsonObject json = new JsonObject();
-            json.addProperty("flag", "order");
-            json.addProperty("status", "2");
-            json.addProperty("ordid", "1");
-            json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-
-            Ion.with(APPFirebaseMessagingService.this)
-                    .load(Global.urls.setStatus.value)
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
-
-                            try {
-                                if (result != null) Log.v("result", result.toString());
-                            } catch (Exception ea) {
-                                ea.printStackTrace();
-                            }
-                        }
-                    });
-        }
-    }
+//    public class switchButtonListener extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Toast.makeText(APPFirebaseMessagingService.this, "Send Data", Toast.LENGTH_SHORT).show();
+//
+//            JsonObject json = new JsonObject();
+//            json.addProperty("flag", "order");
+//            json.addProperty("status", "2");
+//            json.addProperty("ordid", "1");
+//            json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+//
+//            Ion.with(APPFirebaseMessagingService.this)
+//                    .load(Global.urls.setStatus.value)
+//                    .setJsonObjectBody(json)
+//                    .asJsonObject()
+//                    .setCallback(new FutureCallback<JsonObject>() {
+//                        @Override
+//                        public void onCompleted(Exception e, JsonObject result) {
+//
+//                            try {
+//                                if (result != null) Log.v("result", result.toString());
+//                            } catch (Exception ea) {
+//                                ea.printStackTrace();
+//                            }
+//                        }
+//                    });
+//        }
+//    }
 
 
 
