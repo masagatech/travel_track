@@ -18,7 +18,7 @@ public class model_pending {
     public int ordid;
 
     @SerializedName("ordno")
-    public int ordno;
+    public String ordno;
 
     @SerializedName("rm")
     public String remark;

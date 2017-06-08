@@ -196,22 +196,22 @@ public class PushOrder extends AppCompatActivity {
 //        return mRiderList;
 //    }
 
-    public static ArrayList<model_rider_list> populateList(){
-        ArrayList<model_rider_list> mRiderList = new ArrayList<model_rider_list>();
-        mRiderList.add(new model_rider_list("Nilesh Shah", 308,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Pratik Naik", 948,"994685586","22KM away","28%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 1", 340,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"992586286","756KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","82KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 1 Rider 3", 308,"9946253286","25KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 2 Rider 3", 948,"9946253286","23KM away","26%"));
-        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
-
-        return mRiderList;
-    }
+//    public static ArrayList<model_rider_list> populateList(){
+//        ArrayList<model_rider_list> mRiderList = new ArrayList<model_rider_list>();
+//        mRiderList.add(new model_rider_list("Nilesh Shah", 308,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Pratik Naik", 948,"994685586","22KM away","28%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 1", 340,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"992586286","756KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","82KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 1 Rider 3", 308,"9946253286","25KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 2 Rider 3", 948,"9946253286","23KM away","26%"));
+//        mRiderList.add(new model_rider_list("Rider 3 Rider 3", 340,"9946253286","25KM away","26%"));
+//
+//        return mRiderList;
+//    }
 
 //
 //    private JsonObject getRiders() {

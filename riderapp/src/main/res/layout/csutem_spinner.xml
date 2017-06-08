@@ -20,14 +20,6 @@
         android:textColor="#000"
         android:textStyle="bold"
         android:textSize="16dp"/>
-        <CheckBox
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:id="@+id/checkbox"/>
-
     </LinearLayout>
     <LinearLayout
         android:paddingLeft="10dp"

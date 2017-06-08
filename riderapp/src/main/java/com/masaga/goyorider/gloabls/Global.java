@@ -55,7 +55,8 @@ public class Global {
         getStatus("getStatus", REST_URL + APIName+"/getStatus"),
         setStatus("setStatus", REST_URL + APIName+"/setStatus"),
         setTripAction("setTripAction", REST_URL + APIName+"/setTripAction"),
-        getNotify("getNotify", REST_URL + APIName+"/getNotify");
+        getNotify("getNotify", REST_URL + APIName+"/getNotify"),
+        getAvailRider("getNotify", REST_URL + APIName+"/getAvailRider");
 
 
 

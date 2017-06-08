@@ -69,28 +69,10 @@ public class RiderListAdapter extends BaseAdapter {
 
 
 
-        mViewHolder.uRidername.setText(Rider.RiderName);
-        mViewHolder.uPhone.setText(Rider.RiderNumber);
-        mViewHolder.uKm.setText(Rider.RiderKM);
-        mViewHolder.uBtry.setText(Rider.RiderBtry);
-        mViewHolder.RiderCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mViewHolder.RiderCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
-                data.get(getPosition).setSelected(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
-            }
-        });
-        mViewHolder.RiderCheck.setTag(position);
-        mViewHolder.RiderCheck.setChecked(data.get(position).isSelected());
-
+        mViewHolder.uRidername.setText(Rider.nm);
+        mViewHolder.uPhone.setText(Rider.mb);
+        mViewHolder.uKm.setText("1 KM Away");
+        mViewHolder.uBtry.setText(Rider.btry+"%");
 
 
 
@@ -109,7 +91,7 @@ public class RiderListAdapter extends BaseAdapter {
         TextView uPhone;
         TextView uKm;
         TextView uBtry;
-        CheckBox RiderCheck;
+
 
 
         public MyViewHolder(View item) {
@@ -117,7 +99,6 @@ public class RiderListAdapter extends BaseAdapter {
             uPhone = (TextView) item.findViewById(R.id.rider_numbr);
             uKm = (TextView) item.findViewById(R.id.km);
             uBtry = (TextView) item.findViewById(R.id.rider_btry);
-            RiderCheck = (CheckBox) item.findViewById(R.id.checkbox);
         }
     }
 }

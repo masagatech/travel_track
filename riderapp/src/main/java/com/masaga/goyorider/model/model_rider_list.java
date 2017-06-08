@@ -9,30 +9,28 @@ import com.google.gson.annotations.SerializedName;
 public class model_rider_list {
 
 
-    public int RiderId;
-    public String RiderName;
-    public String RiderNumber;
-    public String RiderKM;
-    public String RiderBtry;
-    boolean selected = false;
+    @SerializedName("nm")
+    public String nm;
 
-    public model_rider_list(String RiderName,int RiderId,String RiderNumber,String RiderKM,String RiderBtry) {
-        this.RiderNumber=RiderNumber;
-        this.RiderKM=RiderKM;
-        this.RiderBtry=RiderBtry;
-        this.RiderId=RiderId;
-        this.RiderName=RiderName;
-    }
+    @SerializedName("up_on")
+    public String up_on;
 
-    public boolean isSelected() {
-        return selected;
-    }
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-    @Override
-    public String toString() {
-        return RiderName;
+    @SerializedName("rdrtyp")
+    public String rdrtyp;
+
+    @SerializedName("btry")
+    public Float btry;
+
+    @SerializedName("mb")
+    public String mb;
+
+    @SerializedName("ch")
+    public Boolean ch;
+
+    @SerializedName("rdrid")
+    public String rdrid;
+
+    public model_rider_list() {
     }
 
 
