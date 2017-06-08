@@ -46,8 +46,8 @@ public class splash_screen extends AppCompatActivity {
                 SHP.set(getApplicationContext(), SHP.ids.shortcut, true);
             }
 
-            SQLBase dataaseInitiate = new SQLBase(splash_screen.this);
-            dataaseInitiate.close();
+//            SQLBase dataaseInitiate = new SQLBase(splash_screen.this);
+//            dataaseInitiate.close();
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

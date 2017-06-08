@@ -336,7 +336,8 @@ public class SQLBase  {
     public void close(){
         try{
         openHelper.close();
-        sqLiteDB.close();}
+        //sqLiteDB.close();
+            }
         catch (Exception e){
             e.printStackTrace();
         }
