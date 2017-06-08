@@ -79,6 +79,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
     HashMap<String, Runnable> threads = new HashMap<>();
     ListView lstRider;
     String []Name;
+    Dialog dialogOut;
 
        private ArrayList<model_rider_list> mRiderList;
 
@@ -321,7 +322,7 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
         GetRiderList();
 //        final ArrayList<model_rider_list> data = populateList();
-        final Dialog dialogOut = new Dialog(mContext);
+        dialogOut = new Dialog(mContext);
 
         dialogOut.setContentView(R.layout.rider_list);
        lstRider = (ListView) dialogOut.findViewById(R.id.lstRiderList);
@@ -416,11 +417,11 @@ public class PushOrderAdapter extends RecyclerView.Adapter<PushOrderViewHolder>{
 
     private void bindCurrentTrips(ArrayList<model_rider_list> lst) {
         if (lst.size() > 0) {
+            dialogOut.findViewById(R.id.txtNodata).setVisibility(View.GONE);
             RiderListAdapter adapter = new RiderListAdapter(mContext, lst);
             lstRider.setAdapter(adapter);
-//        } else {
-//            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
-//        }
+        } else {
+            dialogOut.findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
         }
     }
 

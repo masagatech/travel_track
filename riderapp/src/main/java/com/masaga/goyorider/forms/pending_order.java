@@ -246,13 +246,13 @@ public class pending_order extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                                 //StartRide.setVisibility(View.GONE);
-                                Intent intent=new Intent(pending_order.this,dashboard.class);
-                                startActivity(intent);
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                             }
+                            Intent intent=new Intent(pending_order.this,dashboard.class);
+                            startActivity(intent);
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();

@@ -12,11 +12,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 
+import com.crashlytics.android.Crashlytics;
 import com.masaga.goyorider.R;
 
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.utils.SHP;
 import com.masaga.goyorider.database.SQLBase;
+import io.fabric.sdk.android.Fabric;
 
 public class splash_screen extends AppCompatActivity {
 
@@ -26,6 +28,7 @@ public class splash_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.activity_splash_screen);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

@@ -10,4 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
+    <TextView
+        android:layout_marginTop="60dp"
+        android:id="@+id/txtNodata"
+        android:drawableTop="@drawable/no_pending_data"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textColor="@color/blue_light"
+        android:layout_height="wrap_content"
+        android:text="Oops there were no Riders Available right now!!"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        />
 </LinearLayout>

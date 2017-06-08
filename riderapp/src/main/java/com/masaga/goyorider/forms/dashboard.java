@@ -47,6 +47,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -128,6 +129,9 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        logUser();
+
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
 
@@ -315,6 +319,14 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
 
     }
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier("12345");
+        Crashlytics.setUserEmail("user@fabric.io");
+        Crashlytics.setUserName(Global.loginusr.getDriverid() + "");
+    }
+
 
     boolean isStatusDbCheck = false;
 
