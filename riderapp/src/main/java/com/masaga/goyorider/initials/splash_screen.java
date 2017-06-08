@@ -79,7 +79,7 @@ public class splash_screen extends AppCompatActivity {
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
                 Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.mipmap.ic_launcher));
+                        R.drawable.riderlogo21));
 
         addIntent
                 .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
