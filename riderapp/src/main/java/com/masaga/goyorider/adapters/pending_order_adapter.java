@@ -56,6 +56,7 @@ import static android.view.View.INVISIBLE;
 import static com.masaga.goyorider.Service.RiderStatus.Rider_Lat;
 import static com.masaga.goyorider.Service.RiderStatus.Rider_Long;
 import static com.masaga.goyorider.forms.PendingOrdersView.getTimeLineViewType;
+import static com.masaga.goyorider.forms.dashboard.Pending_element;
 import static com.masaga.goyorider.gloabls.Global.urls.setTripAction;
 
 /**
@@ -107,6 +108,8 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 
     @Override
     public void onBindViewHolder(final pending_order_viewHolder holder, final int position) {
+
+        Pending_element=mFeedList.size();
 
         final model_pending timeLineModel = mFeedList.get(position);
 

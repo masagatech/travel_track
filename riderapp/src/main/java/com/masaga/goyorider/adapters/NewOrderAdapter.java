@@ -234,6 +234,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
                                         holder.popup_counter.setText("REJECTED") ;
                                     }
                                 } else {
+                                    holder.popup_counter.setText("Already Assigned");
                                     String msg = data.get("msg").toString();
                                     Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                                 }

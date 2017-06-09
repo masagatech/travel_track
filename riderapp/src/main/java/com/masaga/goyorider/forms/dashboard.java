@@ -124,8 +124,10 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     public Criteria criteria;
     public String bestProvider;
     LocationManager locationManager2;
+    public  static int Pending_element;
     final Popup_Counter CountTimer = new Popup_Counter(180000, 1000);
     private NotificationManager notificationManager;
+    TextView Count_Pending;
 
 
     @Override
@@ -135,6 +137,8 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
         setContentView(R.layout.activity_dashboard);
         AppVerCheck();
+        Count_Pending=(TextView)findViewById(R.id.Count);
+        PendingCountOnCheck();
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -186,6 +190,8 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         Online = (TextView) findViewById(R.id.online);
         RiderName = (TextView) findViewById(R.id.nameRider);
         Logout = (ImageButton) findViewById(R.id.Logout);
+
+
 
         RiderName.setText(Global.loginusr.getFullname());
 
@@ -688,9 +694,21 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     }
 
+    private void PendingCountOnCheck(){
+        if(Pending_element>0){
+            Count_Pending.setVisibility(View.VISIBLE);
+            Count_Pending.setText(Pending_element+"");
+        }else if(Count_Pending.getVisibility()==View.GONE) {
+
+        }else {
+            Count_Pending.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        PendingCountOnCheck();
         AppVerCheck();
     }
 }
