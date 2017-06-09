@@ -13,7 +13,8 @@
         android:text="DATE"
         android:background="@color/bb_inActiveBottomBarItemColor"
         android:textColor="#fff"
-        android:textSize="18dp" />
+        android:textSize="16dp"
+        android:fontFamily="sans-serif-light"/>
 
     <ImageView
         android:id="@+id/RejectedAllOrder"
@@ -24,7 +25,6 @@
         android:padding="5dp"
         android:visibility="gone"
         android:src="@drawable/push_order"
-        android:text="10"
         android:textColor="#fff"
         android:textSize="18dp" />
 
@@ -55,10 +55,11 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:text="TOTAL"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:background="@color/bb_inActiveBottomBarItemColor"
         android:textColor="#fff"
-        android:textSize="18dp" />
+        android:textSize="16dp" />
 
 
 </LinearLayout>
