@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#d9d8d8"
     android:fitsSystemWindows="true"
-    tools:context="com.masaga.goyorider.forms.cash_collection">
+    tools:context="com.goyo.goyorider.forms.cash_collection">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

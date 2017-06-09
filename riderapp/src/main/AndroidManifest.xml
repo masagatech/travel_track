@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.masaga.goyorider"
+    package="com.goyo.goyorider"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -90,10 +90,10 @@
 
         <!-- Activities -->
         <activity
-            android:name=".goyorider.MainActivity"
+            android:name="com.goyo.goyorider.goyorider.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".initials.splash_screen"
+            android:name="com.goyo.goyorider.initials.splash_screen"
             android:configChanges="locale|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -105,52 +105,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".forms.driver_info"
+            android:name="com.goyo.goyorider.forms.driver_info"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.driver_info_view"
+            android:name="com.goyo.goyorider.forms.driver_info_view"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.my_trip"
+            android:name="com.goyo.goyorider.forms.my_trip"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".initials.login"
+            android:name="com.goyo.goyorider.initials.login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.pickupcrew"
+            android:name="com.goyo.goyorider.forms.pickupcrew"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.crew_details"
+            android:name="com.goyo.goyorider.forms.crew_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".settings.languages"
+            android:name="com.goyo.goyorider.settings.languages"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".settings.settings"
+            android:name="com.goyo.goyorider.settings.settings"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".forms.googlemapexp" />
-        <activity android:name=".testd.popuppanel" />
+        <activity android:name="com.goyo.goyorider.forms.googlemapexp" />
+        <activity android:name="com.goyo.goyorider.testd.popuppanel" />
         <activity
-            android:name=".customer.clnt_tripview"
+            android:name="com.goyo.goyorider.customer.clnt_tripview"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".customer.clnt_mykids"
+            android:name="com.goyo.goyorider.customer.clnt_mykids"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".Service.RiderStatus"
+            android:name="com.goyo.goyorider.Service.RiderStatus"
             android:exported="false" />
 
         <!-- [START firebase_service] -->
         <service
-            android:name=".firebasemessaging.APPFirebaseMessagingService"
+            android:name="com.goyo.goyorider.firebasemessaging.APPFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -163,7 +163,7 @@
 
         <!-- [START firebase_iid_service] -->
         <service
-            android:name=".firebasemessaging.FirebaseInstanceIDService"
+            android:name="com.goyo.goyorider.firebasemessaging.FirebaseInstanceIDService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -171,35 +171,35 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
-        <activity android:name=".initials.sessionchecker" />
+        <activity android:name="com.goyo.goyorider.initials.sessionchecker" />
         <activity
-            android:name=".forms.dashboard"
+            android:name="com.goyo.goyorider.forms.dashboard"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.pending_order"
+            android:name="com.goyo.goyorider.forms.pending_order"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".forms.complated_order"
+            android:name="com.goyo.goyorider.forms.complated_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".forms.cash_collection"
+            android:name="com.goyo.goyorider.forms.cash_collection"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".forms.rejected_order"
+            android:name="com.goyo.goyorider.forms.rejected_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".forms.all_order"
+            android:name="com.goyo.goyorider.forms.all_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".forms.PushOrder"
+            android:name="com.goyo.goyorider.forms.PushOrder"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".forms.newOrder"
+            android:name="com.goyo.goyorider.forms.newOrder"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -208,7 +208,7 @@
             android:name="io.fabric.ApiKey"
             android:value="0c08ca1731bcc7783e0a16ff95210e959ce5cdbb" />
 
-        <activity android:name=".forms.AllOrderDetails"
+        <activity android:name="com.goyo.goyorider.forms.AllOrderDetails"
             android:label="Daily Order Counts"></activity>
     </application>
 

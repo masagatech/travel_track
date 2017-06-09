@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.masaga.goyorider.forms.my_trip"
+    tools:context="com.goyo.goyorider.forms.my_trip"
     android:background="@color/background">
     <ListView
         android:id="@+id/lst_mytrip_list"

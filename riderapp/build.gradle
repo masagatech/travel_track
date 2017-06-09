@@ -20,7 +20,7 @@ android {
     buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId 'com.masaga.goyorider'
+        applicationId 'com.goyo.goyorider'
         minSdkVersion 15
         targetSdkVersion 25
         compileSdkVersion = 25
