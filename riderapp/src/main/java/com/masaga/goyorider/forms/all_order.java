@@ -51,8 +51,11 @@ public class all_order extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(getSupportActionBar()!=null)
+        if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setLogo(R.drawable.rider_del);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
 
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;

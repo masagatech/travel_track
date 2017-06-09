@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rider 1 Rider 1"
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:fontFamily="sans-serif-light"
             android:id="@+id/rider_numbr"
             android:paddingBottom="5dp"
             android:layout_weight="1"
@@ -37,6 +39,7 @@
             android:text="9996325763"
             android:textSize="15dp"/>
         <TextView
+            android:fontFamily="sans-serif-light"
 
             android:layout_marginLeft="10dp"
             android:paddingBottom="5dp"
@@ -49,6 +52,7 @@
             android:textColor="#000"
             android:textSize="15dp"/>
         <TextView
+            android:fontFamily="sans-serif-light"
             android:id="@+id/rider_btry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

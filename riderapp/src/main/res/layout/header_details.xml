@@ -9,60 +9,55 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="2.5"
-        android:background="@color/bb_inActiveBottomBarItemColor"
-        android:padding="5dp"
-        android:text="01/21/17"
         android:gravity="center"
-        android:fontFamily="sans-serif-light"
+        android:text="DATE"
+        android:background="@color/bb_inActiveBottomBarItemColor"
         android:textColor="#fff"
-        android:textSize="16dp" />
+        android:textSize="18dp" />
 
-    <TextView
+    <ImageView
         android:id="@+id/RejectedAllOrder"
         android:layout_width="55dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/orange_light"
         android:gravity="center"
         android:padding="5dp"
-        android:text="10"
         android:visibility="gone"
+        android:src="@drawable/push_order"
+        android:text="10"
         android:textColor="#fff"
         android:textSize="18dp" />
 
     <TextView
-        android:id="@+id/DeliverAllOrder"
         android:textColor="#fff"
         android:padding="5dp"
+       android:drawableLeft="@drawable/accept"
         android:gravity="center"
-        android:fontFamily="sans-serif-light"
         android:background="@color/green_light"
-        android:textSize="18dp"
+        android:textSize="12dp"
         android:layout_width="68dp"
-        android:layout_height="match_parent"
-        android:text="02"/>
+        android:layout_height="50dp"
+        android:text="DEL."/>
 
     <TextView
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/ReturnAllOrder"
         android:layout_width="67dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/red_light"
+        android:drawableLeft="@drawable/reject"
         android:gravity="center"
         android:padding="5dp"
-        android:text="04"
+        android:text="RET."
         android:textColor="#fff"
-        android:textSize="18dp" />
+        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/TotalAllOrder"
         android:layout_width="70dp"
         android:layout_height="match_parent"
+        android:text="TOTAL"
         android:gravity="center"
-        android:padding="5dp"
-        android:text="10"
         android:background="@color/bb_inActiveBottomBarItemColor"
         android:textColor="#fff"
-        android:fontFamily="sans-serif-light"
         android:textSize="18dp" />
 
 

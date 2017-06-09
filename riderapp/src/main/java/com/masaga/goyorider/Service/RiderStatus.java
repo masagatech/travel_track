@@ -30,6 +30,7 @@ import com.masaga.goyorider.common.CheckAppForground;
 import com.masaga.goyorider.database.SQLBase;
 import com.masaga.goyorider.forms.newOrder;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_loginusr;
 import com.masaga.goyorider.model.model_notification;
 import com.masaga.goyorider.utils.SHP;
 
@@ -51,12 +52,13 @@ public class RiderStatus extends Service implements LocationListener {
     public static LocationManager locationManager;
     public static Handler handler = new Handler();
     public Context context = RiderStatus.this;
-   public static String Rider_Lat = "0.0", Rider_Long = "0.0";
+    public static String Rider_Lat = "0.0", Rider_Long = "0.0";
     private static String riderid = "0", hsid = "0";
     private Location location;
     Handler handler1;
     Runnable notify;
-    String  ordid,olnm,stops,amt;
+    String ordid, olnm, stops, amt;
+    Integer exptm = 3;
     NotificationCompat.Builder mBuilder;
     NotificationManager notificationManager;
 
@@ -64,6 +66,7 @@ public class RiderStatus extends Service implements LocationListener {
     Integer LocationTimerResseter = LOCATION_SENDER_TIMER;
 
     SQLBase sql;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
@@ -132,7 +135,7 @@ public class RiderStatus extends Service implements LocationListener {
         handler1.removeCallbacks(notify);
         notify = null;
         handler1 = null;
-       // sql.close();
+        // sql.close();
 
     }
 
@@ -174,11 +177,16 @@ public class RiderStatus extends Service implements LocationListener {
                             if (result != null) Log.v("result", result.toString());
                             {
                                 JsonObject d = result.get("data").getAsJsonObject();
-                                if(d.get("state").getAsBoolean()){
-                                JsonObject data = d.get("data").getAsJsonObject().get("extra").getAsJsonObject();
+                                if (d.get("state").getAsBoolean()) {
+                                    JsonObject data = d.get("data").getAsJsonObject().get("extra").getAsJsonObject();
                                     //sql.NOTIFICATION_DELETEAll();
-                                    sql.NOTIFICATION_INSERT(data.toString());
-                                    processData(data);
+                                    Gson gson = new Gson();
+                                    Type listType = new TypeToken<model_notification>() {
+                                    }.getType();
+                                    model_notification m = gson.fromJson(data, listType);
+
+                                    sql.NOTIFICATION_INSERT(data.toString(),m.expmin);
+                                    processData(m);
                                 }
                             }
 
@@ -255,24 +263,24 @@ public class RiderStatus extends Service implements LocationListener {
     }
 
     //Notification Showing here
-    private  void processData(JsonObject data){
+    private void processData(model_notification m) {
 
         //Map<String,String> Data= (Map<String, String>) _msg.getData();
         Intent dialogIntent = new Intent(RiderStatus.this, newOrder.class);
+        if (Global.loginusr == null) {
+            Global.loginusr = new model_loginusr();
+            Global.loginusr.setDriverid(Long.parseLong(riderid));
+        }
+        //dialogIntent.putExtra(riderid,)
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
 
 
-
-        Gson gson = new Gson();
-        Type listType = new TypeToken<model_notification>() {
-        }.getType();
-        model_notification m =  gson.fromJson(data, listType);
-
         ordid = m.ordid;
-        olnm =  m.olnm;
+        olnm = m.olnm;
         stops = m.stops;//obj.get("stops").getAsString();
         amt = m.amt;
+        exptm = m.expmin;
 
         try {
             boolean foregroud = new CheckAppForground().execute(this).get();

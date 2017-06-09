@@ -64,7 +64,8 @@ public class Global {
         setTripAction("setTripAction", REST_URL + APIName+"/setTripAction"),
         getNotify("getNotify", REST_URL + APIName+"/getNotify"),
         getAvailRider("getNotify", REST_URL + APIName+"/getAvailRider"),
-        getMOM("getMOM", REST_URL +"/getMOM");
+        getMOM("getMOM", REST_URL +"/getMOM"),
+        getOrdersCount("getOrdersCount", REST_URL + APIName+"/getOrdersCount");
 
 
 

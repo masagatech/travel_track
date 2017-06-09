@@ -53,6 +53,7 @@ public final class Tables {
         public static final String autoid = "autoid";
         public static final String createon = "createon";
         public static final String data = "data";
+        public static final String exp = "exptm";
 
     }
 

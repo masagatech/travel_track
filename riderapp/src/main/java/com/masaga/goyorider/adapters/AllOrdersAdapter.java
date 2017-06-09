@@ -98,6 +98,12 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
             GradientDrawable gd = (GradientDrawable) holder.Border.getBackground();
             int width_px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mContext.getResources().getDisplayMetrics());
             gd.setStroke(width_px, Color.parseColor("#ff99cc00"));
+
+            holder.DeliverTexts.setText("Delivered");
+            holder.DeliverTexts.setBackgroundColor(Color.parseColor("#ff99cc00"));
+            holder.DeliverTexts.setCompoundDrawablesWithIntrinsicBounds( R.drawable.del, 0, 0, 0);
+
+//            holder.Btn_AcceptReject.setImageDrawable(tempImage);
 //            GradientDrawable gd = new GradientDrawable();
 //            gd.setStroke(2,Color.parseColor("#ff99cc00"));
 //            holder.Border.setBackground(gd);
@@ -109,6 +115,10 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
             GradientDrawable gd = (GradientDrawable) holder.Border.getBackground();
             int width_px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mContext.getResources().getDisplayMetrics());
             gd.setStroke(width_px, Color.parseColor("#ffff4444"));
+
+            holder.DeliverTexts.setText("Returned");
+            holder.DeliverTexts.setBackgroundColor(Color.parseColor("#ffff4444"));
+            holder.DeliverTexts.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ret, 0, 0, 0);
 
 //            GradientDrawable gd = new GradientDrawable();
 //            gd.setStroke(2,Color.parseColor("#ffff4444"));

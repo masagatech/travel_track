@@ -79,15 +79,19 @@ public final class Procedures {
                 "("
                 +  Tables.tblnotification.autoid + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +  Tables.tblnotification.createon  + " VARCHAR, "
-                +  Tables.tblnotification.data  + " VARCHAR "
+                +  Tables.tblnotification.data  + " VARCHAR, "
+                +  Tables.tblnotification.exp  + " INTEGER "
                 +")";
 
 
         public static final String INSERT = "INSERT INTO " + Tables.tblnotification.name
                 + " ("
                 + Tables.tbl_driver_info.createon +  "," + Tables.tblnotification.data
+                +  "," + Tables.tblnotification.exp
                 + ")"
-                + " VALUES (?,?)";
+                + " VALUES (?,?,?)";
+
+        public static final String UPGRADE_2 = "ALTER TABLE " + Tables.tblnotification.name + " ADD COLUMN " +  Tables.tblnotification.exp +" INTEGER";
 
     }
 }

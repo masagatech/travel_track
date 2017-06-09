@@ -61,11 +61,11 @@ public class OrderDetailsAdapter extends BaseAdapter {
 
 
 
-        mViewHolder.uDate.setText(details.mDate);
-        mViewHolder.uReturn.setText(details.mReturn+"");
-        mViewHolder.uDelivery.setText(details.mDeliver+"");
-        mViewHolder.uRejected.setText(details.mReject+"");
-        mViewHolder.uTotal.setText(details.mTotal+"");
+        mViewHolder.uDate.setText(details.dt+"");
+        mViewHolder.uReturn.setText(details.ret+"");
+        mViewHolder.uDelivery.setText(details.del+"");
+        mViewHolder.uRejected.setText("");
+        mViewHolder.uTotal.setText((details.del+details.ret)+"");
 
 
 

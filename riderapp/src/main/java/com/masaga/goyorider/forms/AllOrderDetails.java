@@ -1,20 +1,40 @@
 package com.masaga.goyorider.forms;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
+import com.masaga.goyorider.adapters.AllOrdersAdapter;
 import com.masaga.goyorider.adapters.OrderDetailsAdapter;
+import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_order_details;
 import com.masaga.goyorider.model.model_rider_list;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.masaga.goyorider.R.id.footer;
+import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
+import static com.masaga.goyorider.gloabls.Global.urls.getOrdersCount;
 
 public class AllOrderDetails extends AppCompatActivity {
     private ArrayList<model_order_details> data;
     ListView AllDetails;
+    private ProgressDialog loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +44,50 @@ public class AllOrderDetails extends AppCompatActivity {
         if(getSupportActionBar()!=null)
            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        data= populateList();
+//        data= populateList();
         AllDetails=(ListView)findViewById(R.id.all_details);
 
-        OrderDetailsAdapter orderDetailsAdapter=new OrderDetailsAdapter(data,this);
-        AllDetails.setAdapter(orderDetailsAdapter);
-        orderDetailsAdapter.notifyDataSetChanged();
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header_details, AllDetails,
+                false);
+        AllDetails.addHeaderView(header, null, false);
 
+//        OrderDetailsAdapter orderDetailsAdapter=new OrderDetailsAdapter(data,this);
+//        AllDetails.setAdapter(orderDetailsAdapter);
+//        orderDetailsAdapter.notifyDataSetChanged();
+
+
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
+
+
+        Ion.with(this)
+                .load("GET", getOrdersCount.value)
+                .addQuery("flag", "month")
+                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<List<model_order_details>>() {
+                            }.getType();
+                            ArrayList<model_order_details> events = (ArrayList<model_order_details>) gson.fromJson(result.get("data"), listType);
+                            bindCurrentTrips(events);
+
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                        loader.hide();
+                    }
+                });
 
 
 
@@ -39,20 +96,32 @@ public class AllOrderDetails extends AppCompatActivity {
 
     }
 
-    public static ArrayList<model_order_details> populateList(){
-        ArrayList<model_order_details> mRiderList = new ArrayList<model_order_details>();
-        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-        mRiderList.add(new model_order_details("13-5-17",1,0,9,10));
-        mRiderList.add(new model_order_details("14-5-17",2,2,9,12));
-        mRiderList.add(new model_order_details("15-5-17",6,0,4,10));
-        mRiderList.add(new model_order_details("16-5-17",4,3,9,13));
-        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+    private void bindCurrentTrips(ArrayList<model_order_details> lst) {
+        if (lst.size() > 0) {
+            findViewById(R.id.txtNodata).setVisibility(View.GONE);
 
-        return mRiderList;
+            OrderDetailsAdapter orderDetailsAdapter=new OrderDetailsAdapter(lst,this);
+            AllDetails.setAdapter(orderDetailsAdapter);
+            orderDetailsAdapter.notifyDataSetChanged();
+        } else {
+            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
+        }
     }
+//
+//    public static ArrayList<model_order_details> populateList(){
+//        ArrayList<model_order_details> mRiderList = new ArrayList<model_order_details>();
+//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+//        mRiderList.add(new model_order_details("13-5-17",1,0,9,10));
+//        mRiderList.add(new model_order_details("14-5-17",2,2,9,12));
+//        mRiderList.add(new model_order_details("15-5-17",6,0,4,10));
+//        mRiderList.add(new model_order_details("16-5-17",4,3,9,13));
+//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
+//
+//        return mRiderList;
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Menu

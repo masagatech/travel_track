@@ -23,7 +23,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_complated_orders" />
-
     <TextView
         android:layout_marginTop="60dp"
         android:id="@+id/txtNodata"
@@ -34,6 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Whooho No Complated Delivery!"
         android:textSize="20sp"
+        android:fontFamily="sans-serif-light"
         android:visibility="gone"
         android:layout_centerInParent="true"
         />

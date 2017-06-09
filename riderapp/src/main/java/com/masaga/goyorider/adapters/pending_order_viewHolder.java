@@ -59,6 +59,8 @@ public class pending_order_viewHolder extends RecyclerView.ViewHolder {
     ToggleButton ButtonHide;
     @BindView(R.id.border)
     RelativeLayout Border;
+    @BindView(R.id.DeliverText)
+    TextView DeliverTexts;
 
     public pending_order_viewHolder(View itemView, int viewType) {
         super(itemView);

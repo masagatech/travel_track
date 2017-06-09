@@ -196,6 +196,19 @@
                         android:id="@+id/Btn_AcceptReject"
                         android:src="@drawable/complated_orders"
                         android:background="@color/green_light"/>
+                    <TextView
+                        android:id="@+id/DeliverText"
+                        android:drawableLeft="@drawable/del"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:background="@color/green_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Deliverd"/>
 
                     <ImageButton
                         android:id="@+id/Btn_Call"

@@ -30,6 +30,7 @@
         android:drawableTop="@drawable/no_pending_data"
         android:layout_width="match_parent"
         android:gravity="center"
+        android:fontFamily="sans-serif-light"
         android:textColor="@color/blue_light"
         android:layout_height="wrap_content"
         android:text="Whooho No Returned Orders!!"

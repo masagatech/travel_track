@@ -118,7 +118,6 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
             holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.colorAccent));
         }
 //        holder.mDate.setText(currentDateTimeString);
-        holder.mDate.setText(timeLineModel.dltm + "");
         holder.mOrder.setText(timeLineModel.ordno +"");
         holder.mMarchant.setText(timeLineModel.olnm);
         holder.Custmer_name.setText(timeLineModel.custname);
@@ -126,6 +125,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.mDeliver_at.setText(timeLineModel.custaddr+"\n");
         holder.Remark.setText("Remark: "+timeLineModel.remark);
         holder.mTime.setText(timeLineModel.deltime);
+        holder.mDate.setText(timeLineModel.dltm + "");
         holder.collected_cash.setText(+timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
@@ -413,6 +413,9 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 
     private void Return(final model_pending timeLineModel, final int position, final int newPosition,String feedback){
 
+        if(feedback==null){
+            feedback="";
+        }
 
         JsonObject json = new JsonObject();
         json.addProperty("flag", "retn");

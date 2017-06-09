@@ -209,7 +209,7 @@
             android:value="0c08ca1731bcc7783e0a16ff95210e959ce5cdbb" />
 
         <activity android:name=".forms.AllOrderDetails"
-            android:label="Order Details"></activity>
+            android:label="Daily Order Counts"></activity>
     </application>
 
 </manifest>

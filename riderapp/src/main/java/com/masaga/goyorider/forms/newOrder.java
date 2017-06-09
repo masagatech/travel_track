@@ -113,20 +113,19 @@ public class newOrder extends AppCompatActivity {
         for (int i=0;i<=d.size() -1; i++){
             try{
                 String autoid = "", createon = "", data = "";
+                Integer expTm = 3;
                 autoid =  d.get(i).get(Tables.tblnotification.autoid);
                 createon = d.get(i).get(Tables.tblnotification.createon);
                 data = d.get(i).get(Tables.tblnotification.data);
-
+                expTm = Integer.parseInt(d.get(i).get(Tables.tblnotification.exp));
                 Date date2 = simpleDateFormat.parse(createon);
                 Date date1  = new Date();
                 long difference = date1.getTime() - date2.getTime();
                 Integer minutes = (int) (difference / (1000 * 60));
                 long milisec = (long) (difference);
-                if(minutes > Global.RedAlert){
+                if(minutes > expTm){
                     db.NOTIFICATION_DELETE(autoid);
                 }else {
-
-
                     JsonObject obj = parser.parse(data).getAsJsonObject();
                     Gson gson = new Gson();
                     Type listType = new TypeToken<model_notification>() {
@@ -134,12 +133,12 @@ public class newOrder extends AppCompatActivity {
                     model_notification m = gson.fromJson(obj, listType);
                     m.autoid = Integer.parseInt(autoid);
                     m.createdon = date2;
-                    m.remaintime = (Global.RedAlert * 60* 1000) - milisec;
+                    m.remaintime = (expTm * 60* 1000) - milisec;
                     lst.add(m);
                 }
 
             }catch (Exception e){
-
+                e.printStackTrace();
             }
 
 

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by mTech on 03-Mar-2017.
  */
 public class SQLBase  {
-    private static final String DATABASE_NAME = "goyorider.db";
+    private static final String DATABASE_NAME = "goyoriderv1.db";
     private static final int DATABASE_VERSION = 1;
     private static Context context;
     public static SQLiteDatabase sqLiteDB;
@@ -264,7 +264,7 @@ public class SQLBase  {
     //############################################################################################################
     // notifications
 
-    public void NOTIFICATION_INSERT(String data
+    public void NOTIFICATION_INSERT(String data, Integer exptm
     ){
         //insertStmt = sqLiteDB.compileStatement(Procedures.tbl_driver_info.INSERT);
         ContentValues values = new ContentValues();
@@ -272,6 +272,7 @@ public class SQLBase  {
 
         values.put(Tables.tblnotification.createon , "" + common.dateandtime(context));
         values.put(Tables.tblnotification.data, data);
+        values.put(Tables.tblnotification.exp, exptm + "");
         sqLiteDB.insert(Tables.tblnotification.name,null,values);
         //sqLiteDB.close();
     }
@@ -292,7 +293,8 @@ public class SQLBase  {
         String selectEvents = "SELECT "
                 + Tables.tblnotification.autoid
                 +"," + Tables.tblnotification.createon +","
-                + Tables.tblnotification.data
+                + Tables.tblnotification.data+","
+                + Tables.tblnotification.exp
 
                 + " FROM " + Tables.tblnotification.name ;
         Cursor cursor = sqLiteDB.rawQuery(selectEvents, null);
@@ -303,6 +305,7 @@ public class SQLBase  {
                 map.put(Tables.tblnotification.autoid, cursor.getString(0));
                 map.put(Tables.tblnotification.createon, cursor.getString(1));
                 map.put(Tables.tblnotification.data, cursor.getString(2));
+                map.put(Tables.tblnotification.exp, cursor.getString(3));
                 data.add(map);
             } while (cursor.moveToNext());
         }
@@ -330,6 +333,21 @@ public class SQLBase  {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onCreate(db);
+            switch (oldVersion)
+            {
+                case 1://upgrade from version 1 to 2
+
+                  break;
+                case 2://upgrade from version 2 to 3
+
+                    break;
+
+            }
+
+
+
+
+
         }
     }
 
