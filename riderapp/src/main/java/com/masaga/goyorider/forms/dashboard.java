@@ -95,6 +95,8 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
     @BindView(R.id.Pending_Order)
     FrameLayout Pending_Order;
+    @BindView(R.id.All_Order_details)
+    FrameLayout OrderDetails;
     @BindView(R.id.pushOrder)
     FrameLayout Push_Order;
     @BindView(R.id.Complated_Orders)
@@ -129,10 +131,10 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        logUser();
+        registerCrashReport();
 
         setContentView(R.layout.activity_dashboard);
+        AppVerCheck();
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -174,7 +176,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         if (location != null) {
             latitude = String.valueOf(location.getLatitude());
             longitude = String.valueOf(location.getLongitude());
-            Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
         }
 
 //      Toast.makeText(this,"Current Battery : "+getBatteryLevel()+"%",Toast.LENGTH_SHORT).show();
@@ -300,7 +302,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                         else
                                             stopService(new Intent(dashboard.this, RiderStatus.class));
                                         SwitchTurnedOnOFF("false");
-                                        Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), "Stopping Service", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
@@ -319,12 +321,12 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
 
     }
-    private void logUser() {
+    public static void registerCrashReport() {
         // TODO: Use the current user's information
         // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier("12345");
-        Crashlytics.setUserEmail("user@fabric.io");
-        Crashlytics.setUserName(Global.loginusr.getDriverid() + "");
+        Crashlytics.setUserIdentifier("Hotspot ID: "+Global.loginusr.getHsid() + "");
+//        Crashlytics.setUserEmail("Hotspot ID: "+Global.loginusr.getHsid() + "");
+        Crashlytics.setUserName("Rider ID: " +Global.loginusr.getDriverid() + "");
     }
 
 
@@ -404,7 +406,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                         //Notification
                                         showNotification();
                                         Online.setText("Online");
-                                        Toast.makeText(getApplicationContext(), "Starting Service", Toast.LENGTH_SHORT).show();
                                         mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
                                         dashboard.this.startService(mServiceIntent);
                                     }
@@ -414,7 +415,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     RiderStatusSwitch.setChecked(false);
                                 }
                             } else {
-                                Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "Switch Off", Toast.LENGTH_SHORT).show();
                             }
                             // }
                         } catch (Exception ea) {
@@ -570,6 +571,11 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         Intent intent = new Intent(this, PushOrder.class);
         startActivity(intent);
     }
+    @OnClick(R.id.All_Order_details)
+    void click8() {
+        Intent intent = new Intent(this, AllOrderDetails.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -591,7 +597,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
 
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
-        Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, latitude + "\n" + longitude, Toast.LENGTH_SHORT).show();
 
         locationManager2.removeUpdates(this);
 
@@ -637,5 +643,54 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                     TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
         }
+    }
+
+    private void AppVerCheck() {
+        try {
+            Integer VersionCode = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionCode;
+            if (Global.loginusr.getAppver() > 0) {
+                if (VersionCode < Global.loginusr.getAppver()) {
+                    new AlertDialog.Builder(dashboard.this)
+                            .setTitle("Update")
+                            .setCancelable(false)
+                            .setMessage("Your using older version of the app, \nPlease Update to continue..")
+                            .setPositiveButton("Take me to app store!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.masaga.goyorider")));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.masaga.goyorider")));
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+//                                    int pid = android.os.Process.myPid();
+//                                    android.os.Process.killProcess(pid);
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
+
+                }
+            }
+            //set config
+            Global.loadConfig(Global.loginusr.getConf());
+
+            } catch(PackageManager.NameNotFoundException e){
+                e.printStackTrace();
+            }
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppVerCheck();
     }
 }

@@ -1,6 +1,7 @@
 package com.masaga.goyorider.adapters;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,10 +14,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.masaga.goyorider.R;
@@ -28,13 +38,18 @@ import com.masaga.goyorider.forms.complated_order;
 import com.masaga.goyorider.forms.dashboard;
 import com.masaga.goyorider.forms.pending_order;
 import com.masaga.goyorider.gloabls.Global;
+import com.masaga.goyorider.goyorider.MainActivity;
 import com.masaga.goyorider.model.model_pending;
+import com.masaga.goyorider.model.model_push_order;
 import com.masaga.goyorider.utils.VectorDrawableUtils;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.R.attr.button;
 import static android.R.attr.data;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -57,6 +72,10 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     private LayoutInflater mLayoutInflater;
     public String tripid = "0";
     private ProgressDialog loader;
+    private Spinner RejectSpinner;
+    List<String> RejectList;
+    String SelectedReason;
+
 
     public pending_order_adapter(List<model_pending> feedList, Orientation orientation, boolean withLinePadding) {
         mFeedList = feedList;
@@ -153,34 +172,188 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.Btn_Return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText edittext = new EditText(mContext);
-                edittext.setMaxLines(100);
-                new AlertDialog.Builder(mContext)
-                        .setTitle("Return")
-                        .setMessage("Are you sure you want Return Delivery ? \n\nTell us why?")
-                        .setView(edittext)
-                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //Getting rider feed back
-                                String feedabck = edittext.getText().toString();
-                                loader = new ProgressDialog(mContext);
-                                loader.setCancelable(false);
-                                loader.setMessage("Please wait..");
-                                loader.show();
-                                Return(timeLineModel,position,newPosition,feedabck);
-                            }
-                        })
-                        .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .setIcon(R.drawable.stop_trip).show();
+                final Dialog dialog = new Dialog(mContext);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.reject_reason);
+                dialog.setCancelable(true);
+
+               RejectSpinner = (Spinner) dialog.findViewById(R.id.rej_list_spinner);
+                Button Cancel = (Button) dialog.findViewById(R.id.cancel);
+                Button Return = (Button) dialog.findViewById(R.id.returne);
+
+//                List<String> categories = new ArrayList<String>();
+//                categories.add("Automobile");
+//                categories.add("Business Services");
+//                categories.add("Computers");
+//                categories.add("Education");
+//                categories.add("Personal");
+//                categories.add("Travel");
+
+//                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, categories);
+//                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                RejectSpinner.setAdapter(dataAdapter);
+//                RejectSpinner.setAdapter(adapter);
+                GetRejectReason();
+                RejectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        SelectedReason=RejectList.get(position);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+               Cancel.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                Return.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        loader = new ProgressDialog(mContext);
+                        loader.setCancelable(false);
+                        loader.setMessage("Please wait..");
+                        loader.show();
+                        dialog.dismiss();
+                        Return(timeLineModel,position,newPosition,SelectedReason);
+                    }
+                });
+                dialog.show();
+
+
+
+
+//                TextView tx;
+//                String[] s = { "India ", "Arica", "India ", "Arica", "India ", "Arica",
+//                        "India ", "Arica", "India ", "Arica" };
+//
+//                final ArrayAdapter<String> adp = new ArrayAdapter<String>(mContext,
+//                        android.R.layout.simple_spinner_item, s);
+//
+//                tx= (TextView)findViewById(R.id.txt1);
+//                final Spinner sp = new Spinner(WvActivity.this);
+//                sp.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+//                sp.setAdapter(adp);
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(WvActivity.this);
+//                builder.setView(sp);
+//                builder.create().show();
+//            }
+//
+
+//
+//                View alertView = mContext.getLayoutInflater().inflate(R.layout.reject_reason, null);
+//
+//                List<String> spinnerArray =  new ArrayList<String>();
+//                spinnerArray.add("item1");
+//                spinnerArray.add("item2");
+//
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                        mContext, android.R.layout.simple_spinner_item, spinnerArray);
+//
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                Spinner sItems = (Spinner).findViewById(R.id.);
+//                sItems.setAdapter(adapter);
+
+
+
+
+
+//                final EditText edittext = new EditText(mContext);
+//                edittext.setMaxLines(100);
+//                new AlertDialog.Builder(mContext)
+//                        .setTitle("Return")
+//                        .setMessage("Are you sure you want Return Delivery ? \n\nTell us why?")
+//                        .setView(edittext)
+//                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                //Getting rider feed back
+//                                String feedabck = edittext.getText().toString();
+//                                loader = new ProgressDialog(mContext);
+//                                loader.setCancelable(false);
+//                                loader.setMessage("Please wait..");
+//                                loader.show();
+//                                Return(timeLineModel,position,newPosition,feedabck);
+//                            }
+//                        })
+//                        .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                            }
+//                        })
+//                        .setIcon(R.drawable.stop_trip).show();
 
             }
         });
 
     }
+
+    private void GetRejectReason(){
+        loader = new ProgressDialog(mContext);
+        loader.setCancelable(false);
+        loader.setMessage("Please wait..");
+        loader.show();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "");
+        json.addProperty("group", "rejectreason");
+
+//        Global.showProgress(loader);
+        Ion.with(mContext)
+                .load(Global.urls.getMOM.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+//                            Gson gson = new Gson();
+//                            Type listType = new TypeToken<List<String>>() {
+//                            }.getType();
+                            RejectList = new ArrayList<String>();
+                            for(int i=0;i<result.get("data").getAsJsonArray().size();i++){
+                                RejectList.add(result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("val").getAsString());
+                            }
+                            bindCurrentTrips(RejectList);
+
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                        loader.hide();
+                    }
+                });
+
+    }
+
+    private void bindCurrentTrips(List<String> lst) {
+        if (lst.size() > 0) {
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, lst);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            RejectSpinner.setAdapter(dataAdapter);
+
+//            findViewById(R.id.txtNodata).setVisibility(View.GONE);
+//            mTimeLineAdapter = new PushOrderAdapter(lst, mOrientation, mWithLinePadding);
+//            mRecyclerView.setAdapter(mTimeLineAdapter);
+//            mTimeLineAdapter.notifyDataSetChanged();
+        } else {
+//            findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
+        }
+    }
+
     private void dialContactPhone(final String phoneNumber) {
         mContext.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
     }
@@ -239,9 +412,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     }
 
     private void Return(final model_pending timeLineModel, final int position, final int newPosition,String feedback){
-        if(feedback==null){
-            feedback="";
-        }
+
 
         JsonObject json = new JsonObject();
         json.addProperty("flag", "retn");

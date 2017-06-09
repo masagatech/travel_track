@@ -175,7 +175,7 @@ public class RiderStatus extends Service implements LocationListener {
                             {
                                 JsonObject d = result.get("data").getAsJsonObject();
                                 if(d.get("state").getAsBoolean()){
-                                    JsonObject data = d.get("data").getAsJsonObject().get("extra").getAsJsonObject();
+                                JsonObject data = d.get("data").getAsJsonObject().get("extra").getAsJsonObject();
                                     //sql.NOTIFICATION_DELETEAll();
                                     sql.NOTIFICATION_INSERT(data.toString());
                                     processData(data);

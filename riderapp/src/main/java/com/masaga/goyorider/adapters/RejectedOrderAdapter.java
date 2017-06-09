@@ -88,7 +88,7 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
 //        holder.mTime.setText(timeLineModel.deltime);
 //        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ButtonHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
                 if (holder.ClickToHide.getVisibility() == View.VISIBLE) {

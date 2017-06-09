@@ -28,6 +28,7 @@
         app:contentPadding="15dp">
 
         <RelativeLayout
+            android:id="@+id/border"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -143,8 +144,29 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
                     android:orientation="vertical">
+                    <ToggleButton
+                        android:background="@drawable/expand_arrow"
+                        android:id="@+id/hideButton"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:textOn=""
+                        android:textOff=""
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:layout_centerVertical="true"/>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:id="@+id/Btn_AcceptReject"
+                        android:src="@drawable/complated_orders"
+                        android:background="@color/green_light"/>
+
 
                     <ImageButton
                         android:layout_width="wrap_content"
@@ -166,6 +188,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:background="@android:color/holo_blue_light"
                         android:src="@drawable/map_custemer" />
                 </LinearLayout>

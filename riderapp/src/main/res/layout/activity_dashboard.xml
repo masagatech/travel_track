@@ -124,7 +124,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="40dp"
                     android:gravity="center"
-                    android:src="@drawable/pending_order" />
+                    android:src="@drawable/pending_orders" />
             </FrameLayout>
 
         </LinearLayout>
@@ -138,38 +138,80 @@
         android:padding="10dp">
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_marginLeft="5dp"
             android:layout_weight="1.2"
             android:orientation="vertical"
             android:background="@android:color/holo_green_dark"
             android:clickable="true">
             <FrameLayout
+            android:layout_width="match_parent"
+            android:id="@+id/All_Order"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_height="match_parent">
+
+            <ImageView
                 android:layout_width="match_parent"
-                android:id="@+id/All_Order"
-                android:background="?android:attr/selectableItemBackground"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:src="@drawable/all_order"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/all_order"
-                    android:gravity="center"
-                    android:layout_marginTop="20dp"
-                    />
-
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/All_Order"
-                    android:textColor="@color/white"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="20dp"
-                    />
-            </FrameLayout>
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/All_Order"
+                android:textColor="@color/white"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                />
+        </FrameLayout>
         </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1.2"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:background="@color/orange_light"
+                android:clickable="true">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/All_Order_details"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/pending_order"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Order \nDetails"
+                        android:textColor="@color/white"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="10dp"
+                        />
+                </FrameLayout>
+            </LinearLayout>
+
+            </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

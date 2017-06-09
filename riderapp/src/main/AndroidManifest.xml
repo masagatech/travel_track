@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permision.CALL_PHONE"/>
+    <uses-permission android:name="android.permision.CALL_PHONE" />
     <!--
         <permission
         android:name="com.example.androidmapsv2.permission.MAPS_RECEIVE"
@@ -198,15 +198,18 @@
             android:name=".forms.PushOrder"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".forms.newOrder"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".forms.newOrder"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0c08ca1731bcc7783e0a16ff95210e959ce5cdbb" />
+
+        <activity android:name=".forms.AllOrderDetails"
+            android:label="Order Details"></activity>
     </application>
 
 </manifest>

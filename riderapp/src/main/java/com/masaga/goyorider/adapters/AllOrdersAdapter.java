@@ -2,9 +2,13 @@ package com.masaga.goyorider.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import com.masaga.goyorider.forms.OrderStatus;
 import com.masaga.goyorider.forms.Orientation;
 import com.masaga.goyorider.forms.PendingModel;
 import com.masaga.goyorider.forms.PendingOrdersView;
+import com.masaga.goyorider.forms.all_order;
 import com.masaga.goyorider.gloabls.Global;
 import com.masaga.goyorider.model.model_completed;
 import com.masaga.goyorider.model.model_pending;
@@ -29,6 +34,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.masaga.goyorider.R.drawable.cir;
 import static com.masaga.goyorider.gloabls.Global.urls.getOrders;
 
 /**
@@ -44,12 +50,14 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
     private LayoutInflater mLayoutInflater;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private ProgressDialog loader;
+    private int []Stat;
 
 
-    public AllOrdersAdapter(List<model_completed> feedList, Orientation orientation, boolean withLinePadding) {
+    public AllOrdersAdapter(List<model_completed> feedList, Orientation orientation, boolean withLinePadding,int []stat) {
         mFeedList = feedList;
         mOrientation = orientation;
         mWithLinePadding = withLinePadding;
+        Stat=stat;
     }
     @Override
     public int getItemViewType(int position) {
@@ -68,7 +76,7 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
     }
 
     @Override
-    public void onBindViewHolder(final pending_order_viewHolder holder, final int position) {
+    public void onBindViewHolder(final pending_order_viewHolder holder,  int position) {
 
         final model_completed timeLineModel = mFeedList.get(position);
 
@@ -81,14 +89,42 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
         }
 
 //        holder.mDate.setText(currentDateTimeString);
+
         holder.mOrder.setText(timeLineModel.ordno +"");
         holder.mMarchant.setText(timeLineModel.olnm);
+
+        if(Stat[position]==(1)){
+
+            GradientDrawable gd = (GradientDrawable) holder.Border.getBackground();
+            int width_px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mContext.getResources().getDisplayMetrics());
+            gd.setStroke(width_px, Color.parseColor("#ff99cc00"));
+//            GradientDrawable gd = new GradientDrawable();
+//            gd.setStroke(2,Color.parseColor("#ff99cc00"));
+//            holder.Border.setBackground(gd);
+//            holder.Btn_AcceptReject.setBackgroundColor(Color.parseColor("#ff99cc00"));
+//                                    holder.Btn_AcceptReject.setBackgroundResource(R.drawable.complated_orders);
+//            Drawable tempImage = ContextCompat.getDrawable(mContext,R.drawable.complated_orders);
+//            holder.Btn_AcceptReject.setImageDrawable(tempImage);
+        }else if(Stat[position]==(2)){
+            GradientDrawable gd = (GradientDrawable) holder.Border.getBackground();
+            int width_px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mContext.getResources().getDisplayMetrics());
+            gd.setStroke(width_px, Color.parseColor("#ffff4444"));
+
+//            GradientDrawable gd = new GradientDrawable();
+//            gd.setStroke(2,Color.parseColor("#ffff4444"));
+//            holder.Border.setBackground(gd);
+//            holder.Btn_AcceptReject.setBackgroundColor(Color.parseColor("#ffff4444"));
+//            Drawable tempImage = ContextCompat.getDrawable(mContext,R.drawable.rejected_order);
+//            holder.Btn_AcceptReject.setImageDrawable(tempImage);
+//                                    holder.Btn_AcceptReject.setBackgroundResource(R.drawable.rejected_order);
+        }
+
 //        holder.Custmer_name.setText(timeLineModel.custname);
 //        holder.mDeliver_at.setText(timeLineModel.custmob+"\n"+ timeLineModel.custaddr+"\n"+"Remark: "+timeLineModel.remark);
 //        holder.mTime.setText(timeLineModel.deltime);
 //        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ButtonHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
                 if(holder.ClickToHide.getVisibility() == View.VISIBLE){
@@ -101,7 +137,7 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
                     loader.setCancelable(false);
                     loader.setMessage("Please wait..");
                     loader.show();
-                    AllOrder(timeLineModel,holder,position);
+                    AllOrder(timeLineModel,holder);
                     holder.ClickToHide.setVisibility(View.VISIBLE);
                     holder.mDate.setVisibility(View.VISIBLE);
                     holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
@@ -114,7 +150,7 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
 
 
 
-    private void AllOrder(final model_completed timeLineModel, final pending_order_viewHolder holder,final int position) {
+    private void AllOrder(final model_completed timeLineModel, final pending_order_viewHolder holder) {
 
         Ion.with(mContext)
                 .load("GET", getOrders.value)
@@ -145,6 +181,8 @@ public class AllOrdersAdapter extends RecyclerView.Adapter<pending_order_viewHol
                                 timeLineModel.deltime = Data.get("dtm").getAsString();
                                 timeLineModel.custname = Data.get("cnm").getAsString();
                                 timeLineModel.dltm = Data.get("dltm").getAsString();
+
+
 
 
                                 holder.mTime.setText(timeLineModel.deltime + "");

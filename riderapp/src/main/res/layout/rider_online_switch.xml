@@ -38,6 +38,6 @@
         android:layout_marginTop="5dp"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/ic_action_user"
+        android:background="@drawable/riderlogo21"
         android:layout_alignParentRight="true" />
 </RelativeLayout>

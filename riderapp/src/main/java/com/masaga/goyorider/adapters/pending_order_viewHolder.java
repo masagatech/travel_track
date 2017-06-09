@@ -6,7 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.github.vipulasri.timelineview.TimelineView;
 import com.masaga.goyorider.R;
@@ -45,12 +47,18 @@ public class pending_order_viewHolder extends RecyclerView.ViewHolder {
     ImageButton ArrowRemark;
     @BindView(R.id.Btn_Return)
     Button Btn_Return;
+    @BindView(R.id.Btn_AcceptReject)
+    ImageButton Btn_AcceptReject;
     @BindView(R.id.Collected_Cash)
     EditText collected_cash;
     @BindView(R.id.time_marker)
     TimelineView mTimelineView;
     @BindView(R.id.ClickToHide)
     LinearLayout ClickToHide;
+    @BindView(R.id.hideButton)
+    ToggleButton ButtonHide;
+    @BindView(R.id.border)
+    RelativeLayout Border;
 
     public pending_order_viewHolder(View itemView, int viewType) {
         super(itemView);

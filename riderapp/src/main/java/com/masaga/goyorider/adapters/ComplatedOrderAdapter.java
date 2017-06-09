@@ -92,7 +92,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ButtonHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
                 ComplatedOrder(timeLineModel,holder,position);

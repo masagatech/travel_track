@@ -70,7 +70,7 @@ public class pending_order extends AppCompatActivity {
     EditText collected_cash;
 
     private RecyclerView mRecyclerView;
-    private ImageButton StartRide;
+    private ImageButton StartRide,BackButton;
     private com.masaga.goyorider.adapters.pending_order_adapter mTimeLineAdapter;
     private List<model_pending> mDataList = new ArrayList<>();
     private Orientation mOrientation;
@@ -103,6 +103,15 @@ public class pending_order extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         StartRide = (ImageButton) findViewById(R.id.startRide);
+        BackButton = (ImageButton) findViewById(R.id.back);
+
+        BackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
 
 
         StartRide.setBackgroundColor(R.color.green_light);
@@ -119,6 +128,8 @@ public class pending_order extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     stopTrip();
+                                    Intent intent=new Intent(pending_order.this,dashboard.class);
+                                    startActivity(intent);
 
                                 }
                             })
@@ -251,8 +262,6 @@ public class pending_order extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                             }
-                            Intent intent=new Intent(pending_order.this,dashboard.class);
-                            startActivity(intent);
                         }
                         catch (Exception ea) {
                             ea.printStackTrace();

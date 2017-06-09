@@ -111,6 +111,32 @@ public class model_loginusr {
     @SerializedName("lastlogindt")
     private String lastlogindt;
 
+    public String getConf() {
+        return conf;
+    }
+
+    public void setConf(String conf) {
+        this.conf = conf;
+
+    }
+
+    @SerializedName("conf")
+    private String conf;
+
+
+
+    public int getAppver() {
+        return appver;
+    }
+
+    public void setAppver(int appver) {
+        this.appver = appver;
+    }
+
+    @SerializedName("appver")
+    private int appver;
+
+
     public String getHsid() {
         return hsid;
     }

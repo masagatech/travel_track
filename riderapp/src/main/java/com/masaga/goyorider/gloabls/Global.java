@@ -3,12 +3,19 @@ package com.masaga.goyorider.gloabls;
 import android.app.ProgressDialog;
 import android.os.Environment;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.masaga.goyorider.model.model_appsettings;
+import com.masaga.goyorider.model.model_config;
 import com.masaga.goyorider.model.model_crewdata;
 import com.masaga.goyorider.model.model_loginusr;
+import com.masaga.goyorider.model.model_pending;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by mTech on 04-Mar-2017.
@@ -16,11 +23,11 @@ import java.net.URL;
 public class Global {
     //public static String DOMAIN_URL = "http://192.168.1.16:8081/goyoapi";
 
-    public final static String REST_URL = "http://13.126.2.220:8082/goyoapi";
-    public static final String SOCKET_URL = "http://13.126.2.220:8082/";
+//    public final static String REST_URL = "http://13.126.2.220:8082/goyoapi";
+//    public static final String SOCKET_URL = "http://13.126.2.220:8082/";
 
-//    public final static String REST_URL = "http://192.168.43.10:8082/goyoapi";
-//    public static final String SOCKET_URL = "http://192.168.43.10:8082/";
+    public final static String REST_URL = "http://192.168.43.10:8082/goyoapi";
+    public static final String SOCKET_URL = "http://192.168.43.10:8082/";
 
 
     private final static String APIName="/mrcht";
@@ -56,7 +63,8 @@ public class Global {
         setStatus("setStatus", REST_URL + APIName+"/setStatus"),
         setTripAction("setTripAction", REST_URL + APIName+"/setTripAction"),
         getNotify("getNotify", REST_URL + APIName+"/getNotify"),
-        getAvailRider("getNotify", REST_URL + APIName+"/getAvailRider");
+        getAvailRider("getNotify", REST_URL + APIName+"/getAvailRider"),
+        getMOM("getMOM", REST_URL +"/getMOM");
 
 
 
@@ -77,13 +85,14 @@ public class Global {
     public final static String pause = "pause";
     public final static String cancel = "3";
     public final static String pending = "0";
-    public final static Integer RedAlert = 10;
+    public static Integer RedAlert = 10;
     public final static String pickedupdrop = "1";
     public final static String absent = "2";
 
     public static model_crewdata crewDetails;
 
     public static model_loginusr loginusr;
+    private static model_config config;
 
     public static model_appsettings appsettings;
     public static ProgressDialog prgdialog;
@@ -91,6 +100,15 @@ public class Global {
     public static void showProgress(ProgressDialog prd) {
         prd.setCancelable(false);
         if (!prd.isShowing()) prd.show();
+    }
+
+    public static void loadConfig(String config) {
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<model_config>() {
+        }.getType();
+        Global.config = (model_config)gson.fromJson(config,listType);
+        Global.RedAlert =  Global.config.notifymin;
     }
 
     public static void hideProgress(ProgressDialog prd) {

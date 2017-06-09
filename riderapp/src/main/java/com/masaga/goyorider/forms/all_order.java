@@ -1,6 +1,9 @@
 package com.masaga.goyorider.forms;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +41,7 @@ public class all_order extends AppCompatActivity {
     private boolean mWithLinePadding;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
     private ProgressDialog loader;
+   private int []Stat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,12 @@ public class all_order extends AppCompatActivity {
                             Type listType = new TypeToken<List<model_completed>>() {
                             }.getType();
                             List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
-                            bindCurrentTrips(events);
+                            Stat = new int[result.get("data").getAsJsonArray().size()];
+                            for (int i=0;i<result.get("data").getAsJsonArray().size();i++){
+                                JsonObject Data = result.get("data").getAsJsonArray().get(i).getAsJsonObject();
+                                Stat[i]=Data.get("stsi").getAsInt();
+                            }
+                            bindCurrentTrips(events,Stat);
 
                         }
                         catch (Exception ea) {
@@ -139,10 +148,10 @@ public class all_order extends AppCompatActivity {
 
     }
 
-    private void bindCurrentTrips(List<model_completed> lst) {
+    private void bindCurrentTrips(List<model_completed> lst,int []Stat) {
         if (lst.size() > 0) {
             findViewById(R.id.txtNodata).setVisibility(View.GONE);
-            mTimeLineAdapter = new AllOrdersAdapter(lst, mOrientation, mWithLinePadding);
+            mTimeLineAdapter = new AllOrdersAdapter(lst, mOrientation, mWithLinePadding,Stat);
             mRecyclerView.setAdapter(mTimeLineAdapter);
             mTimeLineAdapter.notifyDataSetChanged();
 
