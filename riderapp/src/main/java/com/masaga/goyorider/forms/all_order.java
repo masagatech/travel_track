@@ -53,8 +53,8 @@ public class all_order extends AppCompatActivity {
 
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setLogo(R.drawable.rider_del);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
+//            getSupportActionBar().setLogo(R.drawable.rider_del);
+//            getSupportActionBar().setDisplayUseLogoEnabled(true);
         }
 
         mOrientation = Orientation.VERTICAL;
