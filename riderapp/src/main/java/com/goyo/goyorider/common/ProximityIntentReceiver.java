@@ -22,7 +22,7 @@ import com.goyo.goyorider.gloabls.Global;
 public class ProximityIntentReceiver extends BroadcastReceiver {
     public static final String TripID_INTENT_EXTRA = "TripID";
     public static final String StudID_INTENT_EXTRA = "StudID";
-    public static final String PROX_ALERT_INTENT = "com.masaga.goyo";
+    public static final String PROX_ALERT_INTENT = "com.goyo.goyorider";
     public static final String LocationReach = "0010";
 
 

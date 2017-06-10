@@ -648,9 +648,9 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                             .setPositiveButton("Take me to app store!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.masaga.goyorider")));
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.goyo.goyorider")));
                                     } catch (android.content.ActivityNotFoundException anfe) {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.masaga.goyorider")));
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.goyo.goyorider")));
                                     }
                                 }
                             })
