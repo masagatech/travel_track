@@ -1,9 +1,11 @@
 package com.goyo.goyorider.adapters;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +33,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static android.content.Context.BIND_IMPORTANT;
+import static com.goyo.goyorider.Service.RiderStatus.mBuilder;
+import static com.goyo.goyorider.Service.RiderStatus.notificationManager;
 import static com.goyo.goyorider.gloabls.Global.urls.setStatus;
 
 /**
@@ -89,6 +94,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
         holder.Btn_Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setNoti();
                 holder.timer.cancel();
                 holder.timer= null;
                 holder.Btn_Reject.setVisibility(View.GONE);
@@ -102,6 +108,7 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
         holder.Btn_Reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setNoti();
                 final EditText edittext = new EditText(mContext);
                 edittext.setMaxLines(100);
 
@@ -191,6 +198,20 @@ public class NewOrderAdapter extends RecyclerView.Adapter<NewOrderAdapterViewHol
 //            }
 //        });
 
+    private void setNoti(){
+
+        mBuilder =
+                new NotificationCompat.Builder(mContext)
+                        .setSmallIcon(R.drawable.rider)
+                        .setContentTitle("You Have Aceepted This Order!")
+                        .setDefaults(Notification.DEFAULT_ALL) // must requires VIBRATE permission
+                        .setPriority(NotificationCompat.PRIORITY_HIGH) //must give priority to High, Max which will considered as heads-up notification
+                        .setVisibility(BIND_IMPORTANT)
+                        .setOngoing(false);
+        Notification note = mBuilder.build();
+//to post your notification to the notification bar with a id. If a notification with same id already exists, it will get replaced with updated information.
+        notificationManager.notify(0, note);
+    }
 
     private void setStatus(final String flag, String ordid, final int position, final int autoid,final NewOrderAdapterViewHolder holder,String feedabck) {
 

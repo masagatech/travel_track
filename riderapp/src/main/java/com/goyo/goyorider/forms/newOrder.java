@@ -94,7 +94,6 @@ public class newOrder extends AppCompatActivity {
         } else {
             findViewById(R.id.txtNodata).setVisibility(View.VISIBLE);
         }
-
     }
 
     private void setDataListItems(){

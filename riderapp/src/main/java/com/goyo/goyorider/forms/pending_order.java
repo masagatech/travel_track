@@ -63,7 +63,7 @@ public class pending_order extends AppCompatActivity {
     private List<model_pending> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
-    String TripId = "0";
+    public static String TripId = "0";
     private ProgressDialog loader;
     private String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -102,12 +102,29 @@ public class pending_order extends AppCompatActivity {
         });
 
 
-        StartRide.setBackgroundColor(R.color.green_light);
+        StartRide.setImageResource(R.drawable.start_trip);
+        StartRide.setBackgroundColor(Color.parseColor("#ff99cc00"));
         StartRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TripId.equals("0")) {
-                    startTrip();
+                    new AlertDialog.Builder(pending_order.this)
+                            .setTitle("Start Trip")
+                            .setMessage("Are you want Start Trip?")
+                            .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startTrip();
+
+
+                                }
+                            })
+                            .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setIcon(R.drawable.rider).show();
+
                 } else {
                     new AlertDialog.Builder(pending_order.this)
                             .setTitle("Stop Trip")
@@ -207,7 +224,8 @@ public class pending_order extends AppCompatActivity {
                                 StartRide.setBackgroundColor(Color.RED);
                                 Toast.makeText(getApplicationContext(),"Your Ride Has started"
                                         ,Toast.LENGTH_SHORT).show();
-                                StartRide.setImageResource(R.drawable.stop_trip);
+                                StartRide.setBackgroundColor(Color.parseColor("#ffff4444"));
+                                StartRide.setImageResource(R.drawable.end_trip);
                                 mTimeLineAdapter.tripid = TripId;
                             }
                             else{
@@ -277,12 +295,12 @@ public class pending_order extends AppCompatActivity {
             TripId = lst.get(0).tripid;
             if(TripId.equals("0")){
                 //greeen
-                StartRide.setImageResource(R.drawable.rider);
-                StartRide.setBackgroundColor(Color.GREEN);
+                StartRide.setImageResource(R.drawable.start_trip);
+                StartRide.setBackgroundColor(Color.parseColor("#ff99cc00"));
             }else {
                 //red
-                StartRide.setImageResource(R.drawable.stop_trip);
-                StartRide.setBackgroundColor(Color.RED);
+                StartRide.setBackgroundColor(Color.parseColor("#ffff4444"));
+                StartRide.setImageResource(R.drawable.end_trip);
             }
 
 

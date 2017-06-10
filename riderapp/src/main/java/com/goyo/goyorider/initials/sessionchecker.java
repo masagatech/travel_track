@@ -120,12 +120,13 @@ public class sessionchecker extends AppCompatActivity {
 
     private void nextScreen() {
         Intent i;
-        if (isLanguageShow) {
-            i = new Intent(sessionchecker.this, languages.class);
-            i.putExtra("frmsplash", true);
-        } else {
+//        if (isLanguageShow) {
+////            i = new Intent(sessionchecker.this, languages.class);
+////            i.putExtra("frmsplash", true);
+//        } else {
             i = new Intent(sessionchecker.this, login.class);
-        }
+//            startActivity(i);
+//        }
         startActivity(i);
         finish();
     }

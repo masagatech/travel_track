@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.goyo.goyorider.forms.dashboard;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.goyo.goyorider.R;
@@ -40,6 +41,7 @@ import java.util.ListIterator;
 
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Lat;
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Long;
+import static com.goyo.goyorider.forms.pending_order.TripId;
 import static com.goyo.goyorider.gloabls.Global.urls.setTripAction;
 
 /**
@@ -288,15 +290,14 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     }
 
     private void AutoStop(){
-            if(mFeedList.size()==0){
+            if(mFeedList.size()==1){
                 new AlertDialog.Builder(mContext)
                         .setTitle("Stop Trip")
                         .setMessage("No Pending Delivery. Are you want Stop Trip?")
                         .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                pending_order pending_order=new pending_order();
-                                pending_order.stopTrip();
+                               stopTrip();
 
                             }
                         })
@@ -309,6 +310,46 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
             }
 
         }
+
+    public void stopTrip(){
+
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "stop");
+        json.addProperty("loc", Rider_Lat+","+Rider_Long);
+
+        json.addProperty("tripid", TripId);
+        json.addProperty("rdid", Global.loginusr.getDriverid() + "");
+
+        Ion.with(mContext)
+                .load(setTripAction.value)
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        try {
+                            if (result != null) Log.v("result", result.toString());
+                            if(result.get("data").getAsJsonObject().get("status").getAsBoolean()){
+                                Toast.makeText(mContext,result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                                //StartRide.setVisibility(View.GONE);
+                                Intent intent=new Intent(mContext,dashboard.class);
+                                mContext.startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(mContext,result.get("data").getAsJsonObject().get("msg").toString()
+                                        ,Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (Exception ea) {
+                            ea.printStackTrace();
+                        }
+                    }
+                });
+
+    }
+
 
     private void GetRejectReason(){
         loader = new ProgressDialog(mContext);
