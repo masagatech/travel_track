@@ -34,12 +34,12 @@
         android:name="com.example.androidmapsv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"></permission>
     -->
-    <permission
-        android:name="com.ecs.google.maps.v2.actionbarnew.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature" />
+    <!--<permission-->
+        <!--android:name="com.ecs.google.maps.v2.actionbarnew.permission.MAPS_RECEIVE"-->
+        <!--android:protectionLevel="signature" />-->
 
-    <uses-permission android:name="com.example.androidmapsv2.permission.MAPS_RECEIVE" />
-    <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />
+    <!--<uses-permission android:name="com.example.androidmapsv2.permission.MAPS_RECEIVE" />-->
+    <!--<uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />-->
 
     <!-- Access Google based webservices -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -81,9 +81,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC5I13jVmX6CtOsH7qcxS6Uc8U5DrTAIbs" />
         -->
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC5I13jVmX6CtOsH7qcxS6Uc8U5DrTAIbs" />
+        <!--<meta-data-->
+            <!--android:name="com.google.android.maps.v2.API_KEY"-->
+            <!--android:value="AIzaSyC5I13jVmX6CtOsH7qcxS6Uc8U5DrTAIbs" />-->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -112,10 +112,10 @@
             android:name="com.goyo.goyorider.forms.driver_info_view"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.goyo.goyorider.forms.my_trip"
-            android:configChanges="locale|orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.goyo.goyorider.forms.my_trip"-->
+            <!--android:configChanges="locale|orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name="com.goyo.goyorider.initials.login"
             android:screenOrientation="portrait" />
@@ -133,16 +133,16 @@
             android:name="com.goyo.goyorider.settings.settings"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name="com.goyo.goyorider.forms.googlemapexp" />
+        <!--<activity android:name="com.goyo.goyorider.forms.googlemapexp" />-->
         <activity android:name="com.goyo.goyorider.testd.popuppanel" />
-        <activity
-            android:name="com.goyo.goyorider.customer.clnt_tripview"
-            android:configChanges="locale|orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.goyo.goyorider.customer.clnt_mykids"
-            android:configChanges="locale|orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.goyo.goyorider.customer.clnt_tripview"-->
+            <!--android:configChanges="locale|orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name="com.goyo.goyorider.customer.clnt_mykids"-->
+            <!--android:configChanges="locale|orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
 
         <service
             android:name="com.goyo.goyorider.Service.RiderStatus"
@@ -209,7 +209,8 @@
             android:value="0c08ca1731bcc7783e0a16ff95210e959ce5cdbb" />
 
         <activity android:name="com.goyo.goyorider.forms.AllOrderDetails"
-            android:label="Daily Order Counts"></activity>
+            android:label="Daily Order Counts"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

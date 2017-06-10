@@ -141,6 +141,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                 loader.show();
 
                 Deliver(timeLineModel,position,newPosition);
+                AutoStop();
 
 //                    final model_pending status = mFeedList.get(mFeedList.size() == position +1 ? position :position+1);
 //                    status.status=(OrderStatus.ACTIVE);
@@ -210,6 +211,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                         loader.show();
                         dialog.dismiss();
                         Return(timeLineModel,position,newPosition,SelectedReason);
+                        AutoStop();
                     }
                 });
                 dialog.show();
@@ -283,32 +285,30 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         });
 
 
-        ListIterator<model_pending> iterator = mFeedList.listIterator();
-        while(iterator.hasNext()){
-            System.out.println(iterator.next());
-           if(!iterator.hasNext()){
-               new AlertDialog.Builder(mContext)
-                       .setTitle("Stop Trip")
-                       .setMessage("No Pending Delivery. Are you want Stop Trip?")
-                       .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int which) {
+    }
 
-                               pending_order pending_order=new pending_order();
-                               pending_order.stopTrip();
+    private void AutoStop(){
+            if(mFeedList.size()==0){
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Stop Trip")
+                        .setMessage("No Pending Delivery. Are you want Stop Trip?")
+                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                           }
-                       })
-                       .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int which) {
+                                pending_order pending_order=new pending_order();
+                                pending_order.stopTrip();
 
-                           }
-                       })
-                       .setIcon(R.drawable.stop_trip).show();
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_no_text, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.stop_trip).show();
             }
 
         }
-
-    }
 
     private void GetRejectReason(){
         loader = new ProgressDialog(mContext);
