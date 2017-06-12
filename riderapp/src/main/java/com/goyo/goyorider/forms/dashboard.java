@@ -552,8 +552,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     void click6() {
         int flag = 1;
         Intent intent = new Intent(this, newOrder.class);
-//        Intent intent=new Intent(this,notification.class);
-//        intent.putExtra("FromDashboard", flag);
+        intent.putExtra("FromDashboard", flag);
         startActivity(intent);
     }
 

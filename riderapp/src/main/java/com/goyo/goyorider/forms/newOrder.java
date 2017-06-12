@@ -1,6 +1,7 @@
 package com.goyo.goyorider.forms;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -45,33 +47,44 @@ public class newOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Intent intent = getIntent();
-//        int isFromDashboard = intent.getExtras().getInt("FromDashboard");
-//        if(isFromDashboard!=1){
-//            Toast.makeText(this,"Start from Dashboard",Toast.LENGTH_SHORT).show();
+        Intent intent = getIntent();
+        int isFromDashboard = intent.getExtras().getInt("FromDashboard");
+        if(isFromDashboard==0){
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            if(getSupportActionBar()!=null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().hide();
+            }
+        }
 
 //        }
 
         setContentView(R.layout.activity_new_order);
 
+        if(isFromDashboard==1) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            if(getSupportActionBar()!=null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setLogo(R.drawable.rider_del);
+//            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            }
+            setTitle(getResources().getString(R.string.New_Order));
+        }
 
          db= new SQLBase(this) ;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if(getSupportActionBar()!=null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().hide();
-        }
 
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
 
-        setTitle(getResources().getString(R.string.New_Order));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());

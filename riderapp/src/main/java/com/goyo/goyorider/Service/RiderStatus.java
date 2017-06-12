@@ -268,6 +268,7 @@ public class RiderStatus extends Service implements LocationListener {
 
     //Notification Showing here
     private void processData(model_notification m) {
+        int flag = 0;
 
         //Map<String,String> Data= (Map<String, String>) _msg.getData();
         Intent dialogIntent = new Intent(RiderStatus.this, newOrder.class);
@@ -277,6 +278,7 @@ public class RiderStatus extends Service implements LocationListener {
         }
         //dialogIntent.putExtra(riderid,)
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        dialogIntent.putExtra("FromDashboard", flag);
         startActivity(dialogIntent);
 
 
