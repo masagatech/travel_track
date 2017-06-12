@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import static com.goyo.goyorider.R.drawable.cash;
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Lat;
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Long;
 import static com.goyo.goyorider.forms.pending_order.TripId;
@@ -59,6 +60,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
     public String tripid = "0";
     private ProgressDialog loader;
     private Spinner RejectSpinner;
+    private Double CashCollected;
     List<String> RejectList;
     String SelectedReason;
 
@@ -115,6 +117,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.collected_cash.setText(+timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
+
         holder.Btn_Call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,13 +140,14 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.Btn_Delivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CashCollected= Double.valueOf(holder.collected_cash.getText().toString());
                 loader = new ProgressDialog(mContext);
                 loader.setCancelable(false);
                 loader.setMessage("Please wait..");
                 loader.show();
 
-                Deliver(timeLineModel,position,newPosition);
-                AutoStop();
+                Deliver(timeLineModel,position,newPosition,CashCollected);
+
 
 //                    final model_pending status = mFeedList.get(mFeedList.size() == position +1 ? position :position+1);
 //                    status.status=(OrderStatus.ACTIVE);
@@ -213,7 +217,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                         loader.show();
                         dialog.dismiss();
                         Return(timeLineModel,position,newPosition,SelectedReason);
-                        AutoStop();
+
                     }
                 });
                 dialog.show();
@@ -411,14 +415,15 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         mContext.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
     }
 
-    private void Deliver(final model_pending timeLineModel, final int position, final int newPosition){
+    private void Deliver(final model_pending timeLineModel, final int position, final int newPosition,double Cash){
+
 
         JsonObject json = new JsonObject();
         json.addProperty("flag", "delvr");
         json.addProperty("loc", Rider_Lat+","+Rider_Long);
         json.addProperty("tripid", tripid);
         json.addProperty("rdid", Global.loginusr.getDriverid() + "");
-        json.addProperty("amtrec", timeLineModel.amtcollect + "");
+        json.addProperty("amtrec", timeLineModel.amtcollect + "");   //        Cash
         json.addProperty("ordid", timeLineModel.ordid + "");
         json.addProperty("orddid", timeLineModel.orderdetailid + "");
         json.addProperty("remark", timeLineModel.remark);
@@ -442,9 +447,11 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 //                                }else {
                                     final model_pending status = mFeedList.get(mFeedList.size() == position + 1 ? position : position + 1);
                                     status.status = (OrderStatus.ACTIVE);
+                                    AutoStop();
                                     mFeedList.remove(newPosition);
                                     notifyItemRemoved(newPosition);
                                     notifyItemRangeChanged(newPosition, mFeedList.size());
+
                                     Toast.makeText(mContext, result.get("data").getAsJsonObject().get("msg").toString()
                                             , Toast.LENGTH_SHORT).show();
                                 }
@@ -499,6 +506,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 //                                }else {
                                     final model_pending status = mFeedList.get(mFeedList.size() == position + 1 ? position : position + 1);
                                     status.status = (OrderStatus.ACTIVE);
+                                     AutoStop();
                                     mFeedList.remove(newPosition);
                                     notifyItemRemoved(newPosition);
                                     notifyItemRangeChanged(newPosition, mFeedList.size());

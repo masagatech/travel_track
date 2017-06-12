@@ -12,6 +12,8 @@ import com.goyo.goyorider.model.model_order_details;
 
 import java.util.ArrayList;
 
+import static com.goyo.goyorider.R.drawable.ret;
+
 /**
  * Created by fajar on 08-Jun-17.
  */
@@ -27,7 +29,6 @@ public class OrderDetailsAdapter extends BaseAdapter {
         this.data = item;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
-
 
     }
 
@@ -84,8 +85,6 @@ public class OrderDetailsAdapter extends BaseAdapter {
         TextView uDelivery;
         TextView uRejected;
         TextView uTotal;
-
-
 
         public MyViewHolder(View item) {
             uDate = (TextView) item.findViewById(R.id.DateAllOrder);

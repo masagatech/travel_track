@@ -39,6 +39,8 @@ import com.goyo.goyorider.utils.SHP;
 import java.lang.reflect.Type;
 import java.util.concurrent.ExecutionException;
 
+import static android.app.Notification.VISIBILITY_PUBLIC;
+
 
 /**
  * Created by fajar on 31-May-17.
@@ -298,6 +300,7 @@ public class RiderStatus extends Service implements LocationListener {
                                 .setVisibility(BIND_IMPORTANT)
                                 .setContentText(olnm)
                                 .setContentIntent(pi)
+                                .setVisibility(VISIBILITY_PUBLIC )
                                 .setOngoing(false);
 
                 // CountTimer.start();

@@ -117,8 +117,11 @@
             <!--android:configChanges="locale|orientation|screenSize|keyboardHidden"-->
             <!--android:screenOrientation="portrait" />-->
         <activity
-            android:name="com.goyo.goyorider.initials.login"
-            android:screenOrientation="portrait" />
+            android:configChanges="locale|keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+        android:name="com.goyo.goyorider.initials.login"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name="com.goyo.goyorider.forms.pickupcrew"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
@@ -206,7 +209,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="0c08ca1731bcc7783e0a16ff95210e959ce5cdbb" />
+            android:value="2cc1c9e453ef447c6d6e1b4270811b3b028da0a4" />
 
         <activity android:name="com.goyo.goyorider.forms.AllOrderDetails"
             android:label="Daily Order Counts"

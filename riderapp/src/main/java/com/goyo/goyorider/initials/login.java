@@ -1,5 +1,6 @@
 package com.goyo.goyorider.initials;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,7 +52,9 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setTitle(getResources().getString(R.string.login_title));
+//        setTitle(getResources().getString(R.string.login_title));
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
         checkAndRequestPermissions();
         initAllControls();
     }

@@ -38,7 +38,7 @@
             android:focusable="false"
             android:focusableInTouchMode="true"
             android:textSize="16sp" />
-    </FrameLayout>
+    </FrameLayout>`
 
     <!-- SLIDING LAYOUT -->
     <LinearLayout
@@ -72,7 +72,6 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"/>
-
         </LinearLayout>
 
         <ListView
