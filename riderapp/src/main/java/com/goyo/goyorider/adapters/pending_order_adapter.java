@@ -338,6 +338,7 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
                                 Toast.makeText(mContext,result.get("data").getAsJsonObject().get("msg").toString()
                                         ,Toast.LENGTH_SHORT).show();
                                 //StartRide.setVisibility(View.GONE);
+//                               mContext.onBackPressed();
                                 Intent intent=new Intent(mContext,dashboard.class);
                                 mContext.startActivity(intent);
                             }
