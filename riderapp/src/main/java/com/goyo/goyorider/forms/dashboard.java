@@ -710,7 +710,11 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     @Override
     protected void onResume() {
         super.onResume();
+        //Update Pending order Counts
         PendingCountOnCheck();
+        //Check App Version
         AppVerCheck();
+        //Check if GPS on in user phone, If not promt them on
+        settingsrequest();
     }
 }
