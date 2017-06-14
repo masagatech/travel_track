@@ -70,12 +70,15 @@ public class RejectedOrderAdapter extends RecyclerView.Adapter<pending_order_vie
 
         final model_completed timeLineModel = mFeedList.get(position);
 
-        if (timeLineModel.status == OrderStatus.INACTIVE) {
-            holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
-        } else if (timeLineModel.status == OrderStatus.ACTIVE) {
-            holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.round));
-        } else {
-            holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+            if (timeLineModel.status == OrderStatus.INACTIVE) {
+                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
+            } else if (timeLineModel.status == OrderStatus.ACTIVE) {
+                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.round));
+            } else {
+                holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
+            }
         }
 
 //        holder.mDate.setText(currentDateTimeString);

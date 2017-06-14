@@ -714,7 +714,5 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         PendingCountOnCheck();
         //Check App Version
         AppVerCheck();
-        //Check if GPS on in user phone, If not promt them on
-        settingsrequest();
     }
 }
