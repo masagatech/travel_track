@@ -56,6 +56,7 @@
     <string name="New_Order" translatable="false">Notifications</string>
     <string name="Rejected_Order" translatable="false">Returned Orders</string>
     <string name="Push_Order" translatable="false">Push Orders</string>
+    <string name="title_activity_custemer_maps">Map</string>
 
 
 </resources>

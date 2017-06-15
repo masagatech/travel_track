@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.goyo.goyorider.forms.dashboard;
+import com.goyo.goyorider.googlemap.CustemerMapsActivity;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.goyo.goyorider.R;
@@ -39,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import static android.R.id.message;
 import static com.goyo.goyorider.R.drawable.cash;
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Lat;
 import static com.goyo.goyorider.Service.RiderStatus.Rider_Long;
@@ -119,6 +122,16 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
         holder.mDate.setText(timeLineModel.dltm + "");
         holder.collected_cash.setText(+timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
+
+
+        holder.collected_cash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.collected_cash.requestFocus();
+                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(holder.collected_cash, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
 
 
         holder.Btn_Call.setOnClickListener(new View.OnClickListener() {
@@ -290,6 +303,15 @@ public class pending_order_adapter extends RecyclerView.Adapter<pending_order_vi
 //                        })
 //                        .setIcon(R.drawable.stop_trip).show();
 
+            }
+        });
+
+        holder.Btn_Map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext, CustemerMapsActivity.class);
+                intent.putExtra("Address", timeLineModel.custaddr);
+                mContext.startActivity(intent);
             }
         });
 

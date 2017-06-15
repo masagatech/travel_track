@@ -54,6 +54,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.goyo.goyorider.googlemap.CustemerMapsActivity;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.goyo.goyorider.R;
@@ -522,6 +523,8 @@ public class dashboard extends AppCompatActivity implements LocationListener,
     void click() {
         Intent intent = new Intent(this, pending_order.class);
         startActivity(intent);
+//        Intent intent = new Intent(this, CustemerMapsActivity.class);
+//        startActivity(intent);
     }
 
     @OnClick(R.id.Cash_Collection)

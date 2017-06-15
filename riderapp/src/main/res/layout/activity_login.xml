@@ -79,7 +79,6 @@
             android:layout_below="@+id/edtPassword"
             android:layout_marginTop="5dp"
             android:visibility="invisible"
-
             android:textColor="#CACACA"
             android:textSize="15sp" />
 
@@ -95,7 +94,7 @@
         android:text="@string/login_signin"
         android:layout_alignParentBottom="true"
         android:fontFamily="sans-serif-light"
-       android:layout_marginBottom="10dp"
+       android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true" />
 
     <RelativeLayout
@@ -111,6 +110,7 @@
             android:layout_centerInParent="true"
             android:src="@drawable/goyologo500"
             android:layout_margin="25dp" />
+
     </RelativeLayout>
 
 </RelativeLayout>
