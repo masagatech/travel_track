@@ -1,0 +1,62 @@
+<resources>
+    <string name="title_activity_splash_screen" translatable="false">splash_screen</string>
+    <string name="lblSarthiName">Sarathi Name :</string>
+    <string name="app_name">Travel Tracker</string>
+    <string name="mytrp_todaytrip">Today\'s Trips</string>
+    <string name="mytrp_history">History</string>
+    <string name="del_schoolnm">Dhiru Bhai Ambani School</string>
+    <string name="mytrp_title">Today\'s Trips</string>
+    <string name="login_title">LOGIN</string>
+    <string name="login_usrnamehint">MOBILE NUMBER</string>
+    <string name="login_passwordhint">PASSWORD</string>
+    <string name="login_loginbtntext">Sign In</string>
+    <string name="dashboard_mytrips">Trips</string>
+    <string name="pickup">PICKUP</string>
+    <string name="status_completed">COMPLETED</string>
+    <string name="status_pending">PENDING</string>
+    <string name="status_started">STARTED</string>
+    <string name="status_canceled">CANCELED</string>
+    <string name="drop">DROP</string>
+    <string name="status_pause">PAUSE</string>
+    <string name="dashboard_title">Menu</string>
+    <string name="confirm_logout">Are you sure you want to Log Out?</string>
+    <string name="logout">Log Out</string>
+    <string name="presagain_exit">Press again to exit</string>
+    <string name="alert_no_text">CANCEL</string>
+    <string name="alert_ok_text">OK</string>
+    <string name="login_signin">SIGN IN</string>
+    <string name="pickup_opt_pickup">PICKED UP</string>
+    <string name="pickup_opt_absent">ABSENT</string>
+    <string name="pickup_opt_call">CALL</string>
+    <string name="pickup_opt_info">INFO</string>
+    <string name="pickup_title">Pickup\'s Detail</string>
+    <string name="str_stop">STOP</string>
+    <string name="str_start">START</string>
+    <string name="dashboard_menu_trips">Today\'s Trips</string>
+    <string name="dashboard_menu_settings">Settings</string>
+    <string name="pickup_opt_route">Route</string>
+    <string name="language_title">Language</string>
+    <string name="settings_title">Settings</string>
+    <string name="str_change">CHANGE</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="crew_status_pickedup">PICKED</string>
+    <string name="crew_status_drop">DROPPED</string>
+    <string name="crew_status_absent">ABSENT</string>
+    <string name="crew_status_pending">PENDING</string>
+    <string name="alertconfirmtext_stopstrop">Do you want to stop this trip?</string>
+    <string name="alertconfirmtext_starttrip">Do you want to start this trip?</string>
+    <string name="alert_start_text">START</string>
+    <string name="pickup_exit">This trip is in progress. If you exit from the screen we unable to track your vehicle. Do you still want to exit?</string>
+    <string name="alert_yes_text">YES</string>
+
+    <string name="Pending_Order" translatable="false">Pending Orders</string>
+    <string name="Complated_Order" translatable="false">Complated Orders</string>
+    <string name="Cash_Collection" translatable="false">Cash Collection</string>
+    <string name="All_Order" translatable="false">All Orders</string>
+    <string name="New_Order" translatable="false">Notifications</string>
+    <string name="Rejected_Order" translatable="false">Returned Orders</string>
+    <string name="Push_Order" translatable="false">Push Orders</string>
+    <string name="title_activity_custemer_maps">Map</string>
+
+
+</resources>

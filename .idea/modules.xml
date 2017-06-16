@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gyo_delivery_rider.iml" filepath="$PROJECT_DIR$/gyo_delivery_rider.iml" />
-      <module fileurl="file://$PROJECT_DIR$/riderapp/riderapp.iml" filepath="$PROJECT_DIR$/riderapp/riderapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TravelTracker/TravelTracker.iml" filepath="$PROJECT_DIR$/TravelTracker/TravelTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel_track.iml" filepath="$PROJECT_DIR$/travel_track.iml" />
     </modules>
   </component>
 </project>

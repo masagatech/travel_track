@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "158778456160",
+    "firebase_url": "https://travel-tracker-52543.firebaseio.com",
+    "project_id": "travel-tracker-52543",
+    "storage_bucket": "travel-tracker-52543.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158778456160:android:cfc9ff7db7c1c855",
+        "android_client_info": {
+          "package_name": "com.travel.tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158778456160-kecm8t311io9dk7mkqlm3r6k42b8soq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travel.tracker",
+            "certificate_hash": "7af39ed0ec9cf4dba57cc6a1c458630ca353f0cd"
+          }
+        },
+        {
+          "client_id": "158778456160-1t9qec35jl6tpkerstca9io5ju28mkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQmRZXIAPpTxDmnvNx1h1AmSyxYxPkTNs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158778456160-1t9qec35jl6tpkerstca9io5ju28mkir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
