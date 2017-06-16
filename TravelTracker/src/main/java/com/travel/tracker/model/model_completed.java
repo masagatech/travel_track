@@ -9,6 +9,10 @@ import com.travel.tracker.forms.OrderStatus;
 
 public class model_completed {
 
+    public String mDate;
+    public String mMarchant;
+
+
     @SerializedName("ordid")
     public String ordid;
 
@@ -52,4 +56,10 @@ public class model_completed {
     public String dltm;
 
     public OrderStatus status = OrderStatus.ACTIVE;
+
+
+    public model_completed( String mMarchant,String mDate) {
+        this.mMarchant = mMarchant;
+        this.mDate = mDate;
+    }
 }

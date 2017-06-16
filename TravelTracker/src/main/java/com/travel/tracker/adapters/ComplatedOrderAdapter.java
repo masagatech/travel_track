@@ -70,18 +70,18 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 
         final model_completed timeLineModel = mFeedList.get(position);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-
-            if (timeLineModel.status == OrderStatus.INACTIVE) {
-                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
-            } else if (timeLineModel.status == OrderStatus.ACTIVE) {
-                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.round));
-            } else {
-                holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
-            }
-        }
-        holder.mOrder.setText(timeLineModel.ordno +"");
-        holder.mMarchant.setText(timeLineModel.olnm);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//
+//            if (timeLineModel.status == OrderStatus.INACTIVE) {
+//                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
+//            } else if (timeLineModel.status == OrderStatus.ACTIVE) {
+//                holder.mTimelineView.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.round));
+//            } else {
+//                holder.mTimelineView.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.round));
+//            }
+//        }
+        holder.mOrder.setText(timeLineModel.mMarchant+"");
+        holder.mMarchant.setText(timeLineModel.mDate+"");
 //        holder.Custmer_name.setText(timeLineModel.custname);
 //        holder.mDeliver_at.setText(timeLineModel.custaddr);
 //        holder.Remark.setText("Remark: "+timeLineModel.remark);
@@ -89,29 +89,29 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
-        holder.ButtonHide.setOnClickListener(new View.OnClickListener() {
+        holder.Btn_Map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
-                ComplatedOrder(timeLineModel,holder,position);
+//                ComplatedOrder(timeLineModel,holder,position);
                 if(holder.ClickToHide.getVisibility() == View.VISIBLE){
                     holder.ClickToHide.setVisibility(View.GONE);
-                    holder.mDate.setVisibility(View.GONE);
-                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//                    holder.mDate.setVisibility(View.GONE);
+//                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }else {
-                    loader = new ProgressDialog(mContext);
-                    loader.setCancelable(false);
-                    loader.setMessage("Please wait..");
-                    loader.show();
-                    ComplatedOrder(timeLineModel,holder,position);
+//                    loader = new ProgressDialog(mContext);
+//                    loader.setCancelable(false);
+//                    loader.setMessage("Please wait..");
+//                    loader.show();
+//                    ComplatedOrder(timeLineModel,holder,position);
                 holder.ClickToHide.setVisibility(View.VISIBLE);
-                    holder.mDate.setVisibility(View.VISIBLE);
-                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
-                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds( R.drawable.pending_outlets, 0, 0, 0);
+//                    holder.mDate.setVisibility(View.VISIBLE);
+//                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
+//                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds( R.drawable.pending_outlets, 0, 0, 0);
                 }
             }
         });
-        holder.collected_cash.setEnabled(false);
+//        holder.collected_cash.setEnabled(false);
 
 
 

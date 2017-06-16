@@ -47,7 +47,7 @@ public class rejected_order extends AppCompatActivity {
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
 
-        setTitle(getResources().getString(R.string.Rejected_Order));
+        setTitle(getResources().getString(R.string.Leave));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());

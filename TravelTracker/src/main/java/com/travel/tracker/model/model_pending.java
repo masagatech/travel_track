@@ -3,11 +3,15 @@ package com.travel.tracker.model;
 import com.google.gson.annotations.SerializedName;
 import com.travel.tracker.forms.OrderStatus;
 
+import static com.travel.tracker.R.id.Cash;
+
 /**
  * Created by fajar on 27-May-17.
  */
 
 public class model_pending {
+
+
 
     @SerializedName("orddid")
     public int orderdetailid;
@@ -62,7 +66,7 @@ public class model_pending {
 
     public OrderStatus status = OrderStatus.ACTIVE;
 
-    public model_pending()
-    {}
+
+
 
 }

@@ -83,7 +83,7 @@ public class pending_order extends AppCompatActivity {
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
 
-        setTitle(getResources().getString(R.string.Pending_Order));
+        setTitle(getResources().getString(R.string.Work_Status));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());

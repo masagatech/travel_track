@@ -74,10 +74,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -86,8 +85,6 @@
             <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC5I13jVmX6CtOsH7qcxS6Uc8U5DrTAIbs" />
-
-
         -->
         <!-- <meta-data -->
         <!-- android:name="com.google.android.maps.v2.API_KEY" -->
@@ -98,10 +95,10 @@
 
         <!-- Activities -->
         <activity
-            android:name="com.travel.tracker.goyorider.MainActivity"
+            android:name=".goyorider.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.initials.splash_screen"
+            android:name=".initials.splash_screen"
             android:configChanges="locale|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -113,11 +110,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.travel.tracker.forms.driver_info"
+            android:name=".forms.driver_info"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.forms.driver_info_view"
+            android:name=".forms.driver_info_view"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <!-- <activity -->
@@ -125,26 +122,26 @@
         <!-- android:configChanges="locale|orientation|screenSize|keyboardHidden" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name="com.travel.tracker.initials.login"
+            android:name=".initials.login"
             android:configChanges="locale|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.pickupcrew"
+            android:name=".forms.pickupcrew"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.forms.crew_details"
+            android:name=".forms.crew_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.settings.languages"
+            android:name=".settings.languages"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.settings.settings"
+            android:name=".settings.settings"
             android:configChanges="locale|orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <!-- <activity android:name="com.goyo.goyorider.forms.googlemapexp" /> -->
-        <activity android:name="com.travel.tracker.testd.popuppanel" />
+        <activity android:name=".testd.popuppanel" />
         <!-- <activity -->
         <!-- android:name="com.goyo.goyorider.customer.clnt_tripview" -->
         <!-- android:configChanges="locale|orientation|screenSize|keyboardHidden" -->
@@ -155,12 +152,12 @@
         <!-- android:screenOrientation="portrait" /> -->
 
         <service
-            android:name="com.travel.tracker.Service.RiderStatus"
+            android:name=".Service.RiderStatus"
             android:exported="false" />
 
         <!-- [START firebase_service] -->
         <service
-            android:name="com.travel.tracker.firebasemessaging.APPFirebaseMessagingService"
+            android:name=".firebasemessaging.APPFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -173,7 +170,7 @@
 
         <!-- [START firebase_iid_service] -->
         <service
-            android:name="com.travel.tracker.firebasemessaging.FirebaseInstanceIDService"
+            android:name=".firebasemessaging.FirebaseInstanceIDService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -181,35 +178,35 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
-        <activity android:name="com.travel.tracker.initials.sessionchecker" />
+        <activity android:name=".initials.sessionchecker" />
         <activity
-            android:name="com.travel.tracker.forms.dashboard"
+            android:name=".forms.dashboard"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.forms.pending_order"
+            android:name=".forms.pending_order"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.travel.tracker.forms.complated_order"
+            android:name=".forms.complated_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.cash_collection"
+            android:name=".forms.cash_collection"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.rejected_order"
+            android:name=".forms.rejected_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.all_order"
+            android:name=".forms.all_order"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.PushOrder"
+            android:name=".forms.PushOrder"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.travel.tracker.forms.newOrder"
+            android:name=".forms.newOrder"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -219,7 +216,7 @@
             android:value="2cc1c9e453ef447c6d6e1b4270811b3b028da0a4" />
 
         <activity
-            android:name="com.travel.tracker.forms.AllOrderDetails"
+            android:name=".forms.AllOrderDetails"
             android:label="Daily Order Counts"
             android:screenOrientation="portrait" />
         <!--
@@ -235,8 +232,14 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.travel.tracker.googlemap.CustemerMapsActivity"
-            android:label="@string/title_activity_custemer_maps"></activity>
+            android:name=".googlemap.CustemerMapsActivity"
+            android:label="@string/title_activity_custemer_maps" />
+        <activity
+            android:name=".initials.SliderScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".forms.contact_us"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

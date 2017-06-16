@@ -47,70 +47,72 @@ public class complated_order extends AppCompatActivity {
 
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setLogo(R.drawable.rider_del);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//            getSupportActionBar().setLogo(R.drawable.rider_del);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
 
-        setTitle(getResources().getString(R.string.Complated_Order));
+        setTitle(getResources().getString(R.string.Today_Visit));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());
         mRecyclerView.setHasFixedSize(true);
 //
-     //   initView();
+        initView();
 
-        loader = new ProgressDialog(this);
-        loader.setCancelable(false);
-        loader.setMessage("Please wait..");
-        loader.show();
-
-        Ion.with(this)
-                .load("GET", getOrders.value)
-                .addQuery("flag", "completed")
-                .addQuery("subflag", "smry")
-                .addQuery("rdid", Global.loginusr.getDriverid() + "")
-                .addQuery("stat","1")
-
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-
-                        try {
-                            if (result != null) Log.v("result", result.toString());
-                            Gson gson = new Gson();
-                            Type listType = new TypeToken<List<model_completed>>() {
-                            }.getType();
-                            List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
-                            bindCurrentTrips(events);
-                        }
-                        catch (Exception ea) {
-                            ea.printStackTrace();
-                        }
-                        loader.hide();
-                    }
-                });
+//        loader = new ProgressDialog(this);
+//        loader.setCancelable(false);
+//        loader.setMessage("Please wait..");
+//        loader.show();
+//
+//        Ion.with(this)
+//                .load("GET", getOrders.value)
+//                .addQuery("flag", "completed")
+//                .addQuery("subflag", "smry")
+//                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+//                .addQuery("stat","1")
+//
+//                .asJsonObject()
+//                .setCallback(new FutureCallback<JsonObject>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonObject result) {
+//
+//                        try {
+//                            if (result != null) Log.v("result", result.toString());
+//                            Gson gson = new Gson();
+//                            Type listType = new TypeToken<List<model_completed>>() {
+//                            }.getType();
+//                            List<model_completed> events = (List<model_completed>) gson.fromJson(result.get("data"), listType);
+//                            bindCurrentTrips(events);
+//                        }
+//                        catch (Exception ea) {
+//                            ea.printStackTrace();
+//                        }
+//                        loader.hide();
+//                    }
+//                });
     }
 
     private LinearLayoutManager getLinearLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     }
 
-//    private void initView() {
-//        setDataListItems();
-//        mTimeLineAdapter = new ComplatedOrderAdapter(mDataList, mOrientation, mWithLinePadding);
-//        mRecyclerView.setAdapter(mTimeLineAdapter);
-//    }
+    private void initView() {
+        setDataListItems();
+        mTimeLineAdapter = new ComplatedOrderAdapter(mDataList, mOrientation, mWithLinePadding);
+        mRecyclerView.setAdapter(mTimeLineAdapter);
+    }
 
     private void setDataListItems(){
-//        mDataList.add(new PendingModel("#198" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.ACTIVE,0.00));
-//        mDataList.add(new PendingModel("#199" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,0.00));
-//        mDataList.add(new PendingModel("#200" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,209.00));
-//        mDataList.add(new PendingModel("#201" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,349.00));
-//        mDataList.add(new PendingModel("#202" , "Pizza Hut, Pralhad Nagar", "Time : 08.00 ","Navi Mumbai,sector 15", currentDateTimeString, OrderStatus.COMPLETED,460.50));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
+        mDataList.add(new model_completed("lat : 123456" , "lon : 1234.5678"));
 
     }
     private void bindCurrentTrips(List<model_completed> lst) {

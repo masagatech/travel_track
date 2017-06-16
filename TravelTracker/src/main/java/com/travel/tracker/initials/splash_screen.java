@@ -59,7 +59,7 @@ public class splash_screen extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent i = new Intent(splash_screen.this, sessionchecker.class);
+                Intent i = new Intent(splash_screen.this,sessionchecker.class);
                 startActivity(i);
                 finish();
             }

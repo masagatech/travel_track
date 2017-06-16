@@ -46,7 +46,7 @@
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="15dp"
                     android:gravity="center"
-                    android:text="@string/Complated_Order"
+                    android:text="@string/Today_Visit"
                     android:textColor="@color/white" />
             </FrameLayout>
 
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/Rejected_Order"
+                    android:text="@string/Leave"
                     android:textColor="@color/white"
                     android:layout_marginBottom="15dp"
                     android:layout_gravity="bottom"/>
@@ -119,7 +119,7 @@
                     android:layout_marginBottom="50dp"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
-                    android:text="@string/Pending_Order"
+                    android:text="@string/Work_Status"
                     android:textColor="@color/white" />
 
                 <ImageView
@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:fontFamily="sans-serif-light"
-                        android:text="Order \nDetails"
+                        android:text="Attentence"
                         android:textColor="@color/white"
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="10dp"
@@ -340,7 +340,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:text="@string/Push_Order"
+                        android:text="@string/Messages"
                         android:fontFamily="sans-serif-light"
                         android:textColor="@color/white" />
                 </FrameLayout>

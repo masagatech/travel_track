@@ -123,7 +123,7 @@ public class sessionchecker extends AppCompatActivity {
 ////            i = new Intent(sessionchecker.this, languages.class);
 ////            i.putExtra("frmsplash", true);
 //        } else {
-            i = new Intent(sessionchecker.this, login.class);
+            i = new Intent(sessionchecker.this, SliderScreen.class);
 //            startActivity(i);
 //        }
         startActivity(i);

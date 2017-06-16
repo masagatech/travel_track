@@ -7,68 +7,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/rider_login_bg02"
-    tools:context="com.travel.tracker.initials.login">
+    android:background="@drawable/model_login_bg"
+    tools:context="com.goyo.goyorider.initials.login">
 
     <RelativeLayout
         android:id="@+id/userPassLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/imageLayout"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:background="@android:drawable/screen_background_dark_transparent">
 
         <EditText
+            android:fontFamily="sans-serif-light"
             android:id="@+id/edtUserName"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@+id/username_ico"
-            android:drawablePadding="5dp"
             android:background="@drawable/loginedttext"
+            android:drawablePadding="5dp"
+            android:hint="@string/login_usrnamehint"
             android:singleLine="true"
-            android:textColorHint="#CACACA"
-            android:hint="@string/login_usrnamehint">
+            android:textColorHint="#CACACA">
 
             <requestFocus />
         </EditText>
+
         <ImageView
-            android:padding="3dp"
-            android:layout_marginTop="30dp"
             android:id="@+id/username_ico"
-            android:src="@drawable/acc"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
-
-
-        <ImageView
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
             android:padding="3dp"
-            android:layout_below="@+id/edtUserName"
+            android:src="@drawable/acc" />
+        <ImageView
             android:id="@+id/password_icon"
-            android:layout_marginTop="60dp"
-            android:src="@drawable/pw"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            android:layout_below="@+id/edtUserName"
+            android:layout_marginTop="20dp"
+            android:padding="3dp"
+            android:src="@drawable/pw" />
 
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:fontFamily="sans-serif-light"
             android:layout_below="@+id/edtUserName"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/loginedttext"
+            android:layout_marginTop="20dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@+id/password_icon"
-            android:inputType="textPassword"
+            android:background="@drawable/loginedttext"
+            android:hint="@string/login_passwordhint"
             android:imeOptions="actionDone"
+            android:inputType="textPassword"
             android:singleLine="true"
-            android:textColorHint="#CACACA"
-            android:hint="@string/login_passwordhint">
-        </EditText>
-
+            android:textColorHint="#CACACA"/>
 
 
         <TextView
@@ -78,39 +80,53 @@
             android:layout_alignRight="@+id/edtPassword"
             android:layout_below="@+id/edtPassword"
             android:layout_marginTop="5dp"
-            android:visibility="invisible"
             android:textColor="#CACACA"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="invisible" />
 
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/progressbar"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_signin"
+            android:textColor="#000"
+            android:textSize="20dp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="@color/darkText"
-        android:background="@color/red_light"
-        android:text="@string/login_signin"
-        android:layout_alignParentBottom="true"
-        android:fontFamily="sans-serif-light"
-       android:layout_marginBottom="50dp"
-        android:layout_centerHorizontal="true" />
+
 
     <RelativeLayout
+
         android:id="@+id/imageLayout"
+        android:background="@android:drawable/screen_background_light_transparent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/userPassLayout">
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
+            android:layout_height="130dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/goyologo500"
-            android:layout_margin="25dp" />
+            android:layout_alignParentTop="true"
 
+            />
     </RelativeLayout>
 
 </RelativeLayout>

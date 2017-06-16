@@ -48,7 +48,7 @@ public class PushOrder extends AppCompatActivity {
         mOrientation = Orientation.VERTICAL;
         mWithLinePadding = true;
 
-        setTitle(getResources().getString(R.string.Push_Order));
+        setTitle(getResources().getString(R.string.Messages));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(getLinearLayoutManager());

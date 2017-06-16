@@ -252,14 +252,14 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                     if (isStatusDbCheck) {
                         //Notification
                         showNotification();
-                        Online.setText("Online");
+                        Online.setText("Check In");
                         SwitchTurnedOnOFF("true");
                         return;
                     }
 
                     new AlertDialog.Builder(dashboard.this)
-                            .setTitle("Online")
-                            .setMessage("Ready for some delivery?")
+                            .setTitle("Check In")
+                            .setMessage("Do You Want Check In?")
                             .setPositiveButton("Yes, Lets go!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //Getting JSON data from server
@@ -281,12 +281,12 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                         return;
                     }
                     new AlertDialog.Builder(dashboard.this)
-                            .setTitle("Offline")
-                            .setMessage("Are you sure you want go Offline Mode?")
+                            .setTitle("Check Out")
+                            .setMessage("Are you sure you want Check Out?")
                             .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     notificationManager.cancel(0);
-                                    Online.setText("Offline");
+                                    Online.setText("Check Out");
                                     handler.removeMessages(0);
                                     if (isMyServiceRunning(RiderStatus.class)) {
                                         if (mServiceIntent != null) stopService(mServiceIntent);
@@ -396,7 +396,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
                                     if (!isMyServiceRunning(RiderStatus.class)) {
                                         //Notification
                                         showNotification();
-                                        Online.setText("Online");
+                                        Online.setText("Check In");
                                         mServiceIntent = new Intent(dashboard.this, RiderStatus.class);
                                         dashboard.this.startService(mServiceIntent);
                                     }
