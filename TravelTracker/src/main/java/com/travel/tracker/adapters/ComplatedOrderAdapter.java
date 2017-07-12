@@ -89,12 +89,13 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //        holder.collected_cash.setText("₹ " +timeLineModel.amtcollect +"");
         final int newPosition = holder.getAdapterPosition();
 
-        holder.Btn_Map.setOnClickListener(new View.OnClickListener() {
+        holder.ButtonHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View m) {
 //                ComplatedOrder(timeLineModel,holder,position);
                 if(holder.ClickToHide.getVisibility() == View.VISIBLE){
                     holder.ClickToHide.setVisibility(View.GONE);
+                    holder.Btn_Delivery.setVisibility(View.GONE);
 //                    holder.mDate.setVisibility(View.GONE);
 //                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 //                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -105,6 +106,7 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
 //                    loader.show();
 //                    ComplatedOrder(timeLineModel,holder,position);
                 holder.ClickToHide.setVisibility(View.VISIBLE);
+                    holder.Btn_Delivery.setVisibility(View.VISIBLE);
 //                    holder.mDate.setVisibility(View.VISIBLE);
 //                    holder.mOrder.setCompoundDrawablesWithIntrinsicBounds( R.drawable.order_id, 0, 0, 0);
 //                    holder.mMarchant.setCompoundDrawablesWithIntrinsicBounds( R.drawable.pending_outlets, 0, 0, 0);
@@ -157,7 +159,6 @@ public class ComplatedOrderAdapter extends RecyclerView.Adapter<pending_order_vi
                                     timeLineModel.deltime = Data.get("dtm").getAsString();
                                     timeLineModel.custname = Data.get("cnm").getAsString();
                                     timeLineModel.dltm = Data.get("dltm").getAsString();
-
 
                                     holder.mTime.setText("Deliverd At "+timeLineModel.deltime + "");
                                     holder.collected_cash.setText("₹ " + timeLineModel.amtcollect + "");

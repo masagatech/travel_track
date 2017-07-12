@@ -31,7 +31,19 @@
             android:id="@+id/border"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ToggleButton
+                android:background="@drawable/add_save"
+                android:id="@+id/hideButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+               />
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/Btn_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,11 +53,24 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:src="@drawable/plus_today_visit" />
-
+            <Button
+                android:id="@+id/Btn_Delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+             android:visibility="gone"
+                android:background="@android:color/holo_green_dark"
+                android:text="Save"
+                android:textColor="@color/cardview_light_background"
+                android:layout_alignTop="@+id/Btn_map"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"
+                 />
 
 
             <LinearLayout
-                android:layout_below="@id/Btn_map"
+                android:layout_below="@id/hideButton"
                 android:id="@+id/pending_orders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,9 +98,14 @@
                     <LinearLayout
                         android:id="@+id/ClickToHide"
                         android:visibility="gone"
+                      android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/text_timeline_title"
@@ -87,34 +117,27 @@
                             tools:text="lat : 12345.7890" />
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/text_marchent"
-                            android:layout_width="225dp"
-
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:textColor="@android:color/black"
                             tools:text="lon :12345.789" />
+                        </LinearLayout>
 
                         <EditText
-
                             android:id="@+id/Collected_Cash"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="70dp"
                             android:layout_marginTop="5dp"
                             android:padding="10dp"
+                            android:gravity="top"
                             android:background="@drawable/border_cash_collection"
                             android:hint="Remark"
+                            android:inputType="textMultiLine"
                             android:textColor="@android:color/black"
                             android:textSize="15dp" />
-                        <Button
-                            android:layout_marginTop="20dp"
-                            android:id="@+id/Btn_Delivery"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
 
-                            android:layout_weight="1"
-                            android:background="@android:color/holo_green_dark"
-                            android:text="Save"
-                            android:textColor="@color/cardview_light_background" />
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/Custmer_name"
                             android:layout_width="match_parent"
@@ -179,17 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <ToggleButton
-                        android:background="@drawable/expand_arrow"
-                        android:id="@+id/hideButton"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:textOn=""
-                        android:textOff=""
-                        android:visibility="gone"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_centerVertical="true"/>
+
                     <TextView
                         android:id="@+id/DeliverText"
                         android:drawableLeft="@drawable/del"

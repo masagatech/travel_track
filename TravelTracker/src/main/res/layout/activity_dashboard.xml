@@ -12,10 +12,13 @@
     tools:context="com.travel.tracker.forms.dashboard">
 
     <LinearLayout
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -95,7 +98,7 @@
        >
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="vertical"
@@ -154,13 +157,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="5dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
             android:orientation="vertical">
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginLeft="5dp"
@@ -199,11 +203,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
                 android:layout_weight="1.2"
-                android:layout_marginTop="5dp"
                 android:orientation="vertical"
-                android:background="@color/orange_light"
+                android:background="@color/blue_light"
                 android:clickable="true">
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -216,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/pending_order"
                         android:gravity="center"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="40dp"
                         />
 
                     <TextView
@@ -227,7 +229,7 @@
                         android:text="Attentence"
                         android:textColor="@color/white"
                         android:layout_gravity="bottom"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="50dp"
                         />
                 </FrameLayout>
             </LinearLayout>
@@ -239,6 +241,7 @@
             android:layout_height="170dp"
             android:layout_marginRight="5dp"
             android:layout_weight="2"
+            android:visibility="gone"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:orientation="vertical"

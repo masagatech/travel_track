@@ -36,10 +36,11 @@ public class AllOrderDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_order_details);
 
+        setTitle("Attentence");
         if(getSupportActionBar()!=null)
            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        data= populateList();
+        data= populateList();
         AllDetails=(ListView)findViewById(R.id.all_details);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -47,45 +48,45 @@ public class AllOrderDetails extends AppCompatActivity {
                 false);
         AllDetails.addHeaderView(header, null, false);
 
-//        OrderDetailsAdapter orderDetailsAdapter=new OrderDetailsAdapter(data,this);
-//        AllDetails.setAdapter(orderDetailsAdapter);
-//        orderDetailsAdapter.notifyDataSetChanged();
+        OrderDetailsAdapter orderDetailsAdapter=new OrderDetailsAdapter(data,this);
+        AllDetails.setAdapter(orderDetailsAdapter);
+        orderDetailsAdapter.notifyDataSetChanged();
 
 
-        loader = new ProgressDialog(this);
-        loader.setCancelable(false);
-        loader.setMessage("Please wait..");
-        loader.show();
-
-
-        Ion.with(this)
-                .load("GET", getOrdersCount.value)
-                .addQuery("flag", "month")
-                .addQuery("rdid", Global.loginusr.getDriverid() + "")
-
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-
-                        try {
-                            if (result != null) Log.v("result", result.toString());
-                            Gson gson = new Gson();
-                            Type listType = new TypeToken<List<model_order_details>>() {
-                            }.getType();
-                            ArrayList<model_order_details> events = (ArrayList<model_order_details>) gson.fromJson(result.get("data"), listType);
-                            bindCurrentTrips(events);
-
-                        }
-                        catch (Exception ea) {
-                            ea.printStackTrace();
-                        }
-                        loader.hide();
-                    }
-                });
-
-
-
+//        loader = new ProgressDialog(this);
+//        loader.setCancelable(false);
+//        loader.setMessage("Please wait..");
+//        loader.show();
+//
+//
+//        Ion.with(this)
+//                .load("GET", getOrdersCount.value)
+//                .addQuery("flag", "month")
+//                .addQuery("rdid", Global.loginusr.getDriverid() + "")
+//
+//                .asJsonObject()
+//                .setCallback(new FutureCallback<JsonObject>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonObject result) {
+//
+//                        try {
+//                            if (result != null) Log.v("result", result.toString());
+//                            Gson gson = new Gson();
+//                            Type listType = new TypeToken<List<model_order_details>>() {
+//                            }.getType();
+//                            ArrayList<model_order_details> events = (ArrayList<model_order_details>) gson.fromJson(result.get("data"), listType);
+//                            bindCurrentTrips(events);
+//
+//                        }
+//                        catch (Exception ea) {
+//                            ea.printStackTrace();
+//                        }
+//                        loader.hide();
+//                    }
+//                });
+//
+//
+//
 
 
 
@@ -103,20 +104,18 @@ public class AllOrderDetails extends AppCompatActivity {
         }
     }
 //
-//    public static ArrayList<model_order_details> populateList(){
-//        ArrayList<model_order_details> mRiderList = new ArrayList<model_order_details>();
-//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-//        mRiderList.add(new model_order_details("13-5-17",1,0,9,10));
-//        mRiderList.add(new model_order_details("14-5-17",2,2,9,12));
-//        mRiderList.add(new model_order_details("15-5-17",6,0,4,10));
-//        mRiderList.add(new model_order_details("16-5-17",4,3,9,13));
-//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-//        mRiderList.add(new model_order_details("12-5-17",4,3,9,13));
-//
-//        return mRiderList;
-//    }
+    public static ArrayList<model_order_details> populateList(){
+        ArrayList<model_order_details> mRiderList = new ArrayList<model_order_details>();
+        mRiderList.add(new model_order_details("12","03","09","10.00","8.00","Deliverd"));
+        mRiderList.add(new model_order_details("13","10","20","06.00","10.00","Collected"));
+        mRiderList.add(new model_order_details("14","05","09","08.00","8.00","Drive"));
+        mRiderList.add(new model_order_details("15","03","09","10.00","8.00","send"));
+        mRiderList.add(new model_order_details("16","03","09","10.00","8.00","Deliverd"));
+        mRiderList.add(new model_order_details("17","03","09","10.00","8.00","Deliverd"));
+        mRiderList.add(new model_order_details("18","03","09","10.00","8.00","Deliverd"));
+
+        return mRiderList;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Menu

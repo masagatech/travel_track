@@ -6,64 +6,73 @@
 
     <TextView
         android:id="@+id/DateAllOrder"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:layout_weight="2.5"
         android:background="@color/bb_inActiveBottomBarItemColor"
         android:padding="5dp"
-        android:text="01/21/17"
+        android:text="15"
         android:gravity="center"
         android:fontFamily="sans-serif-light"
         android:textColor="#fff"
-        android:textSize="16dp" />
+        android:textSize="13dp" />
 
     <TextView
-        android:id="@+id/RejectedAllOrder"
-        android:layout_width="55dp"
+        android:id="@+id/CheckInAllOrder"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:background="@color/orange_light"
+        android:background="#da9309"
         android:gravity="center"
         android:padding="5dp"
-        android:text="10"
-        android:visibility="gone"
+        android:text="10.00"
         android:textColor="#fff"
-        android:textSize="18dp" />
+        android:textSize="13dp" />
 
     <TextView
-        android:id="@+id/DeliverAllOrder"
+        android:id="@+id/CheckOutAllOrder"
         android:textColor="#fff"
         android:padding="5dp"
         android:gravity="center"
         android:fontFamily="sans-serif-light"
         android:background="@color/green_light"
-        android:textSize="18dp"
-        android:layout_width="68dp"
+        android:textSize="13dp"
+        android:layout_width="70dp"
         android:layout_height="match_parent"
-        android:text="02"/>
+        android:text="02.00"/>
 
     <TextView
         android:fontFamily="sans-serif-light"
-        android:id="@+id/ReturnAllOrder"
-        android:layout_width="67dp"
+        android:id="@+id/StopsAllOrder"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@color/red_light"
         android:gravity="center"
         android:padding="5dp"
         android:text="04"
         android:textColor="#fff"
-        android:textSize="18dp" />
+        android:textSize="13dp" />
 
     <TextView
-        android:id="@+id/TotalAllOrder"
-        android:layout_width="70dp"
+        android:id="@+id/KMAllOrder"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="5dp"
         android:text="10"
+        android:background="@color/blue_light"
+        android:textColor="#fff"
+        android:fontFamily="sans-serif-light"
+        android:textSize="13dp" />
+    <TextView
+        android:id="@+id/RemarkAllOrder"
+        android:layout_width="67dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Delivered"
+        android:layout_weight="1"
         android:background="@color/bb_inActiveBottomBarItemColor"
         android:textColor="#fff"
         android:fontFamily="sans-serif-light"
-        android:textSize="18dp" />
-
+        android:textSize="13dp" />
 
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.travel.tracker.initials;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -49,6 +51,7 @@ public class sessionchecker extends AppCompatActivity {
 
             }
 
+            TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
             JsonObject json = new JsonObject();
             json.addProperty("base", "_sid");
             json.addProperty("sid", sessionid);
@@ -57,6 +60,7 @@ public class sessionchecker extends AppCompatActivity {
             json.addProperty("type", "driver");
             json.addProperty("otherdetails", "{}");
             json.addProperty("src", "m");
+            json.addProperty("imei",telephonyManager.getDeviceId());
             loader.setCancelable(false);
             loader.setMessage("Session Login. Please wait.");
             loader.show();

@@ -59,12 +59,18 @@ public class OrderDetailsAdapter extends BaseAdapter {
 
 
 
-        mViewHolder.uDate.setText(details.dt+"");
-        mViewHolder.uReturn.setText(details.ret+"");
-        mViewHolder.uDelivery.setText(details.del+"");
-        mViewHolder.uRejected.setText("");
-        mViewHolder.uTotal.setText((details.del+details.ret)+"");
+//        mViewHolder.uDate.setText(details.dt+"");
+//        mViewHolder.uReturn.setText(details.ret+"");
+//        mViewHolder.uDelivery.setText(details.del+"");
+//        mViewHolder.uRejected.setText("");
+//        mViewHolder.uTotal.setText((details.del+details.ret)+"");
 
+        mViewHolder.uDate.setText(details.mDate+"");
+        mViewHolder.uStops.setText(details.mStops+"");
+        mViewHolder.uKM.setText(details.mKM+"");
+        mViewHolder.uCheckIn.setText(details.mCheckIn+"");
+        mViewHolder.uCheckOut.setText(details.mCheckOut+"");
+        mViewHolder.uRemark.setText(details.mRemark+"");
 
 
         return convertView;
@@ -79,17 +85,19 @@ public class OrderDetailsAdapter extends BaseAdapter {
     private class MyViewHolder {
 
         TextView uDate;
-        TextView uReturn;
-        TextView uDelivery;
-        TextView uRejected;
-        TextView uTotal;
+        TextView uStops;
+        TextView uKM;
+        TextView uCheckIn;
+        TextView uCheckOut;
+        TextView uRemark;
 
         public MyViewHolder(View item) {
             uDate = (TextView) item.findViewById(R.id.DateAllOrder);
-            uReturn = (TextView) item.findViewById(R.id.ReturnAllOrder);
-            uDelivery = (TextView) item.findViewById(R.id.DeliverAllOrder);
-            uRejected = (TextView) item.findViewById(R.id.RejectedAllOrder);
-            uTotal = (TextView) item.findViewById(R.id.TotalAllOrder);
+            uStops = (TextView) item.findViewById(R.id.StopsAllOrder);
+            uKM = (TextView) item.findViewById(R.id.KMAllOrder);
+            uCheckIn = (TextView) item.findViewById(R.id.CheckInAllOrder);
+            uCheckOut = (TextView) item.findViewById(R.id.CheckOutAllOrder);
+            uRemark = (TextView) item.findViewById(R.id.RemarkAllOrder);
         }
     }
 }

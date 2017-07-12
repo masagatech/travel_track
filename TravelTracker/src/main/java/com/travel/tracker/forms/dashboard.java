@@ -121,7 +121,7 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         registerCrashReport();
 
         setContentView(R.layout.activity_dashboard);
-        AppVerCheck();
+//        AppVerCheck();
         Count_Pending=(TextView)findViewById(R.id.Count);
         PendingCountOnCheck();
         ButterKnife.bind(this);
@@ -715,6 +715,6 @@ public class dashboard extends AppCompatActivity implements LocationListener,
         //Update Pending order Counts
         PendingCountOnCheck();
         //Check App Version
-        AppVerCheck();
+//        AppVerCheck();
     }
 }

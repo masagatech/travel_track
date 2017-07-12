@@ -217,7 +217,6 @@
 
         <activity
             android:name=".forms.AllOrderDetails"
-            android:label="Daily Order Counts"
             android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -236,7 +235,6 @@
             android:label="@string/title_activity_custemer_maps" />
         <activity
             android:name=".initials.SliderScreen"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".forms.contact_us"
             android:screenOrientation="portrait"></activity>

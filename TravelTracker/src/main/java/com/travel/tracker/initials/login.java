@@ -1,12 +1,14 @@
 package com.travel.tracker.initials;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -134,7 +136,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 }catch (Exception ex){
 
                 }
-
+                TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                 JsonObject json = new JsonObject();
                 json.addProperty("email", edtUserName.getText().toString());
                 json.addProperty("pwd", edtPassword.getText().toString());
@@ -142,6 +144,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 json.addProperty("type", "rider");
                 json.addProperty("otherdetails", "{}");
                 json.addProperty("src", "m");
+                json.addProperty("imei",telephonyManager.getDeviceId());
                 Global.showProgress(loader);
                 Ion.with(this)
                         .load(Global.urls.getlogin.value)
